@@ -1,0 +1,36 @@
+insert into event_type (name) values ('LAN');
+insert into event_type (name) values ('Online');
+insert into game_title (title) values ('Advanced Warfare');
+insert into event (name, event_type_id, game_title_id) values ('Brazil', 1, 1);
+insert into match_type (name) values ('Pool Play');
+insert into score_type (name, name_short) values ('Best of Five', 'BO5');
+
+
+
+insert into map(game_title_id, name) values (1, 'Retreat');
+insert into map(game_title_id, name) values (1, 'Riot');
+insert into map(game_title_id, name) values (1, 'Biolab');
+insert into map(game_title_id, name) values (1, 'Solar');
+insert into map(game_title_id, name) values (1, 'Detroit');
+insert into map(game_title_id, name) values (1, 'Recovery');
+insert into map(game_title_id, name) values (1, 'Comeback');
+insert into map(game_title_id, name) values (1, 'Ascend');
+
+
+insert into mode(game_title_id, name) values (1, 'HP');
+insert into mode(game_title_id, name) values (1, 'CTF');
+insert into mode(game_title_id, name) values (1, 'Uplink');
+insert into mode(game_title_id, name) values (1, 'SnD');
+
+insert into map_mode(map_id, mode_id) values (1, 1);
+insert into map_mode(map_id, mode_id) values (1, 2);
+insert into map_mode(map_id, mode_id) values (2, 4);
+insert into map_mode(map_id, mode_id) values (3, 1);
+insert into map_mode(map_id, mode_id) values (3, 2);
+insert into map_mode(map_id, mode_id) values (3, 3);
+insert into map_mode(map_id, mode_id) values (4, 4);
+insert into map_mode(map_id, mode_id) values (5, 1);
+insert into map_mode(map_id, mode_id) values (5, 3);
+insert into map_mode(map_id, mode_id) values (5, 4);
+insert into map_mode(map_id, mode_id) values (6, 4);
+insert into map_mode(map_id, mode_id) values (7, 2);
