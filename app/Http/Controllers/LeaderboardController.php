@@ -1,37 +1,45 @@
-<?php namespace App\Http\Controllers;
+<?php
 
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+
+use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use View;//use view namespace so it can find the view
+
+use App\User;
+use App\Player;
 class LeaderboardController extends Controller
 {
-    /**
-     * Show the profile for the given user.
-     *
-     * @param  int  $id
-     * @return Response
-     */
+    //
     public function index()
     {
-        $players = array(
-            array(
-                "name" => "le",
-                "photo_url" => null,
-                "rostermap" => null,
-                "alias" => "lealias"
-            ),  
-            array(
-                "name" => "le2",
-                "photo_url" => null,
-                "rostermap" => null,
-                "alias" => "le2alias"
-            )  
-        );
-        $players = ['lelelele', 'le', 'lelelele'];
-        return view('leaderboards.about', compact('players'));
-
-        //$players = collect("name" => "le"], ["name" => "le2"]);
-        $players = collect($players);
-        return View::make('leaderboards.view')->with('players');
-        //return view('leaderboards.view', compact('players'));
+        $users = User::all();
+        //return $users;
+        return view('users.index')->with('users', $users);
     }
+	public function view() {
+		$players = Player::all();
+		$slayerPlayers = Player::all();
+		$sndPlayers = Player::all();
+		
+		$players = $players->sortByDesc(function($player)
+		{
+			return $player->kd;
+		});
+
+		$slayerPlayers = $slayerPlayers->sortByDesc(function($slayerPlayer)
+		{
+			return $slayerPlayer->slayer;
+		});
+
+		$sndPlayers = $sndPlayers->sortByDesc(function($sndPlayer)
+		{
+			return $sndPlayer->sndkd;
+		});
+
+		// dd($players);
+		return view('leaderboards.view', compact('players', 'slayerPlayers', 'sndPlayers'));
+	}
 }
+

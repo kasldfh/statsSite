@@ -18,10 +18,10 @@ class PlayerRoster extends \Eloquent {
 	 */
 	
 	public function player() {
-		return $this->hasOne('\Player', 'id', 'player_id');
+		return $this->hasOne('App\Player', 'id', 'player_id');
 	}
 
 	public function roster() {
-		return $this->hasOne('\Roster', 'id', 'roster_id');
+		return $this->hasOne('App\Roster', 'id', 'roster_id');
 	}
 }

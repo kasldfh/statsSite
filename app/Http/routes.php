@@ -16,6 +16,7 @@ Route::get('/', function () {
 });
 Route::get('welcome', 'WelcomeController@index');
 Route::get('leaderboards', 'LeaderboardController@index');
+Route::get('leaderboards/overall', ['uses' => 'LeaderboardController@view']);
 Route::get('leaderboards/about', 'LeaderboardController@index');
 
 Route::get('users', 'UsersController@index');

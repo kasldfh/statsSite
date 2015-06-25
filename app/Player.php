@@ -17,7 +17,7 @@ class Player extends \Eloquent {
 	 * @var array
 	 */
 	public function rostermap() {
-		return $this->hasMany('PlayerRoster', 'player_id', 'id')->orderBy('id', 'desc');
+		return $this->hasMany('App\PlayerRoster', 'player_id', 'id')->orderBy('id', 'desc');
 	}
 
 	public function getKdAttribute() {

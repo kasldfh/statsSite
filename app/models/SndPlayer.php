@@ -1,7 +1,7 @@
 <?php
+namespace App;
 
-
-class SndPlayer extends Eloquent {
+class SndPlayer extends \Eloquent {
 
 	public $timestamps = true; 
 	/**

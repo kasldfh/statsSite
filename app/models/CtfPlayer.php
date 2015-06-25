@@ -1,7 +1,7 @@
 <?php
+namespace App;
 
-
-class CtfPlayer extends Eloquent {
+class CtfPlayer extends \Eloquent {
 
 	public $timestamps = true; 
 	/**

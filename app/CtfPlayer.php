@@ -1,7 +1,7 @@
 <?php
 namespace App;
 
-class HpPlayer extends \Eloquent {
+class CtfPlayer extends \Eloquent {
 
 	public $timestamps = true; 
 	/**
@@ -9,7 +9,7 @@ class HpPlayer extends \Eloquent {
 	 *
 	 * @var string
 	 */
-	protected $table = 'hp_player';
+	protected $table = 'ctf_player';
 
 	/**
 	 * The attributes excluded from the model's JSON form.
@@ -17,6 +17,6 @@ class HpPlayer extends \Eloquent {
 	 * @var array
 	 */
 	public function game() {
-		return $this->hasOne("Hp", "id", "hp_id");
+		return $this->hasOne("App\Ctf", "id", "ctf_id");
 	}
 }

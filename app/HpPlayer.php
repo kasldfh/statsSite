@@ -17,6 +17,6 @@ class HpPlayer extends \Eloquent {
 	 * @var array
 	 */
 	public function game() {
-		return $this->hasOne("Hp", "id", "hp_id");
+		return $this->hasOne("App\Hp", "id", "hp_id");
 	}
 }

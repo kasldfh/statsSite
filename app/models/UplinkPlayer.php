@@ -1,7 +1,7 @@
 <?php
+namespace App;
 
-
-class UplinkPlayer extends Eloquent {
+class UplinkPlayer extends \Eloquent {
 
 	public $timestamps = true; 
 	/**
