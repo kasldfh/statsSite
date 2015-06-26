@@ -18,12 +18,11 @@
           <script src="../../dist/js/vendor/html5shiv.js"></script>
           <script src="../../dist/js/vendor/respond.min.js"></script>
         <![endif]-->
-            <?php dd("made it to first le");?>
         {!! Html::style('assets/css/AdminLTE.min.css') !!}
-    	{{ HTML::style('assets/css/custom.css') }}
-      {{ HTML::style('assets/val/css/formValidation.min.css') }}
-      {{ HTML::style('assets/file_input/css/fileinput.min.css')}}
-      {{ HTML::style('assets/datepicker/bootstrap-datetimepicker.min.css')}}
+    	{!! Html::style('assets/css/custom.css') !!}
+      {!! Html::style('assets/val/css/formValidation.min.css') !!}
+      {!! Html::style('assets/file_input/css/fileinput.min.css')!!}
+      {!! Html::style('assets/datepicker/bootstrap-datetimepicker.min.css')!!}
 	</head>
     <body>
         <nav class="navbar navbar-inverse navbar-static-top">
@@ -76,11 +75,10 @@
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
-            <?php dd("made it to first le");?>
                     @yield('content')
                 </div>
 
-            <?php dd("made it to first le");?>
+            <?php dd("made it to first les");?>
             </div>
              <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
