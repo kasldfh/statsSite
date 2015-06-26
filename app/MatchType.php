@@ -1,7 +1,8 @@
 <?php
 namespace App;
 
-class MatchType extends \Eloquent {
+use Illuminate\Database\Eloquent\Model;
+class MatchType extends Model {
 
 	public $timestamps = true; 
 	/**

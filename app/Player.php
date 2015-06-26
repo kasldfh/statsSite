@@ -1,7 +1,8 @@
 <?php
 namespace App;
-//use Illuminate\Database\Eloquent\Model;
-class Player extends \Eloquent {
+use Illuminate\Database\Eloquent\Model;
+use App\Ctf;
+class Player extends Model {
 
 	public $timestamps = true; 
 	/**
@@ -309,8 +310,12 @@ class Player extends \Eloquent {
 		$ctf_games = CtfPlayer::where("player_id", $this->id)->get();
 		foreach ($ctf_games as $game) {
 			$kills += $game->kills;
+            $ctfgame = $game->game;
+            dd($ctfgame);
+            $game_time += $ctfgame->game_time;
 			$game_time += $game->game->game_time;
-		}
+        dd($game);
+    }
 		$uplink_games = UplinkPlayer::where("player_id", $this->id)->get();
 		foreach ($uplink_games as $game) {
 			$kills += $game->kills;

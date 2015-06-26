@@ -1,7 +1,8 @@
 <?php
 namespace App;
 
-class HpPlayer extends \Eloquent {
+use Illuminate\Database\Eloquent\Model;
+class HpPlayer extends Model {
 
 	public $timestamps = true; 
 	/**

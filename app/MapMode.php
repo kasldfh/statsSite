@@ -1,7 +1,8 @@
 <?php
 namespace App;
 
-class MapMode extends \Eloquent {
+use Illuminate\Database\Eloquent\Model;
+class MapMode extends Model {
 
 	public $timestamps = true; 
 	/**

@@ -1,7 +1,8 @@
 <?php
 namespace App;
+use Illuminate\Database\Eloquent\Model;
 
-class Roster extends \Eloquent {
+class Roster extends Model {
 
 	public $timestamps = true; 
 	/**

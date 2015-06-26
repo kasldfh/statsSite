@@ -1,6 +1,6 @@
 <?php
-    $events = Events::all();
-    $teams = Team::all();
+    $events = App\Events::all();
+    $teams = App\Team::all();
 ?>
 <html>
 	<head>
@@ -18,7 +18,8 @@
           <script src="../../dist/js/vendor/html5shiv.js"></script>
           <script src="../../dist/js/vendor/respond.min.js"></script>
         <![endif]-->
-        {{ HTML::style('assets/css/AdminLTE.min.css') }}
+            <?php dd("made it to first le");?>
+        {!! Html::style('assets/css/AdminLTE.min.css') !!}
     	{{ HTML::style('assets/css/custom.css') }}
       {{ HTML::style('assets/val/css/formValidation.min.css') }}
       {{ HTML::style('assets/file_input/css/fileinput.min.css')}}
@@ -74,8 +75,12 @@
             
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
+            <?php dd("made it to first le");?>
                     @yield('content')
                 </div>
+
+            <?php dd("made it to first le");?>
             </div>
              <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -103,6 +108,7 @@
         <script src="//cdn.datatables.net/plug-ins/f2c75b7247b/integration/bootstrap/3/dataTables.bootstrap.js"></script>
         @yield('js')
     </body>
+
 </html>
 
 

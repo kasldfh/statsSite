@@ -1,7 +1,8 @@
 <?php
 namespace App;
 
-class UplinkPlayer extends \Eloquent {
+use Illuminate\Database\Eloquent\Model;
+class UplinkPlayer extends Model {
 
 	public $timestamps = true; 
 	/**

@@ -1,7 +1,8 @@
 <?php
 namespace App;
 
-class EventType extends \Eloquent {
+use Illuminate\Database\Eloquent\Model;
+class EventType extends Model {
 
 	public $timestamps = true; 
 	/**

@@ -1,7 +1,8 @@
 <?php
 namespace App;
 
-class Team extends \Eloquent {
+use Illuminate\Database\Eloquent\Model;
+class Team extends Model {
 
 	public $timestamps = true; 
 	/**

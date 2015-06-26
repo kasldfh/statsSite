@@ -1,7 +1,9 @@
 <?php
 namespace App;
 
-class CtfPlayer extends \Eloquent {
+use Illuminate\Database\Eloquent\Model;
+use App\Ctf;
+class CtfPlayer extends Model {
 
 	public $timestamps = true; 
 	/**
@@ -17,6 +19,7 @@ class CtfPlayer extends \Eloquent {
 	 * @var array
 	 */
 	public function game() {
-		return $this->hasOne("App\Ctf", "id", "ctf_id");
+        dd("made it to game in ctfplayer");
+		return $this->hasOne("Ctf", "id", "ctf_id");
 	}
 }

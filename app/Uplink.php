@@ -1,7 +1,8 @@
 <?php
 namespace App;
 
-class Uplink extends \Eloquent {
+use Illuminate\Database\Eloquent\Model;
+class Uplink extends Model {
 
 	public $timestamps = true; 
 	/**

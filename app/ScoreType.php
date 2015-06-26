@@ -1,7 +1,8 @@
 <?php
 namespace App;
 
-class ScoreType extends \Eloquent {
+use Illuminate\Database\Eloquent\Model;
+class ScoreType extends Model {
 
 	public $timestamps = true; 
 	/**

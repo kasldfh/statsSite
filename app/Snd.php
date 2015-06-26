@@ -1,7 +1,8 @@
 <?php
 namespace App;
 
-class Snd extends \Eloquent {
+use Illuminate\Database\Eloquent\Model;
+class Snd extends Model {
 
 	public $timestamps = true; 
 	/**

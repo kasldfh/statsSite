@@ -1,7 +1,8 @@
 <?php
 namespace App;
 
-class SndPlayer extends \Eloquent {
+use Illuminate\Database\Eloquent\Model;
+class SndPlayer extends Model {
 
 	public $timestamps = true; 
 	/**

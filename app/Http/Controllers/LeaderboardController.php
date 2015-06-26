@@ -18,6 +18,7 @@ class LeaderboardController extends Controller
         //return $users;
         return view('users.index')->with('users', $users);
     }
+
 	public function view() {
 		$players = Player::all();
 		$slayerPlayers = Player::all();
@@ -31,14 +32,14 @@ class LeaderboardController extends Controller
 		$slayerPlayers = $slayerPlayers->sortByDesc(function($slayerPlayer)
 		{
 			return $slayerPlayer->slayer;
-		});
+        });
 
 		$sndPlayers = $sndPlayers->sortByDesc(function($sndPlayer)
 		{
 			return $sndPlayer->sndkd;
 		});
 
-		// dd($players);
+	     //dd($players);
 		return view('leaderboards.view', compact('players', 'slayerPlayers', 'sndPlayers'));
 	}
 }

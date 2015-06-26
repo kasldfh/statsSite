@@ -1,7 +1,8 @@
 <?php
 namespace App;
 
-class CreateUser extends \Eloquent {
+use Illuminate\Database\Eloquent\Model;
+class CreateUser extends Model {
 
 	public $timestamps = true; 
 	/**

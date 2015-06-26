@@ -49,7 +49,7 @@
 
 @section('js')
 <script type="text/javascript">
-  var allPlayers = {{$players}};
+  var allPlayers = {!!$players!!};
   console.log(allPlayers);
 </script>
 @endsection
@@ -57,7 +57,7 @@
 @if(isset($event))
 <div class="row">
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-    <h4 class="text" style="color:#000000; font-size: 25px;">{{$event->name}} - Leaderboard</h4>
+    <h4 class="text" style="color:#000000; font-size: 25px;">{!!$event->name!!} - Leaderboard</h4>
   </div>
 </div>
 @endif
@@ -92,28 +92,29 @@
             @else
             class="bronze"
             @endif
-            ><b>{{$i}}</b></td>
+            ><b>{!!$i!!}</b></td>
             <td>
               @if(!is_null($player->photo_url))
-              <img class="player_img img-center img-responsive" src="{{$player->photo_url}}" style="height: 75; width: 55;"/>
+              <img class="player_img img-center img-responsive" src="{!!$player->photo_url!!}" style="height: 75; width: 55;"/>
               @else
               <img class="player_img img-center img-responsive" src="http://codstreams.net/uploads/players/alt.png" style="height: 75; width: 55;"/>
               @endif
             </td>
             <td><!-- <img class="team_img" src='http://hydra-media.cursecdn.com/cod.gamepedia.com/4/48/Optic.png?version=55115f8ad615910a2ed282dac9a39edc' height='20'/>  --> 
               @if(count($player->rostermap) > 0)
-                <span class="flair flair-{{ $player->rostermap[0]->roster->team->flair }}"></span>
+                <span class="flair flair-{!! $player->rostermap[0]->roster->team->flair !!}"></span>
 
               @else
                <span class="flair flair-fa"></span>
               @endif
-              <b>{{$player->alias}}</b></td>
+              <b>{!!$player->alias!!}</b></td>
               @if(isset($event))
-                <td><span class="">{{$player->kdByEvent($event->id)}}</span></td>
+                <td><span class="">{!!$player->kdByEvent($event->id)!!}</span></td>
+            <td><span class="">{!!$player->getMapCountByEvent($event->id)!!}</span></td>
+<!-- came from under this if statement-->
               @else
-                <td><span class="">{{$player->kd}}</span></td>
+                <td><span class="">{!!$player->kd!!}</span></td>
               @endif
-            <td><span class="">{{$player->getMapCountByEvent($event->id)}}</span></td>
           </tr>
           <?php $i++; ?>
           @endif
@@ -155,28 +156,29 @@
             @else
             class="bronze"
             @endif
-            ><b>{{$j}}</b></td>
+            ><b>{!!$j!!}</b></td>
             <td>              
               @if(!is_null($player->photo_url))
-              <img class="player_img img-center img-responsive" src="{{$player->photo_url}}" style="height: 75; width: 55;"/>
+              <img class="player_img img-center img-responsive" src="{!!$player->photo_url!!}" style="height: 75; width: 55;"/>
               @else
               <img class="player_img img-center img-responsive" src="http://codstreams.net/uploads/players/alt.png" style="height: 75; width: 55;"/>
               @endif
             </td>
             <td><!-- <img class="team_img" src='http://hydra-media.cursecdn.com/cod.gamepedia.com/4/48/Optic.png?version=55115f8ad615910a2ed282dac9a39edc' height='20'/> -->  
                @if(count($player->rostermap) > 0)
-                <span class="flair flair-{{ $player->rostermap[0]->roster->team->flair }}"></span>
+                <span class="flair flair-{!! $player->rostermap[0]->roster->team->flair !!}"></span>
 
               @else
                <span class="flair flair-fa"></span>
               @endif
-              <b>{{$player->alias}}</b></td>
+              <b>{!!$player->alias!!}</b></td>
               @if(isset($event))
-                <td><span class="">{{$player->slayerByEvent($event->id)}}</span></td>
+                <td><span class="">{!!$player->slayerByEvent($event->id)!!}</span></td>
+            <td><span class="">{!!$player->getRespawnMapCountByEvent($event->id)!!}</span></td>
+<!-- came from under ifelse -->
               @else
-                <td><span class="">{{$player->slayer}}</span></td>
+                <td><span class="">{!!$player->slayer!!}</span></td>
               @endif
-            <td><span class="">{{$player->getRespawnMapCountByEvent($event->id)}}</span></td>
           </tr>
           <?php $j++; ?>
           @endif
@@ -218,28 +220,30 @@
 		@else
 		class="bronze"
 		@endif
-		><b>{{$k}}</b></td>
+		><b>{!!$k!!}</b></td>
             <td>              
               @if(!is_null($player->photo_url))
-              <img class="player_img img-center img-responsive" src="{{$player->photo_url}}" style="height: 75; width: 55;"/>
+              <img class="player_img img-center img-responsive" src="{!!$player->photo_url!!}" style="height: 75; width: 55;"/>
               @else
               <img class="player_img img-center img-responsive" src="http://codstreams.net/uploads/players/alt.png" style="height: 75; width: 55;"/>
               @endif
             </td>
             <td><!-- <img class="team_img" src='http://hydra-media.cursecdn.com/cod.gamepedia.com/4/48/Optic.png?version=55115f8ad615910a2ed282dac9a39edc' height='20'/> -->  
                @if(count($player->rostermap) > 0)
-                <span class="flair flair-{{ $player->rostermap[0]->roster->team->flair }}"></span>
+                <span class="flair flair-{!! $player->rostermap[0]->roster->team->flair !!}"></span>
 
               @else
                <span class="flair flair-fa"></span>
               @endif
-              <b>{{$player->alias}}</b></td>
+              <b>{!!$player->alias!!}</b></td>
+
               @if(isset($event))
-                <td><span class="">{{$player->sndkdByEvent($event->id)}}</span></td>
+                <td><span class="">{!!$player->sndkdByEvent($event->id)!!}</span></td>
+            <td><span class="">{!!$player->getSndMapCountByEvent($event->id)!!}</span></td>
+<!-- came from under this if statement-->
               @else
-                <td><span class="">{{$player->sndkd}}</span></td>
+                <td><span class="">{!!$player->sndkd!!}</span></td>
               @endif
-            <td><span class="">{{$player->getSndMapCountByEvent($event->id)}}</span></td>
           </tr>
           <?php $k++; ?>
           @endif
@@ -252,5 +256,5 @@
  
 
 
-
-  @endsection
+ 
+@endsection

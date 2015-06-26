@@ -1,7 +1,8 @@
 <?php
 namespace App;
 
-class GameTitle extends \Eloquent {
+use Illuminate\Database\Eloquent\Model;
+class GameTitle extends Model {
 
 	public $timestamps = true; 
 	/**
