@@ -78,7 +78,6 @@
                     @yield('content')
                 </div>
 
-            <?php dd("made it to first les");?>
             </div>
              <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -90,17 +89,17 @@
             </div>
         </div>
 
-        {{ HTML::script('assets/datepicker/jquery-2.1.3.min.js')}}
-        {{ HTML::script('//code.jquery.com/ui/1.11.4/jquery-ui.js')}}
-        {{ HTML::script('assets/datepicker/bootstrap.min.js') }}
-        {{ HTML::script('assets/val/js/formValidation.min.js') }}
-        {{ HTML::script('assets/val/js/framework/bootstrap.min.js') }}
-        {{ HTML::script('assets/file_input/js/fileinput.min.js')}}
-        {{ HTML::script('assets/datepicker/moment.min.js')}}
-        {{ HTML::script('assets/datepicker/bootstrap-datetimepicker.min.js')}}
-        {{ HTML::script('assets/js/custom.js') }}
-        {{ HTML::script('assets/js/Chart.min.js') }}
-        {{ HTML::script('assets/js/app.min.js') }}
+        {!! HTML::script('assets/datepicker/jquery-2.1.3.min.js')!!}
+        {!! HTML::script('//code.jquery.com/ui/1.11.4/jquery-ui.js')!!}
+        {!! HTML::script('assets/datepicker/bootstrap.min.js') !!}
+        {!! HTML::script('assets/val/js/formValidation.min.js') !!}
+        {!! HTML::script('assets/val/js/framework/bootstrap.min.js') !!}
+        {!! HTML::script('assets/file_input/js/fileinput.min.js')!!}
+        {!! HTML::script('assets/datepicker/moment.min.js')!!}
+        {!! HTML::script('assets/datepicker/bootstrap-datetimepicker.min.js')!!}
+        {!! HTML::script('assets/js/custom.js') !!}
+        {!! HTML::script('assets/js/Chart.min.js') !!}
+        {!! HTML::script('assets/js/app.min.js') !!}
         <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0-rc.1/js/select2.min.js"></script>
         <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.5/js/jquery.dataTables.js"></script>
         <script src="//cdn.datatables.net/plug-ins/f2c75b7247b/integration/bootstrap/3/dataTables.bootstrap.js"></script>
