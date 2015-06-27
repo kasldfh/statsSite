@@ -18,6 +18,6 @@ class Uplink extends Model {
 	 * @var array
 	 */
 	public function players() {
-		return $this->hasMany('UplinkPlayer', 'uplink_id', 'id');
+		return $this->hasMany('App\UplinkPlayer', 'uplink_id', 'id');
 	}
 }

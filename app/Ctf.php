@@ -18,6 +18,6 @@ class Ctf extends Model {
 	 * @var array
 	 */
 	public function players() {
-		return $this->hasMany('CtfPlayer', 'ctf_id', 'id');
+		return $this->hasMany('App\CtfPlayer', 'ctf_id', 'id');
 	}
 }

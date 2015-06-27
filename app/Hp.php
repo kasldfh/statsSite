@@ -18,6 +18,6 @@ class Hp extends Model {
 	 * @var array
 	 */
 	public function players() {
-		return $this->hasMany('HpPlayer', 'hp_id', 'id');
+		return $this->hasMany('App\HpPlayer', 'hp_id', 'id');
 	}
 }

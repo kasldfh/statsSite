@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Player;
+use App\Events;
+use View;
 	
 class FrontEndPlayerController extends Controller {
 

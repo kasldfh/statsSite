@@ -18,6 +18,6 @@ class Snd extends Model {
 	 * @var array
 	 */
 	public function players() {
-		return $this->hasMany('SndPlayer', 'snd_id', 'id');
+		return $this->hasMany('App\SndPlayer', 'snd_id', 'id');
 	}
 }
