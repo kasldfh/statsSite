@@ -35,5 +35,6 @@ class SeedController extends Controller {
         \Iseed::generateSeed('uplink');
         \Iseed::generateSeed('uplink_player');
         \Iseed::generateSeed('users');
+        return 'successfully seeeded all tables';
     }
 }
