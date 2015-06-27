@@ -20,6 +20,8 @@ Route::get('leaderboards/about', 'LeaderboardController@index');
 
 Route::get('users', 'UsersController@index');
  */
+//iSeed routes (just going to call one controller)
+Route::get('iseed', 'SeedController@seed');
 //now matt's routes start
 
 Route::resource('teams', 'TeamController');

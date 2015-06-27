@@ -147,6 +147,9 @@ return [
         /*for html/form stuff*/
         'Illuminate\Html\HtmlServiceProvider',
 
+        //stuff for iseed
+        'Orangehill\Iseed\IseedServiceProvider'
+
     ],
 
     /*
