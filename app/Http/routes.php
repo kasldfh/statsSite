@@ -102,9 +102,9 @@ Route::get('event/{event_id}', ['uses' => 'FrontEndEventController@viewEvent']);
 Route::get('player/{id}', ['uses' => 'FrontEndPlayerController@view']);
 Route::get('player/{id}/detailed', ['uses' => 'FrontEndPlayerController@viewDetailed']);
 Route::get('leaderboards/overall', ['uses' => 'LeaderboardController@view']);
-Route::get('leaderboards/{id}', ['uses' => 'LeaderboardController@viewByEvent']);
 Route::get('leaderboards/ctf', ['uses' => 'LeaderboardController@viewCTF']);
 Route::get('leaderboards/uplink', ['uses' => 'LeaderboardController@viewUplink']);
 Route::get('leaderboards/snd', ['uses' => 'LeaderboardController@viewSnD']);
+Route::get('leaderboards/{id}', ['uses' => 'LeaderboardController@viewByEvent']);
 
 Route::controller('password', 'RemindersController');

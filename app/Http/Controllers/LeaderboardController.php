@@ -6,6 +6,8 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\Player;
+use App\Events;
+use View;
 class LeaderboardController extends Controller {
 
 	public function view() {
@@ -58,7 +60,6 @@ class LeaderboardController extends Controller {
 	public function viewCTF() {
 		$ctfCapsPlayers = Player::all();
 		$ctfKDPlayers = Player::all();
-		
 		$ctfCapsPlayers = $ctfCapsPlayers->sortByDesc(function($player)
 		{
 			return $player->getCTFCapsAverage();
