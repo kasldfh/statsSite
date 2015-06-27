@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Mail;
+use View;
 class AdminController extends Controller {
 	public function __construct() {
     	$this->beforeFilter('auth');

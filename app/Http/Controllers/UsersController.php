@@ -4,7 +4,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-
+use Auth;
+use View;
+use Redirect;
+use Input;
+use App\CreateUser;
 class UsersController extends Controller {
 	public function __construct() {
     	$this->beforeFilter('csrf', array('on'=>'attempt'));
