@@ -11,7 +11,7 @@ class CreateUser extends Model {
 	 * @var string
 	 */
 
-	protected $connection = 'users';
+	//protected $connection = 'users';
 	protected $table = 'user_creation';
 
 }

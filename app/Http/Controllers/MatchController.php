@@ -4,11 +4,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Match;
+use View;
 class MatchController extends Controller {
 	public function __construct() {
     	$this->beforeFilter('auth');
 	}
-
 public function create() {
 		$events = Events::all();
 		$match_types = MatchType::all();
