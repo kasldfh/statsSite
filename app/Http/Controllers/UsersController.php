@@ -9,6 +9,7 @@ use View;
 use Redirect;
 use Input;
 use App\CreateUser;
+use Session;
 class UsersController extends Controller {
 	public function __construct() {
     	$this->beforeFilter('csrf', array('on'=>'attempt'));

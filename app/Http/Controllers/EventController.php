@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-	
+use View;
+use App\EventType;
+use App\GameTitle;
+
 class EventController extends Controller {
 
 	public function __construct() {
@@ -18,7 +21,7 @@ class EventController extends Controller {
 	}
 
 	public function store() {
-		$event = new Events;
+		$event = new App\Events;
 		$event->name = Input::get('event_name');
 		$event->game_title_id = Input::get('game_title');
 		$event->event_type_id = Input::get('event_type');
