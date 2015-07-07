@@ -199,7 +199,7 @@ return [
         'View'      => Illuminate\Support\Facades\View::class,
         /*for html/form stuff*/
 
-        'Html' => 'Illuminate\Html\HtmlFacade',
+        'HTML' => 'Illuminate\Html\HtmlFacade',
         'Form' => 'Illuminate\Html\FormFacade',
 
     ],

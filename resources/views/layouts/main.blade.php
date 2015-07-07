@@ -18,11 +18,11 @@
           <script src="../../dist/js/vendor/html5shiv.js"></script>
           <script src="../../dist/js/vendor/respond.min.js"></script>
         <![endif]-->
-        {!! Html::style('assets/css/AdminLTE.min.css') !!}
-    	{!! Html::style('assets/css/custom.css') !!}
-      {!! Html::style('assets/val/css/formValidation.min.css') !!}
-      {!! Html::style('assets/file_input/css/fileinput.min.css')!!}
-      {!! Html::style('assets/datepicker/bootstrap-datetimepicker.min.css')!!}
+        {!! HTML::style('assets/css/AdminLTE.min.css') !!}
+    	{!! HTML::style('assets/css/custom.css') !!}
+      {!! HTML::style('assets/val/css/formValidation.min.css') !!}
+      {!! HTML::style('assets/file_input/css/fileinput.min.css')!!}
+      {!! HTML::style('assets/datepicker/bootstrap-datetimepicker.min.css')!!}
 	</head>
     <body>
         <nav class="navbar navbar-inverse navbar-static-top">

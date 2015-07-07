@@ -5,6 +5,10 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Match;
+use App\Events;
+use App\Team;
+use App\ScoreType;
+use App\MatchType;
 use View;
 class MatchController extends Controller {
 	public function __construct() {
