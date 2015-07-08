@@ -41,14 +41,14 @@
       <div class='box-body'>
         <div class='row'>
   <div class='col-md-8'>
-   <img class="player_img" src={{$player->player->age}}/>
+   <img class="player_img" src={!!$player->player->age!!}/>
  </div>
    
   <div class='col-md-4'>
     <div class="info-box bg-green">
       <div class="pad">
         <span class="info-box-text">Name</span>
-        <span class="info-box-number">{{$player->player->FirstName . " " . $player->player->LastName}}</span>
+        <span class="info-box-number">{!!$player->player->FirstName . " " . $player->player->LastName!!}</span>
       </div>
     </div>
   </div>
@@ -56,8 +56,8 @@
     <div class="info-box bg-green">
       <div class="pad">
         <span class="info-box-text">Bio</span>
-        <span class="info-box-number">{{$player->player->age}}</span>
-        <span class="info-box-number">{{$player->player->hometown . ", " . $player->player->country}}</span>
+        <span class="info-box-number">{!!$player->player->age!!}</span>
+        <span class="info-box-number">{!!$player->player->hometown . ", " . $player->player->country!!}</span>
       </div>
     </div>
   </div>
@@ -65,7 +65,7 @@
     <div class="info-box bg-green">
       <div class="pad">
         <span class="info-box-text">Role</span>
-        <span class="info-box-number">{{$player->player->role}}</span>
+        <span class="info-box-number">{!!$player->player->role!!}</span>
       </div>
     </div>
   </div>
@@ -73,7 +73,7 @@
     <div class="info-box bg-green">
       <div class="pad">
         <span class="info-box-text">First Event</span>
-        <span class="info-box-number">{{$player->player->firstEvent}}</span>
+        <span class="info-box-number">{!!$player->player->firstEvent!!}</span>
       </div>
     </div>
   </div>

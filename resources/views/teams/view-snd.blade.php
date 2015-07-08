@@ -7,7 +7,7 @@
 @section('js')
 <script>
  $(document).ready(function() {
-   var sndplants = {{json_encode($sndFirstBlood)}};
+   var sndplants = {!!json_encode($sndFirstBlood)!!};
    
 
 var pieData = [

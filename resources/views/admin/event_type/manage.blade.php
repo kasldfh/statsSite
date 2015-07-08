@@ -28,10 +28,10 @@
         <tbody>
             @foreach($event_types as $event_type)
             <tr>
-                <td>{{$event_type->name}}</td>
-                <td><button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#{{$event_type->id}}">Delete</button></td>
+                <td>{!!$event_type->name!!}</td>
+                <td><button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#{!!$event_type->id!!}">Delete</button></td>
             </tr>
-            <div class="modal fade" id="{{$event_type->id}}" tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true">
+            <div class="modal fade" id="{!!$event_type->id!!}" tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true">
               <div class="modal-dialog">
                 <div class="modal-content">
                   <div class="modal-header">
@@ -39,11 +39,11 @@
                     <h4 class="modal-title" id="myModalLabel">Confirmation</h4>
                   </div>
                   <div class="modal-body">
-                    <p>Are you sure you want to delete {{$event_type->name}}?</p>
+                    <p>Are you sure you want to delete {!!$event_type->name!!}?</p>
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    {{link_to_action('EventTypeController@delete', 'Delete', ['id' => $event_type->id], ['class' => 'btn btn-primary'])}}
+                    {!!link_to_action('EventTypeController@delete', 'Delete', ['id' => $event_type->id], ['class' => 'btn btn-primary'])!!}
                   </div>
                 </div>
               </div>

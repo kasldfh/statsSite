@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use App\Team;
 use App\Player;
 use App\Roster;
+use Input;
+use Redirect;
 use View;
 	
 class RosterController extends Controller {

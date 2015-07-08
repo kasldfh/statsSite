@@ -7,7 +7,10 @@ use App\Http\Controllers\Controller;
 use App\Map;
 use App\Mode;
 use App\MapMode;
+use Input;
+use Redirect;
 use View;
+
 class MapModeController extends Controller {
 	public function __construct() {
     	$this->beforeFilter('auth');

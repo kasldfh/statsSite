@@ -5,6 +5,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\EventType;
+use Input;
+use Redirect;
 use View;
 	
 class EventTypeController extends Controller {

@@ -10,6 +10,8 @@ use App\Team;
 use App\ScoreType;
 use App\MatchType;
 use View;
+use Input;
+use Redirect;
 class MatchController extends Controller {
 	public function __construct() {
     	$this->beforeFilter('auth');

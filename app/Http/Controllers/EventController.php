@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use View;
 use App\EventType;
 use App\GameTitle;
 use App\Events;
+use View;
+use Input;
+use Redirect;
 
 class EventController extends Controller {
 

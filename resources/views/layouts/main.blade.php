@@ -35,7 +35,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                       </button>
-                      <a class="navbar-brand" href="#"><span class="logo"><img src="{{asset('assets/img/logo.png')}}" style="max-width:50px; margin-top: -12px;"></span><div class="logo" style="display:inline-block; vertical-align: middle;margin-top: -18px;">Stats</div></a>
+                      <a class="navbar-brand" href="#"><span class="logo"><img src="{!!asset('assets/img/logo.png')!!}" style="max-width:50px; margin-top: -12px;"></span><div class="logo" style="display:inline-block; vertical-align: middle;margin-top: -18px;">Stats</div></a>
                     </div>
 
                     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -45,7 +45,7 @@
                           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Events <span class="caret"></span></a>
                           <ul class="dropdown-menu" role="menu">
                             @foreach($events as $event)
-                            <li>{{link_to_action('LeaderboardController@viewByEvent', $event->name, ['id' => $event->id], [])}}</li>
+                            <li>{!!link_to_action('LeaderboardController@viewByEvent', $event->name, ['id' => $event->id], [])!!}</li>
                             @endforeach
                           </ul>
                         </li>
@@ -53,18 +53,18 @@
                           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Teams <span class="caret"></span></a>
                           <ul class="dropdown-menu" role="menu">
                             @foreach($teams as $team)
-                            <li><a href="#">{{$team->name}}</a></li>
+                            <li><a href="#">{!!$team->name!!}</a></li>
                             @endforeach
                           </ul>
                         </li>
                         @if(Auth::check())
-                        <li>{{link_to_action('AdminController@dashboard', 'Admin', [], [])}}</li>
+                        <li>{!!link_to_action('AdminController@dashboard', 'Admin', [], [])!!}</li>
                         @endif
                         </ul>
                         <ul class="nav navbar-nav navbar-right" style="">
                           @if(Auth::check())
 
-                          <li>{{link_to_action('UsersController@logout', 'Logout ' . Auth::user()->email, [], [])}}</li>
+                          <li>{!!link_to_action('UsersController@logout', 'Logout ' . Auth::user()->email, [], [])!!}</li>
                           @endif
                         </ul>
                     </div><!-- /.navbar-collapse -->
