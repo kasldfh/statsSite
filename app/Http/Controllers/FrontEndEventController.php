@@ -9,7 +9,7 @@ use View;
 class FrontEndEventController extends Controller {
 
 	public function viewEvent($id) {
-        dd('made it here');
+        //dd('made it here');
 		return View::make('events.view');
 	}
 
