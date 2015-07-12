@@ -14,7 +14,10 @@ class FrontEndTeamController extends Controller {
 		//$team = Team::where('team_url', 'like', $id)->first();
 		$team = Team::where('name', 'like', $id)->first();
 		$currentRoster = $team->getCurrentAttribute();
+        //matt's version -- doesn't work
 		$roster = $currentRoster->playermap;
+        //$roster = $currentRoster->getPlayersAttribute();
+        //dd($roster);
 		return View::make('teams.view', compact('roster')); 
 
 	}
