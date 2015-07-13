@@ -95,6 +95,10 @@ Route::post('admin/roster/fix_process', ['uses' => 'RosterController@fixProcess'
 Route::get('admin/game/delete/{id}', ['uses' => 'GameController@delete']);
 Route::post('admin/game/store', ['uses' => 'GameController@store']);
 Route::get('admin/game/create/{id}', ['uses' => 'GameController@create']);
+//added by le fail
+//TODO: manage for game should maybe go into event controller as @manageGames...?
+Route::get('admin/game/manage/{id}', ['uses' => 'GameController@manage']);
+Route::get('admin/game/edit/{id}', ['uses' => 'GameController@edit']);
 Route::get('admin/game/manage', ['uses' => 'GameController@manage']);
 
 Route::get('{team}', ['uses' => 'FrontEndTeamController@show']);

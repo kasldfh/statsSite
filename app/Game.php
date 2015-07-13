@@ -32,5 +32,23 @@ class Game extends Model {
 	public function uplink() {
 		return $this->hasMany('App\Uplink', 'game_id', 'id');
 	}
+    //added by fail (all under this)
+    public function mapmode() {
+        $retval =  $this->hasOne('App\MapMode',  'id','map_mode_id');
+        return $retval;
+        //return $mapMode;
+    }
+    public function mode() {
+        $mapMode =  $this->mapmode()->first();
+        $mode = $mapMode->mode();
+        //dd($mode);
+        return $mode;
+    }
+    public function map() {
+        $mapMode =  $this->mapmode()->first();
+        $map = $mapMode->map();
+        //dd($mode);
+        return $map;
+    }
 
 }

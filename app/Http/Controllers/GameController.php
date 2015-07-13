@@ -4,6 +4,22 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Match;
+use App\Mode;
+use App\MapMode;
+use App\Game;
+use App\Ctf;
+use App\Hp;
+use App\Snd;
+use App\Uplink;
+use App\CtfPlayer;
+use App\UplinkPlayer;
+use App\HpPlayer;
+use App\SndPlayer;
+
+use Input;
+use Redirect;
+use View;
 	
 class GameController extends Controller {
 
@@ -24,6 +40,18 @@ class GameController extends Controller {
 		// die();
 		return View::make('admin.game.create', compact('modes', 'match', 'mode_map'));
 	}
+	public function manage($id) {
+        $games = Match::find($id)->games;
+        foreach($games as $game)
+        {
+            $game->map = $game->map()->first()->name;
+            $game->mode =  $game->mode()->first()->name;
+        }
+		return View::make('admin.game.manage', compact('games'));
+	}
+    public function edit($id) {
+        //placeholder
+    }
 
 	public function store() {
 		//DBug::DBug(Input::all(), true);
@@ -282,10 +310,6 @@ class GameController extends Controller {
 		return Redirect::action('MatchController@manage');
 	}
 
-	public function manage() {
-		$games = Game::all();
-		return View::make('admin.game.manage', compact('games'));
-	}
 	public function delete($id) {
 		Game::destroy($id);
 		return Redirect::action('GameController@manage');
