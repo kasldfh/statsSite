@@ -51,6 +51,18 @@ class GameController extends Controller {
 	}
     public function edit($id) {
         //placeholder
+        $game = Game::findOrFail($id);
+        $match = $game->match()->first();
+		$modes = Mode::with('maplink.map')->get();
+		$mode_map = [];
+		foreach ($modes as $mode) {
+			foreach ($mode->maplink as $maplink) {
+				$mode_map[$mode->id][$maplink->map->id] = $maplink->map->name;
+			}
+		}
+        $mode = $game->mode();
+        $game->mode = $mode;
+        return View::make('admin.game.edit', compact('game', 'match', 'mode', 'modes', 'mode_map'));
     }
 
 	public function store() {

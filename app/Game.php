@@ -50,5 +50,9 @@ class Game extends Model {
         //dd($mode);
         return $map;
     }
+    public function match()
+    {
+        return $this->belongsTo('App\Match');
+    }
 
 }

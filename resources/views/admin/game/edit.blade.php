@@ -1,9 +1,4 @@
 @extends('layouts.main')
-
-@section('style')
-
-@endsection
-
 @section('js')
 <script>
 $( document ).ready(function() {
@@ -48,11 +43,10 @@ $( document ).ready(function() {
         }
     });
 });
-
 </script>
 @endsection
 @section('content')
-    {!! Form::open(array('action'=>'GameController@store', 'class'=>'form-login', 'id' => 'form')) !!}
+    {!! Form::model($game, ['method' => 'POST', 'action' => ['GameController@edit', $game->id], 'class'=>'form-login', 'id' => 'form']) !!}
     <input type="hidden" name="match_id" value="{!!$match->id!!}">
     <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -430,5 +424,9 @@ $( document ).ready(function() {
         </div>
     </div>
     {!!Form::close()!!}
+<script type="text/javascript">
+var elem = document.getElementById("mode");
+elem.value = "Hardpoint";
+</script>
 @endsection
 
