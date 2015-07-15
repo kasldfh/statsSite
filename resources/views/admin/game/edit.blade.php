@@ -47,7 +47,10 @@ $( document ).ready(function() {
 @endsection
 @section('content')
     {!! Form::model($game, ['method' => 'POST', 'action' => ['GameController@edit', $game->id], 'class'=>'form-login', 'id' => 'form']) !!}
+<form class="form-inline">
+  <div class="form-group">
     <input type="hidden" name="match_id" value="{!!$match->id!!}">
+    {{--This is where i can pass in extra values --}}
     <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <div class="row form-top">
@@ -63,21 +66,39 @@ $( document ).ready(function() {
             <div class="row">
                 <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                     <div class="form-group">
-                    {!!Form::label('mode', 'Mode')!!}
-                    {!! Form::select('mode', ['' => 'Please Select A Mode'] + $modes->lists('name', 'id')->all(),[], ['id' => 'mode', 'class' => 'form-control', 'data-fv-notempty' => 'true']) !!}
+                    
+                    {{--!!Form::label('mode', 'Mode')!!--}}
+                    <label for="mode">Mode</label>
+                    
+                    <select class="form-control" id = "mode">
+                        @foreach($modes as $modeoption)
+                           <option value={!!$modeoption->id!!}
+                           @if($game->mode->name == $modeoption->name) 
+                                selected="selected"
+                            @endif
+                           >{!!$modeoption->name!!}</option>
+                        @endforeach
+                    </select>
+
+                    {{--!! Form::select('mode', ['' => 'Please Select A Mode'] + $modes->lists('name', 'id')->all(),[], ['id' => 'mode', 'class' => 'form-control', 'data-fv-notempty' => 'true']) !! --}}
                     </div>
                 </div>
 
                 <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                     <div class="form-group">
-                    {!!Form::label('map', 'Map')!!}
-                    {!! Form::select('map', ['' => 'Please Select A Map'], [], ['id' => 'map', 'class' => 'form-control']) !!}
-                    </div>
-                </div>
-                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                    <div class="form-group">
-                    {!!Form::label('game_time', 'Game Time (IN SECONDS (MINUTES*60 + SECONDS))')!!}
-                    {!! Form::text('game_time', '' , array('class'=>'form-control')) !!}
+                    {{--!!Form::label('map', 'Map')!!--}}
+                    <label for="map">Map</label>
+                    <select class="form-control" id = "map">
+                        @foreach($maps as $mapoption)
+                           <option
+                           @if($game->map->name == $mapoption->name) 
+                                selected="selected"
+                            @endif
+                           >{!!$mapoption->name!!}</option>
+                        @endforeach
+                    </select>
+
+                    {{--!!Form::select('map', ['' => 'Please Select A Map'], [], ['id' => 'map', 'class' => 'form-control']) !!--}}
                     </div>
                 </div>
             </div>
@@ -98,7 +119,8 @@ $( document ).ready(function() {
                 </div>
             </div>
             @endif
-                <div class="row to_hide snd_div" style="display:none;">
+                @if($game->mode->name == "Search and Destroy")
+                <div class="row to_hide snd_div" style="">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
                     <table class="table table-hover">
@@ -126,9 +148,10 @@ $( document ).ready(function() {
                         </tbody>
                     </table>
                 </div>
-
                 </div>
-                <div class="row to_hide snd_div snd_score" style="display:none;">
+                @endif
+                @if(game->mode->name == "Capture the Flag")
+                <div class="row to_hide snd_div snd_score" style="">
                     <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
                         <h4 type="text">{!!$match->rostera->team->name!!}</h4>
                     </div>
@@ -136,6 +159,8 @@ $( document ).ready(function() {
                         {!! Form::text('a_snd_score', '' , array('class'=>'form-control', 'placeholder'=>'Round Count')) !!}
                     </div>
                 </div>
+                @endif
+                @if(game->mode->name == "Search and Destroy")
                 <div class="row to_hide snd_div" style="display:none;">
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                         <table class="table table-hover">
@@ -424,9 +449,13 @@ $( document ).ready(function() {
         </div>
     </div>
     {!!Form::close()!!}
-<script type="text/javascript">
-var elem = document.getElementById("mode");
-elem.value = "Hardpoint";
-</script>
 @endsection
 
+@section('addback')
+<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+    <div class="form-group">
+    {!!Form::label('game_time', 'Game Time (IN SECONDS (MINUTES*60 + SECONDS))')!!}
+    {!! Form::text('game_time', '' , array('class'=>'form-control')) !!}
+    </div>
+</div>
+@endsection

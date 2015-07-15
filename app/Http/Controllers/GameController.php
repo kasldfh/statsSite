@@ -6,6 +6,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Match;
 use App\Mode;
+use App\Map;
 use App\MapMode;
 use App\Game;
 use App\Ctf;
@@ -54,15 +55,29 @@ class GameController extends Controller {
         $game = Game::findOrFail($id);
         $match = $game->match()->first();
 		$modes = Mode::with('maplink.map')->get();
+        $maps = Map::all();
 		$mode_map = [];
 		foreach ($modes as $mode) {
 			foreach ($mode->maplink as $maplink) {
 				$mode_map[$mode->id][$maplink->map->id] = $maplink->map->name;
 			}
 		}
-        $mode = $game->mode();
+        $mode = $game->mode()->first();
         $game->mode = $mode;
-        return View::make('admin.game.edit', compact('game', 'match', 'mode', 'modes', 'mode_map'));
+        $map = $game->map()->first();
+        $game->map = $map;
+        $mode;
+        if($game->hp)
+            $mode = $game->hp;
+        else if ($game->ctf)
+            $mode = $game->ctf;
+        else if($game->uplink)
+            $mode = $game->uplink;
+        else if($game->uplink)
+            $mode = $game->snd;
+        else
+            dd("wtf");
+        return View::make('admin.game.edit', compact('game', 'mode', 'match', 'modes', 'maps', 'mode_map'));
     }
 
 	public function store() {

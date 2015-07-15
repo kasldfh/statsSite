@@ -18,19 +18,19 @@ class Game extends Model {
 	 * @var array
 	 */
 	public function hp() {
-		return $this->hasMany('App\Hp', 'game_id', 'id');
+		return $this->hasOne('App\Hp', 'game_id', 'id');
 	}
 
 	public function ctf() {
-		return $this->hasMany('App\Ctf', 'game_id', 'id');
+		return $this->hasOne('App\Ctf', 'game_id', 'id');
 	}
 
 	public function snd() {
-		return $this->hasMany('App\Snd', 'game_id', 'id');
+		return $this->hasOne('App\Snd', 'game_id', 'id');
 	}
 
 	public function uplink() {
-		return $this->hasMany('App\Uplink', 'game_id', 'id');
+		return $this->hasOne('App\Uplink', 'game_id', 'id');
 	}
     //added by fail (all under this)
     public function mapmode() {
