@@ -67,14 +67,14 @@ class GameController extends Controller {
         $map = $game->map()->first();
         $game->map = $map;
         $mode;
-        if($game->hp)
-            $mode = $game->hp;
-        else if ($game->ctf)
-            $mode = $game->ctf;
-        else if($game->uplink)
-            $mode = $game->uplink;
-        else if($game->uplink)
-            $mode = $game->snd;
+        if($game->hp())
+            $mode = $game->hp()->first();
+        else if ($game->ctf())
+            $mode = $game->ctf()->first();
+        else if($game->uplink())
+            $mode = $game->uplink()->first();
+        else if($game->snd())
+            $mode = $game->snd()->first();
         else
             dd("wtf");
         return View::make('admin.game.edit', compact('game', 'mode', 'match', 'modes', 'maps', 'mode_map'));

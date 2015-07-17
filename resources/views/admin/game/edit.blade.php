@@ -1,47 +1,52 @@
 @extends('layouts.main')
 @section('js')
 <script>
-$( document ).ready(function() {
-    $(".to_hide").hide();
+function modeChanger() {
+    console.log("hello world");
     var score_type = parseInt({!!$match->score_type_id!!});
     score_type = 1;
     var options = {!!json_encode($mode_map)!!};
-    $("body").on("change", "#mode", function() {
-        var value = parseInt($(this).val());
-        var selected = $('option:selected', $(this)).text();
-        console.log(options);
-        var $el = $("#map");
-        $el.empty(); // remove old options
-        $.each(options[value], function(value,key) {
-            $el.append($("<option></option>")
-                .attr("value", value).text(key));
-        });
-        if(selected  === "Search and Destroy") {
-            $(".to_hide").hide();
-            $(".snd_score").show();
-            if(score_type == 1) {
-                $(".snd_div").show();
-            }
-        } else if(selected  === "Capture the Flag") {
-            $(".to_hide").hide();
-            $(".ctf_score").show();
-            if(score_type == 1) {
-                $(".ctf_div").show();
-            }
-        } else if(selected  === "Uplink") {
-            $(".to_hide").hide();
-            $(".uplink_score").show();
-            if(score_type == 1) {
-                $(".uplink_div").show();
-            }
-        } else if(selected === "Hardpoint") {
-            $(".to_hide").hide();
-            $(".hp_score").show();
-            if(score_type == 1) {
-                $(".hp_div").show();
-            }
-        }
+    var value = parseInt($(this).val());
+    var selected = $('option:selected', $(this)).text();
+    console.log(options);
+    var $el = $("#map");
+    $el.empty(); // remove old options
+    $.each(options[value], function(value,key) {
+        $el.append($("<option></option>")
+            .attr("value", value).text(key));
     });
+    if(selected  === "Search and Destroy") {
+        $(".to_hide").hide();
+        $(".snd_score").show();
+        if(score_type == 1) {
+            $(".snd_div").show();
+        }
+    } else if(selected  === "Capture the Flag") {
+        $(".to_hide").hide();
+        $(".ctf_score").show();
+        if(score_type == 1) {
+            $(".ctf_div").show();
+        }
+    } else if(selected  === "Uplink") {
+        $(".to_hide").hide();
+        $(".uplink_score").show();
+        if(score_type == 1) {
+            $(".uplink_div").show();
+        }
+    } else if(selected === "Hardpoint") {
+        $(".to_hide").hide();
+        $(".hp_score").show();
+        if(score_type == 1) {
+            $(".hp_div").show();
+        }
+    }
+}
+
+$( document ).ready(function() {
+    $(".to_hide").hide();
+    $("body").on("change", "#mode", modeChanger); 
+    //trigger change to load first mode
+    $("#mode").change();
 });
 </script>
 @endsection
@@ -55,7 +60,7 @@ $( document ).ready(function() {
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <div class="row form-top">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                    <h4 class="text">Create Game</h4>
+                    <h4 class="text">Update Game</h4>
                 </div>
             </div>
             <div class="row">
@@ -66,10 +71,10 @@ $( document ).ready(function() {
             <div class="row">
                 <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
                     <div class="form-group">
-                    
+
                     {{--!!Form::label('mode', 'Mode')!!--}}
                     <label for="mode">Mode</label>
-                    
+
                     <select class="form-control" id = "mode">
                         @foreach($modes as $modeoption)
                            <option value={!!$modeoption->id!!}
@@ -102,6 +107,7 @@ $( document ).ready(function() {
                     </div>
                 </div>
             </div>
+            {{-- fix this (online stuff) later --}}
             @if($match->event->type->name == "Online")
             <div class="row">
                 <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
@@ -119,8 +125,7 @@ $( document ).ready(function() {
                 </div>
             </div>
             @endif
-                @if($game->mode->name == "Search and Destroy")
-                <div class="row to_hide snd_div" style="">
+                <div class="row to_hide snd_div" style="display:none;">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 
                     <table class="table table-hover">
@@ -149,9 +154,7 @@ $( document ).ready(function() {
                     </table>
                 </div>
                 </div>
-                @endif
-                @if(game->mode->name == "Capture the Flag")
-                <div class="row to_hide snd_div snd_score" style="">
+                <div class="row to_hide snd_div snd_score" style="display:none;">
                     <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
                         <h4 type="text">{!!$match->rostera->team->name!!}</h4>
                     </div>
@@ -159,8 +162,6 @@ $( document ).ready(function() {
                         {!! Form::text('a_snd_score', '' , array('class'=>'form-control', 'placeholder'=>'Round Count')) !!}
                     </div>
                 </div>
-                @endif
-                @if(game->mode->name == "Search and Destroy")
                 <div class="row to_hide snd_div" style="display:none;">
                     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                         <table class="table table-hover">
@@ -375,7 +376,8 @@ $( document ).ready(function() {
                         <h4 type="text">{!!$match->rostera->team->name!!}</h4>
                     </div>
                     <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
-                        {!! Form::text('a_hp_score', '' , array('class'=>'form-control', 'placeholder'=>'Score')) !!}
+                        {{--{!! Form::text('a_hp_score', '' , array('class'=>'form-control', 'placeholder'=>'Score')) !!}--}}
+                        <input type="text" name="a_hp_score" class="form-control" value={!!$mode->team_a_score!!}>
                     </div>
                 </div>
                 <div class="row to_hide hp_div" style="display:none;">
@@ -409,7 +411,8 @@ $( document ).ready(function() {
                         <h4 type="text">{!!$match->rosterb->team->name!!}</h4>
                     </div>
                     <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
-                        {!! Form::text('b_hp_score', '' , array('class'=>'form-control', 'placeholder'=>'Score')) !!}
+                        {{--{!! Form::text('b_hp_score', '' , array('class'=>'form-control', 'placeholder'=>'Score')) !!}--}}
+                        <input type="text" name="b_hp_score" class="form-control" value={!!$mode->team_b_score!!}>
                     </div>
                 </div>
                 <div class="row to_hide hp_div" style="display:none;">
@@ -441,7 +444,7 @@ $( document ).ready(function() {
             <div class="row">
                 <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                     <div class="form-group">
-                    {!! Form::submit('Add Map', array('class'=>'btn btn-large btn-primary pull-right'))!!}
+                    {!! Form::submit('Update Map', array('class'=>'btn btn-large btn-primary pull-right'))!!}
                     {!! HTML::link(URL::previous(), 'Cancel', array('class' => 'btn btn-default pull-right')) !!}
                     </div>
                 </div>

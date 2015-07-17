@@ -20,4 +20,8 @@ class Hp extends Model {
 	public function players() {
 		return $this->hasMany('App\HpPlayer', 'hp_id', 'id');
 	}
+    public function game()
+    {
+        return $this->belongsTo('App\Game', 'game_id', 'id');
+    }
 }
