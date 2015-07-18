@@ -27,7 +27,7 @@
 			</div>
 			<div class="row form-bottom">
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-					{!! Form::text('email', Input::old('email', '') , array('class'=>'form-control', 'placeholder'=>'Email')) !!}
+					{!! Form::text('email', Input::old('email', '') , array('class'=>'form-control', 'placeholder'=>'Email', 'autofocus')) !!}
 				</div>
 			</div>
 			<div class="row form-bottom">
