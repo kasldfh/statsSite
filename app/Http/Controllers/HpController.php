@@ -14,6 +14,9 @@ class HpController extends Controller {
     public function __construct() {
         $this->beforeFilter('auth');
     }
+    public function update() {
+
+    }
     public function edit($id)
     {
         //id is game id for now (change this later?)

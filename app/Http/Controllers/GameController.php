@@ -21,7 +21,7 @@ use App\SndPlayer;
 use Input;
 use Redirect;
 use View;
-	
+
 class GameController extends Controller {
 
 	public function __construct() {
@@ -79,6 +79,7 @@ class GameController extends Controller {
             dd("wtf");
         return View::make('admin.game.edit', compact('game', 'mode', 'match', 'modes', 'maps', 'mode_map'));
     }
+
 
 	public function store() {
 		//DBug::DBug(Input::all(), true);

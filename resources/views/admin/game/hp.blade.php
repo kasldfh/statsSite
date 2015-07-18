@@ -12,7 +12,8 @@
 ?>
 @endsection
 @section('content')
-<form class="form-inline">
+{!! Form::open(array('action'=>'HpController@update', 'class'=>'form-inline', 'id' => 'form','method' => 'patch')) !!}
+{{--<form class="form-inline">--}}
   <div class="form-group">
     <input type="hidden" name="game_id" value="{!!$game->id!!}">
     {{--This is where i can pass in extra values --}}

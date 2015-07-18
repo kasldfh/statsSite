@@ -99,6 +99,7 @@ Route::get('admin/game/create/{id}', ['uses' => 'GameController@create']);
 //TODO: manage for game should maybe go into event controller as @manageGames...?
 Route::get('admin/game/manage/{id}', ['uses' => 'GameController@manage']);
 Route::get('admin/game/{id}/edit', ['uses' => 'HpController@edit']);
+Route::patch('admin/hp/{id}/update', ['uses' => 'HpController@update']);
 Route::get('admin/game/manage', ['uses' => 'GameController@manage']);
 
 Route::get('{team}', ['uses' => 'FrontEndTeamController@show']);
