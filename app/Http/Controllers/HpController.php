@@ -30,6 +30,10 @@ class HpController extends Controller {
         $aplayers = [];
         //first, set game variables
         //TODO: set mapmode id
+        $modeid = $game->mode()->first()->id;
+        $mapmode = MapMode::where('map_id', '=', Input::get('map'))->where('mode_id', '=', $modeid)->first();
+        $game->map_mode_id = $mapmode->id;
+        $game->save();
         //next, set hp variables
         //TODO:set host stuff
         $hp->team_a_score = Input::get('a_hp_score');
@@ -65,7 +69,7 @@ class HpController extends Controller {
 
         foreach($bplayerids as $bplayerid)
         {
-            $bplayer = HpPlayer::where('player_id', '=', $aplayerid)->where('hp_id', '=', $hp->id)->first();
+            $bplayer = HpPlayer::where('player_id', '=', $bplayerid)->where('hp_id', '=', $hp->id)->first();
             if(!$bplayer) //if a different player is selected
                 $bplayer = new HpPlayer;
             $bplayer->player_id = $bplayerid;
@@ -79,6 +83,8 @@ class HpController extends Controller {
             //TODO: host stuff
         }
 
+        return ("<h1>Map Updated</h1>");
+        //return Redirect::action('AdminController@dashboard');
         //dd($aplayers);
         //dd($hp);
         //dd($match);
@@ -121,7 +127,7 @@ class HpController extends Controller {
                     $bscores[] = $player;
                 }
 
-        dd($ascores);
+        //dd($ascores);
         //dd($aplayers);
         return View::make('admin.game.hp', compact('game', 'match', 'hp', 'maps', 'players', 'aplayers', 'bplayers', 'ascores', 'bscores'));
     }
