@@ -11,6 +11,7 @@
     }
 ?>
 @endsection
+
 @section('content')
 {!! Form::open(array('action'=>'HpController@update', 'class'=>'form-inline', 'id' => 'form','method' => 'patch')) !!}
 {{--<form class="form-inline">--}}
@@ -59,24 +60,9 @@
                 </div>
             </div>
             {{-- fix this (online add back online stuff) later --}}
-            @if($match->event->type->name == "Online")
-            <div class="row">
-                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                    <div class="form-group">
-                    <label for="host">Team Host</label>
-                    {{--{!!Form::label('host', 'Team Host')!!}--}}
-                    {!! Form::select('host', ['' => 'Please Select A Team Host'] + $match->teamletter,[], ['id' => 'host', 'class' => 'form-control']) !!}
-                    </div>
-                </div>
-
-                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                    <div class="form-group">
-                    {!!Form::label('p_host', 'Player Host')!!}
-                    {!!Form::select('p_host', ['' => 'Please Select A Player Host'] + $match->rostera->players + $match->rosterb->players, [], ['class' => 'form-control'])!!}
-                    </div>
-                </div>
-            </div>
-            @endif
+{{--yield('host'--}}
+@include('admin.game.host')
+@yield('host')
                     <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
                         <h4 type="text">{!!$match->rostera->team->name!!}</h4>
                     </div>
@@ -189,14 +175,8 @@
                             </tbody>
                         </table>
                     </div>
-            <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                    <div class="form-group">
-                    {!! Form::submit('Update Map', array('class'=>'btn btn-large btn-primary pull-right'))!!}
-                    {!! HTML::link(URL::previous(), 'Cancel', array('class' => 'btn btn-default pull-right')) !!}
-                    </div>
-                </div>
-            </div>
+                @include('admin.game.buttons')
+                @yield('buttons')
         </div>
     </div>
     {!!Form::close()!!}
