@@ -20,11 +20,11 @@ class HpController extends Controller {
         //TODO: need to remove HpPlayers where player was "unselected"
         $match = Match::find(Input::get('match_id'));
         $game = Game::find(Input::get('game_id'));
-        $hp = Hp::find(Input::get('mode_id'));
-        $kills = Input::get('hp_kills');
-        $deaths = Input::get('hp_deaths');
-        $captures = Input::get('hp_captures');
-        $defends = Input::get('hp_defends');
+        $mode = Hp::find(Input::get('mode_id'));
+        $kills = Input::get('kills');
+        $deaths = Input::get('deaths');
+        $captures = Input::get('captures');
+        $defends = Input::get('defends');
         $aplayerids = Input::get('aplayers');
         $bplayerids = Input::get('bplayers');
         $aplayers = [];
@@ -36,13 +36,13 @@ class HpController extends Controller {
         $game->save();
         //next, set hp variables
         //TODO:set host stuff
-        $hp->team_a_score = Input::get('a_hp_score');
-        $hp->team_b_score = Input::get('b_hp_score');
-        $hp->game_time = Input::get('minutes') * 60 + Input::get('seconds');
-        $hp->a_victory = $hp->team_a_score > $hp->team_b_score ? 1 : 0;
-        $hp->save();
+        $mode->team_a_score = Input::get('a_score');
+        $mode->team_b_score = Input::get('b_score');
+        $mode->game_time = Input::get('minutes') * 60 + Input::get('seconds');
+        $mode->a_victory = $mode->team_a_score > $mode->team_b_score ? 1 : 0;
+        $mode->save();
         //get rid of extra players
-        $extras = HpPlayer::whereNotIn('player_id', $aplayerids + $bplayerids)->where('hp_id', '=', $hp->id);
+        $extras = HpPlayer::whereNotIn('player_id', $aplayerids + $bplayerids)->where('hp_id', '=', $mode->id);
         foreach($extras as $extra)
         {
             dd($extra);
@@ -53,11 +53,11 @@ class HpController extends Controller {
         $i = 0;
         foreach($aplayerids as $aplayerid)
         {
-            $aplayer = HpPlayer::where('player_id', '=', $aplayerid)->where('hp_id', '=', $hp->id)->first();
+            $aplayer = HpPlayer::where('player_id', '=', $aplayerid)->where('hp_id', '=', $mode->id)->first();
             if(!$aplayer) //if a different player is selected
                 $aplayer = new HpPlayer;
             $aplayer->player_id = $aplayerid;
-            $aplayer->hp_id = $hp->id;
+            $aplayer->hp_id = $mode->id;
             $aplayer->kills = $kills[$i];
             $aplayer->deaths = $deaths[$i];
             $aplayer->captures = $captures[$i];
@@ -69,11 +69,11 @@ class HpController extends Controller {
 
         foreach($bplayerids as $bplayerid)
         {
-            $bplayer = HpPlayer::where('player_id', '=', $bplayerid)->where('hp_id', '=', $hp->id)->first();
+            $bplayer = HpPlayer::where('player_id', '=', $bplayerid)->where('hp_id', '=', $mode->id)->first();
             if(!$bplayer) //if a different player is selected
                 $bplayer = new HpPlayer;
             $bplayer->player_id = $bplayerid;
-            $bplayer->hp_id = $hp->id;
+            $bplayer->hp_id = $mode->id;
             $bplayer->kills = $kills[$i];
             $bplayer->deaths = $deaths[$i];
             $bplayer->captures = $captures[$i];
@@ -94,18 +94,18 @@ class HpController extends Controller {
         //id is game id for now (change this later?)
         $game = Game::findOrFail($id);
         $match = $game->match()->first();
-        $hp = $game->hp()->first();
-        $mode = $game->mode()->first();
-        $game->mode = $mode;
+        $mode = $game->hp()->first();
+        $gameMode = $game->mode()->first();
+        $game->mode = $gameMode;
         $map = $game->map()->first();
         $game->map = $map;
-        $maplinks = $mode->maplink()->get();
+        $maplinks = $gameMode->maplink()->get();
         $maps = [];
         foreach($maplinks as $maplink)
             $maps[] = $maplink->map()->first();
 
         //all players in the hp game
-        $players = $hp->players()->get();
+        $players = $mode->players()->get();
         //lists of all players per roster
         $aplayers = $match->rostera()->first()->playermap()->get();
         $bplayers = $match->rosterb()->first()->playermap()->get();
@@ -129,6 +129,6 @@ class HpController extends Controller {
 
         //dd($ascores);
         //dd($aplayers);
-        return View::make('admin.game.hp', compact('game', 'match', 'hp', 'maps', 'players', 'aplayers', 'bplayers', 'ascores', 'bscores'));
+        return View::make('admin.game.hp', compact('game', 'match', 'mode', 'maps', 'players', 'aplayers', 'bplayers', 'ascores', 'bscores'));
     }
 }
