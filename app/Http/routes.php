@@ -101,8 +101,10 @@ Route::get('admin/game/manage/{id}', ['uses' => 'GameController@manage']);
 //Route::get('admin/game/{id}/edit', ['uses' => 'HpController@edit']);
 Route::get('admin/hp/{id}/edit', ['uses' => 'HpController@edit']);
 Route::get('admin/uplink/{id}/edit', ['uses' => 'UplinkController@edit']);
+Route::get('admin/ctf/{id}/edit', ['uses' => 'CtfController@edit']);
 Route::patch('admin/hp/{id}/update', ['uses' => 'HpController@update']);
 Route::patch('admin/uplink/{id}/update', ['uses' => 'UplinkController@update']);
+Route::patch('admin/ctf/{id}/update', ['uses' => 'CtfController@update']);
 Route::get('admin/game/manage', ['uses' => 'GameController@manage']);
 
 Route::get('{team}', ['uses' => 'FrontEndTeamController@show']);
