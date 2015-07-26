@@ -12,10 +12,10 @@ class CreateSndRoundTable extends Migration
      */
     public function up()
     {
-        Schema::table('snd_round', function (Blueprint $table) {
+        Schema::create('snd_round', function (Blueprint $table) {
            $table->integer('snd_id');
            $table->integer('round_number');
-           $table->text('side won');
+           $table->text('side_won');
            $table->integer('victor_id');
            $table->integer('fb_player_id')->nullable();
            $table->integer('lms_player_id')->nullable();
@@ -31,8 +31,6 @@ class CreateSndRoundTable extends Migration
      */
     public function down()
     {
-        Schema::table('snd_round', function (Blueprint $table) {
-            Schema::drop('snd_round');
-        });
+        Schema::drop('snd_round');
     }
 }

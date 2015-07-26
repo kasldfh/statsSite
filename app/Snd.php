@@ -20,4 +20,9 @@ class Snd extends Model {
 	public function players() {
 		return $this->hasMany('App\SndPlayer', 'snd_id', 'id');
 	}
+
+    public function rounds() {
+        return $this->hasMany('App\SndRound', 'snd_id', 'id');
+    }
+
 }
