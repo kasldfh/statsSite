@@ -18,6 +18,7 @@ class SndController extends Controller {
     public function __construct() {
         $this->beforeFilter('auth');
     }
+
     public function update() {
         //TODO: need to remove SndPlayers where player was "unselected"
         $match = Match::find(Input::get('match_id'));
@@ -184,9 +185,7 @@ private function fbs($rounds, $id)
         if($round->fb_player_id)
             $noRecs = false;
     }
-    if($noRecs)
-        return null;
-    return $fbs;
+    return $noRecs ? null : $fbs;
 }
 
 private function fbWins($rounds, $id, $roster_id)
@@ -200,9 +199,7 @@ private function fbWins($rounds, $id, $roster_id)
         if($round->fb_player_id && $round->victor_id)
             $noRecs = false;
     }
-    if($noRecs)
-        return null;
-    return $fbWins;
+    return $noRecs ? null : $fbWins;
 }
 
 private function lms($rounds, $id)
@@ -216,9 +213,7 @@ private function lms($rounds, $id)
         if($round->lms)
             $noRecs = false;
     }
-    if($noRecs)
-        return null;
-    return $lms;
+    return $noRecs ? null : $lms;
 }
 
 private function lmsWins($rounds, $id, $roster_id)
@@ -232,29 +227,52 @@ private function lmsWins($rounds, $id, $roster_id)
         if($round->lms && $round->victor_id)
             $noRecs = false;
     }
-    if($noRecs)
-        return null;
-    return $lmsWins;
+    return $noRecs ? null : $lmsWins;
 }
 
-private function sideWins($rounds, $roster_id, $side_id)
+//get wins for a particular site (offense or defense)
+private function sideWins($rounds, $roster_id, $side)
 {
-    $wins = 0;
+    $sideWins = 0;
     $noRecs = true;
     foreach($rounds as $round)
     {
-        if($round->victor_id == $roster_id && $rounds->side_won == $side_id)
-            $wins++;
-        if($round->victor_id && $rounds->side_won)
+        if($round->side_won == $side)
+            $sideWins++;
+        if($round->side_won)
             $noRecs = false;
     }
-    if($noRecs)
-        return null;
-    return $wins;
+    return $noRecs ? null : $sideWins;
 }
 
-private function offenseWins($rounds, $roster_id)
-{
+private function sitePlants($rounds, $site, $players) {
+    $sitePlants = 0;
+    $noRecs = true;
+    foreach($rounds as $round)
+    {
+        $containsPlanter = containsId($players, $round->planter_id);
+        if($containsPlanter && $round->plant_site == $site)
+            $sitePlants++;
+        if($round->player_id && $round->plant_site)
+            $noRecs = false;
+    }
+    return $noRecs ? null : $sitePlants;
+}
+
+private function sitePlantWins($rounds, $site, $players, $roster_id) {
+    $plantWins = 0;
+    $noRecs = true;
+    foreach($rounds as $round)
+    {
+        $containsPlanter = containsId($players, $round->planter_id);
+        $isVictor = $round->victor_id == $roster_id;
+        $isSite = $round->plant_site == $site;
+        if($containsPlanter && $isSite && $isVictor)
+            $plantWins++;
+        if($round->player_id && $round->plant_site && $round->victor_id)
+            $noRecs = false;
+    }
+    return $noRecs ? null : $plantWins;
 }
 
 private function containsId($players, $id)

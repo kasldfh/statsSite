@@ -1,0 +1,5 @@
+If we ever get issues with snd round counts and events that come from excel, 
+it's probably because of the way playerwise snd stats are calculated. Rounds
+may or may not be the same number of rounds as a_score + b_score, because of
+the way they are generated. If this happens, exclude the events sourced by 
+excel from whatever the issue-creating page/stat is. 
