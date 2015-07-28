@@ -67,7 +67,6 @@ class SndController extends Controller {
             $round->save();
             $rounds[] = $round;
         }
-    }
 
     //get rid of extra players
     $extras = SndPlayer::whereNotIn('player_id', $aplayerids + $bplayerids)->where('snd_id', '=', $mode->id);
@@ -126,6 +125,11 @@ class SndController extends Controller {
     //dd($match);
 }
 
+public function create() {
+    $input = Input::all();
+    dd($input);
+    
+}
 public function edit($id)
 {
     //id is game id for now (change this later?)

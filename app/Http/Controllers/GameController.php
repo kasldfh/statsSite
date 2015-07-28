@@ -17,6 +17,7 @@ use App\CtfPlayer;
 use App\UplinkPlayer;
 use App\HpPlayer;
 use App\SndPlayer;
+use App\SndRound;
 
 use Input;
 use Redirect;
@@ -83,20 +84,25 @@ class GameController extends Controller {
 
 	public function store() {
 		//DBug::DBug(Input::all(), true);
+		$mode = Input::get('mode');
+		if($mode == 4) {
+            return $this->createSnd();
+        }
+
 		$match = Match::find(Input::get('match_id'));
 		$host = Input::get('host');
 		$pHost = Input::get('p_host');
 		$roster_a = $match->rostera->id;
 		$roster_b = $match->rosterb->id;
-		$map = Input::get("map");
-		$mode = Input::get("mode");
+		$map = Input::get('map');
+		$mode = Input::get('mode');
 		$map_mode = MapMode::where('map_id', $map)->where('mode_id', $mode)->first();
 		$game = new Game;
 		$game->match_id = $match->id;
 		$game->game_number = count(Game::where('match_id', $match->id)->get()) + 1;
 		$game->map_mode_id = $map_mode->id;
 		$game->save();
-		if($mode == 3) {
+		if($mode == 4) {
 			$snd = new Snd;
 			$scores = Input::get('team');
 			$side = Input::get('side');
@@ -342,4 +348,62 @@ class GameController extends Controller {
 		Game::destroy($id);
 		return Redirect::action('GameController@manage');
 	}
+    public function createSnd() {
+        //TODO: need to remove SndPlayers where player was "unselected"
+        //dd(Input::all());
+        $match = Match::find(Input::get('match_id'));
+
+		$game = new Game;
+		$game->match_id = $match->id;
+		$game->game_number = count(Game::where('match_id', $match->id)->get()) + 1;
+
+        $mode = new Snd;
+
+        $kills = Input::get('kills');
+        $deaths = Input::get('deaths');
+        $plants = Input::get('plants');
+        $defuses = Input::get('defuses');
+        $defends = Input::get('defends');
+        $aplayerids = Input::get('aplayers');
+        $bplayerids = Input::get('bplayers');
+        //round stuff
+        $sides = Input::get('side');
+        $fbs = Input::get('fb');
+        $sites = input::get('plant');
+        $planters = Input::get('planter');
+        $lms = Input::get('lms');
+        $victors = Input::get('victor');
+        $aplayers = [];
+        //first, set game variables
+        //TODO: refactor this to be dynamic
+        $modeid = 4;
+        $mapmode = MapMode::where('map_id', '=', Input::get('map'))->where('mode_id', '=', $modeid)->first();
+        $game->map_mode_id = $mapmode->id;
+        $game->save();
+        //next, set snd variables
+        //TODO:set host stuff
+        $mode->team_a_score = Input::get('a_score');
+        $mode->team_b_score = Input::get('b_score');
+        $mode->game_time = Input::get('minutes') * 60 + Input::get('seconds');
+        $mode->a_victory = $mode->team_a_score > $mode->team_b_score ? 1 : 0;
+        $mode->game_id = $game->id;
+        $mode->save();
+
+        $rounds = [];
+        for($i = 0; $i < $mode->team_a_score + $mode->team_b_score -1; $i++)
+        {
+            $round = new SndRound;
+            $round->snd_id = $modeid;
+            $round->round_number = $i+1;
+            $round->side_won = $sides[$i];
+            $round->victor_id = $victors[$i];
+            $round->fb_player_id = $fbs[$i];
+            $round->lms_player_id = $lms[$i];
+            $round->planter_id = $planters[$i];
+            $round->plant_site = $sites[$i];
+            $round->save();
+            $rounds[] = $round;
+        }
+    return "<h1>Snd saved</h1>";
+    }
 }

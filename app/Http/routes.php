@@ -102,9 +102,13 @@ Route::get('admin/game/manage/{id}', ['uses' => 'GameController@manage']);
 Route::get('admin/hp/{id}/edit', ['uses' => 'HpController@edit']);
 Route::get('admin/uplink/{id}/edit', ['uses' => 'UplinkController@edit']);
 Route::get('admin/ctf/{id}/edit', ['uses' => 'CtfController@edit']);
+Route::get('admin/snd/{id}/edit', ['uses' => 'SndController@edit']);
 Route::patch('admin/hp/{id}/update', ['uses' => 'HpController@update']);
 Route::patch('admin/uplink/{id}/update', ['uses' => 'UplinkController@update']);
 Route::patch('admin/ctf/{id}/update', ['uses' => 'CtfController@update']);
+Route::patch('admin/snd/{id}/update', ['uses' => 'SndController@update']);
+Route::put('admin/snd/{id}/create',  ['uses' => 'SndController@create']);
+Route::put('admin/snd/create',  ['uses' => 'SndController@create']);
 Route::get('admin/game/manage', ['uses' => 'GameController@manage']);
 
 Route::get('{team}', ['uses' => 'FrontEndTeamController@show']);

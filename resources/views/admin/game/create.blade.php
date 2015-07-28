@@ -125,7 +125,7 @@ $( document ).ready(function() {
                                 <td>{!!Form::select('fb[]', ['' => 'Select'] + $match->rostera->players + $match->rosterb->players, [], ['class' => 'form-control'])!!}</td>
                                 <td>{!!Form::select('planter[]', ['' => 'Select'] +  $match->teams, [], ['class' => 'form-control'])!!}</td>
                                 <td>{!!Form::select('site[]', ['' => 'Select', 'a' => 'A', 'b' => 'B'], [], ['class' => 'form-control'])!!}</td>
-                                <td>{!!Form::select('team[]', ['' => 'Select'] +  $match->teams, [], ['class' => 'form-control'])!!}</td>
+                                <td>{!!Form::select('victor[]', ['' => 'Select'] +  $match->teams, [], ['class' => 'form-control'])!!}</td>
                                 <td>{!!Form::select('side[]', ['' => 'Select', 'o' => 'Offense', 'd' => 'Defense'], [], ['class' => 'form-control'])!!}</td>
                             </tr>
                             @endfor
@@ -139,7 +139,7 @@ $( document ).ready(function() {
                         <h4 type="text">{!!$match->rostera->team->name!!}</h4>
                     </div>
                     <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
-                        {!! Form::text('a_snd_score', '' , array('class'=>'form-control', 'placeholder'=>'Round Count')) !!}
+                        {!! Form::text('a_score', '' , array('class'=>'form-control', 'placeholder'=>'Round Count')) !!}
                     </div>
                 </div>
                 <div class="row to_hide snd_div" style="display:none;">
@@ -175,7 +175,7 @@ $( document ).ready(function() {
                         <h4 type="text">{!!$match->rosterb->team->name!!}</h4>
                     </div>
                     <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
-                        {!! Form::text('b_snd_score', '' , array('class'=>'form-control', 'placeholder'=>'Round Count')) !!}
+                        {!! Form::text('b_score', '' , array('class'=>'form-control', 'placeholder'=>'Round Count')) !!}
                     </div>
                 </div>
                 <div class="row to_hide snd_div" style="display:none;">
