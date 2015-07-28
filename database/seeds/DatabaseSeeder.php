@@ -39,8 +39,8 @@ class DatabaseSeeder extends Seeder
 		$this->call('RosterTableSeeder');
 		$this->call('RosterToEventTableSeeder');
 		$this->call('ScoreTypeTableSeeder');
-		$this->call('SndTableSeeder');
-		$this->call('SndPlayerTableSeeder');
+		//$this->call('SndTableSeeder');
+		//$this->call('SndPlayerTableSeeder');
 		$this->call('TeamTableSeeder');
 		$this->call('UplinkTableSeeder');
 		$this->call('UplinkPlayerTableSeeder');
