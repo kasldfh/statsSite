@@ -20,6 +20,9 @@ Update migration for snd stuff
  We have lms and fb_wins
  foreach player, 1o
 
+For creating snd (and all games) find a way to select each primary player by
+default
+
 
 Notes:
 Do I actually need the event_source stuff?

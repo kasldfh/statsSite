@@ -190,7 +190,7 @@ private function fbs($rounds, $id)
 
 private function fbWins($rounds, $id, $roster_id)
 {
-    $fbwins = 0;
+    $fbWins = 0;
     $noRecs = true;
     foreach($rounds as $round)
     {

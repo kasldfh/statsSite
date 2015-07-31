@@ -51,6 +51,23 @@ $( document ).ready(function() {
 
 </script>
 @endsection
+@section('Delete')
+
+@foreach ($match->rostera->players as $playerid => $player)
+{!!$player!!}
+{!!$playerid!!}
+<br>
+@endforeach
+
+
+
+
+
+
+
+
+
+@endsection
 @section('content')
     {!! Form::open(array('action'=>'GameController@store', 'class'=>'form-login', 'id' => 'form')) !!}
     <input type="hidden" name="match_id" value="{!!$match->id!!}">
@@ -157,7 +174,14 @@ $( document ).ready(function() {
                             <tbody>
                                 @for($i = 1; $i<=4; $i++)
                                 <tr>
-                                    <td>{!!Form::select('snd_player[]', ['' => 'Select'] + $match->rostera->players, [], ['class' => 'form-control'])!!}</td>
+<td>
+<select class="form-control" name="aplayers[]">
+@foreach ($match->rostera->players as $playerid => $player)
+        <option value="{!!$playerid!!}">{!!$player!!}</option>
+@endforeach
+</select>
+</td>
+                                    {{--<td>{!!Form::select('aplayers[]', ['' => 'Select'] + $match->rostera->players, [], ['class' => 'form-control'])!!}</td>--}}
                                     <td>{!! Form::text('snd_kills[]', '' , array('class'=>'form-control')) !!}</td>
                                     <td>{!! Form::text('snd_deaths[]', '' , array('class'=>'form-control')) !!}</td>
                                     <td>{!! Form::text('plants[]', '' , array('class'=>'form-control')) !!}</td>
@@ -193,7 +217,14 @@ $( document ).ready(function() {
                             <tbody>
                                 @for($i = 1; $i<=4; $i++)
                                 <tr>
-                                    <td>{!!Form::select('snd_player[]', ['' => 'Select'] + $match->rosterb->players, [], ['class' => 'form-control'])!!}</td>
+<td>
+<select class="form-control" name="bplayers[]">
+@foreach ($match->rosterb->players as $playerid => $player)
+        <option value="{!!$playerid!!}">{!!$player!!}</option>
+@endforeach
+</select>
+</td>
+                                    {{--<td>{!!Form::select('bplayers[]', ['' => 'Select'] + $match->rosterb->players, [], ['class' => 'form-control'])!!}</td>--}}
                                     <td>{!! Form::text('snd_kills[]', '' , array('class'=>'form-control')) !!}</td>
                                     <td>{!! Form::text('snd_deaths[]', '' , array('class'=>'form-control')) !!}</td>
                                     <td>{!! Form::text('plants[]', '' , array('class'=>'form-control')) !!}</td>
