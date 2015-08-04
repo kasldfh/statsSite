@@ -202,7 +202,7 @@ class GameController extends Controller {
             $snd->b_plant_b = $b_b;
             $snd->b_plant_a_win = $b_a_win;
             $snd->b_plant_b_win = $b_b_win;
-            $snd->game_time = Input::get('game_time');
+            $mode->game_time = Input::get('minutes') * 60 + Input::get('seconds');
             $snd->save();
             if(Input::get('a_snd_score', 0) > Input::get('b_snd_score', 0)) {
                 $match->a_map_count++;
@@ -248,7 +248,7 @@ class GameController extends Controller {
             }
             $ctf->team_a_score = Input::get('a_ctf_score');
             $ctf->team_b_score = Input::get('b_ctf_score');
-            $ctf->game_time = Input::get('game_time');
+            $ctf->game_time = Input::get('minutes') * 60 + Input::get('seconds');
             $ctf->save();
             if($ctf->team_a_score > $ctf->team_b_score) {
                 $match->a_map_count++;
@@ -282,7 +282,7 @@ class GameController extends Controller {
             }
             $uplink->team_a_score = Input::get('a_uplink_score');
             $uplink->team_b_score = Input::get('b_uplink_score');
-            $uplink->game_time = Input::get('game_time');
+            $uplink->game_time = Input::get('minutes') * 60 + Input::get('seconds');
             $uplink->save();
             if($uplink->team_a_score > $uplink->team_b_score) {
                 $match->a_map_count++;
@@ -316,7 +316,7 @@ class GameController extends Controller {
             $hp->game_id = $game->id;
             $hp->team_a_score = Input::get('a_hp_score');
             $hp->team_b_score = Input::get('b_hp_score');
-            $hp->game_time = Input::get('game_time');
+            $hp->game_time = Input::get('minutes') * 60 + Input::get('seconds');
             $hp->save();
             if($hp->team_a_score > $hp->team_b_score) {
                 $match->a_map_count++;

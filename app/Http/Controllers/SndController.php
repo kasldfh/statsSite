@@ -146,6 +146,9 @@ public function edit($id)
     foreach($maplinks as $maplink)
         $maps[] = $maplink->map()->first();
 
+    //rounds
+    $rounds = SndRound::where('snd_id', '=', $mode->id)->get();
+
     //all players in the snd game
     $players = $mode->players()->get();
     //lists of all players per roster
@@ -171,7 +174,7 @@ public function edit($id)
 
     //dd($ascores);
     //dd($aplayers);
-    return View::make('admin.game.snd', compact('game', 'match', 'mode', 'maps', 'players', 'aplayers', 'bplayers', 'ascores', 'bscores'));
+    return View::make('admin.game.snd', compact('game', 'match', 'mode', 'maps', 'players', 'aplayers', 'bplayers', 'ascores', 'bscores', 'rounds'));
 }
 
 private function fbs($rounds, $id)

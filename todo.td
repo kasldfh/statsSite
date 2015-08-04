@@ -1,3 +1,5 @@
+FINISH REFACTORING THE GAMECREATE MINUTES/SECONDS STUFF IN CONTROLLERS AND VIEWS
+
 Refactor SndRound stuff
  Store player round stats (lms/fb/lmsW/fbW) in rounds only
   Remove these stats from SndPlayer(already stored in sndRound)

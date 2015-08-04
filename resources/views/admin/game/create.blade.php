@@ -98,10 +98,16 @@ $( document ).ready(function() {
                     </div>
                 </div>
                 <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
                     <div class="form-group">
-                    {!!Form::label('game_time', 'Game Time (IN SECONDS (MINUTES*60 + SECONDS))')!!}
-                    {!! Form::text('game_time', '' , array('class'=>'form-control')) !!}
+                    <label for="minutes">Minutes</label>
+                    <input type="text" name="minutes" class="form-control" size="5">
+                    <label for="seconds">Seconds</label>
+                    <input type="text" name="seconds" class="form-control" size="5">
+                    {{--{!!Form::label('game_time', 'Game Time (IN SECONDS (MINUTES*60 + SECONDS))')!!}--}}
+                    {{--{!! Form::text('game_time', '' , array('class'=>'form-control')) !!}--}}
                     </div>
+                </div>
                 </div>
             </div>
             @if($match->event->type->name == "Online")
@@ -182,8 +188,8 @@ $( document ).ready(function() {
 </select>
 </td>
                                     {{--<td>{!!Form::select('aplayers[]', ['' => 'Select'] + $match->rostera->players, [], ['class' => 'form-control'])!!}</td>--}}
-                                    <td>{!! Form::text('snd_kills[]', '' , array('class'=>'form-control')) !!}</td>
-                                    <td>{!! Form::text('snd_deaths[]', '' , array('class'=>'form-control')) !!}</td>
+                                    <td>{!! Form::text('kills[]', '' , array('class'=>'form-control')) !!}</td>
+                                    <td>{!! Form::text('deaths[]', '' , array('class'=>'form-control')) !!}</td>
                                     <td>{!! Form::text('plants[]', '' , array('class'=>'form-control')) !!}</td>
                                     <td>{!! Form::text('defuses[]', '' , array('class'=>'form-control')) !!}</td>
 
@@ -225,8 +231,8 @@ $( document ).ready(function() {
 </select>
 </td>
                                     {{--<td>{!!Form::select('bplayers[]', ['' => 'Select'] + $match->rosterb->players, [], ['class' => 'form-control'])!!}</td>--}}
-                                    <td>{!! Form::text('snd_kills[]', '' , array('class'=>'form-control')) !!}</td>
-                                    <td>{!! Form::text('snd_deaths[]', '' , array('class'=>'form-control')) !!}</td>
+                                    <td>{!! Form::text('kills[]', '' , array('class'=>'form-control')) !!}</td>
+                                    <td>{!! Form::text('deaths[]', '' , array('class'=>'form-control')) !!}</td>
                                     <td>{!! Form::text('plants[]', '' , array('class'=>'form-control')) !!}</td>
                                     <td>{!! Form::text('defuses[]', '' , array('class'=>'form-control')) !!}</td>
 
