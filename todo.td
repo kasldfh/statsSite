@@ -1,4 +1,6 @@
-FINISH REFACTORING THE GAMECREATE MINUTES/SECONDS STUFF IN CONTROLLERS AND VIEWS
+The only thing left to fix snd is to get rounds properly displaying in update
+  --also possibly not saving when game is created
+
 
 Refactor SndRound stuff
  Store player round stats (lms/fb/lmsW/fbW) in rounds only
@@ -22,8 +24,7 @@ Update migration for snd stuff
  We have lms and fb_wins
  foreach player, 1o
 
-For creating snd (and all games) find a way to select each primary player by
-default
+For creating snd (and all games) select each primary player by default
 
 
 Notes:
