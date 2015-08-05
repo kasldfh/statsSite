@@ -392,10 +392,10 @@ class GameController extends Controller {
         $mode->save();
 
         $rounds = [];
-        for($i = 0; $i < $mode->team_a_score + $mode->team_b_score -1; $i++)
+        for($i = 1; $i <= $mode->team_a_score + $mode->team_b_score; $i++)
         {
             $round = new SndRound;
-            $round->snd_id = $modeid;
+            $round->snd_id = $mode->id;
             $round->round_number = $i+1;
             $round->side_won = $sides[$i];
             $round->victor_id = $victors[$i];
@@ -406,6 +406,7 @@ class GameController extends Controller {
             $round->save();
             $rounds[] = $round;
         }
+        //dd($rounds);
         //TODO: set team snd stats (plants/etc)
         //set new players
         $i = 0;
