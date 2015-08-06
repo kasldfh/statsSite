@@ -97,11 +97,15 @@ $( document ).ready(function() {
                     {!! Form::select('map', ['' => 'Please Select A Map'], [], ['id' => 'map', 'class' => 'form-control']) !!}
                     </div>
                 </div>
-                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-                <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+                <div class="col-xs-2">
                     <div class="form-group">
                     <label for="minutes">Minutes</label>
                     <input type="text" name="minutes" class="form-control" size="5">
+                    </div>
+                </div>
+
+                <div class="col-xs-2">
+                    <div class="form-group">
                     <label for="seconds">Seconds</label>
                     <input type="text" name="seconds" class="form-control" size="5">
                     {{--{!!Form::label('game_time', 'Game Time (IN SECONDS (MINUTES*60 + SECONDS))')!!}--}}
@@ -146,7 +150,7 @@ $( document ).ready(function() {
                             <tr>
                                 <td><h5 class="text">Round {!!$i!!}</h5></td>
                                 <td>{!!Form::select('fb[]', ['' => 'Select'] + $match->rostera->players + $match->rosterb->players, [], ['class' => 'form-control'])!!}</td>
-                                <td>{!!Form::select('planter[]', ['' => 'Select'] +  $match->teams, [], ['class' => 'form-control'])!!}</td>
+                                <td>{!!Form::select('planter[]', ['' => 'Select'] +  $match->rostera->players + $match->rosterb->players, [], ['class' => 'form-control'])!!}</td>
                                 <td>{!!Form::select('site[]', ['' => 'Select', 'a' => 'A', 'b' => 'B'], [], ['class' => 'form-control'])!!}</td>
                                 <td>{!!Form::select('victor[]', ['' => 'Select'] +  $match->teams, [], ['class' => 'form-control'])!!}</td>
                                 <td>{!!Form::select('side[]', ['' => 'Select', 'o' => 'Offense', 'd' => 'Defense'], [], ['class' => 'form-control'])!!}</td>

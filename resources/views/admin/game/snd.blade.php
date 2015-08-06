@@ -68,14 +68,15 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @for($i = 1; $i <= $mode->team_a_score + $mode->team_b_score; $i++)
+                            <?php $existingRounds = $mode->team_a_score + $mode->team_b_score;?>
+                            @for($i = 1; $i <= 11; $i++)
                             <tr>
                                 <td><h5 class="text">Round {!!$i!!}</h5></td>
-                                <td>{!!Form::select('fb[]', ['' => 'Select'] + $match->rostera->players + $match->rosterb->players, ['' => $rounds[$i-1]->fb_player_id],  ['class' => 'form-control'])!!}</td>
-                                <td>{!!Form::select('planter[]', ['' => 'Select'] +  $match->teams, ['' => $rounds[$i-1]->planter_id], ['class' => 'form-control'])!!}</td>
-                                <td>{!!Form::select('site[]', ['' => 'Select', 'a' => 'A', 'b' => 'B'], ['' => $rounds[$i-1]->plant_site], ['class' => 'form-control'])!!}</td>
-                                <td>{!!Form::select('team[]', ['' => 'Select'] +  $match->teams, ['' => $rounds[$i-1]->victor_id], ['class' => 'form-control'])!!}</td>
-                                <td>{!!Form::select('side[]', ['' => 'Select', 'o' => 'Offense', 'd' => 'Defense'], ['' => $rounds[$i-1]->side_won], ['class' => 'form-control'])!!}</td>
+                                <td>{!!Form::select('fb[]', ['' => 'Select'] + $match->rostera->players + $match->rosterb->players, ($i <= $existingRounds ?  ['' => $rounds[$i-1]->fb_player_id] : []),  ['class' => 'form-control'])!!}</td>
+                                <td>{!!Form::select('planter[]', ['' => 'Select'] + $match->rostera->players + $match->rosterb->players, ($i <= $existingRounds ? ['' => $rounds[$i-1]->planter_id] : []), ['class' => 'form-control'])!!}</td>
+                                <td>{!!Form::select('site[]', ['' => 'Select', 'a' => 'A', 'b' => 'B'], ($i <= $existingRounds ? ['' => $rounds[$i-1]->plant_site] : []), ['class' => 'form-control'])!!}</td>
+                                <td>{!!Form::select('team[]', ['' => 'Select'] +  $match->teams, ($i <= $existingRounds ? ['' => $rounds[$i-1]->victor_id] : []), ['class' => 'form-control'])!!}</td>
+                                <td>{!!Form::select('side[]', ['' => 'Select', 'o' => 'Offense', 'd' => 'Defense'], ($i <= $existingRounds ? ['' => $rounds[$i-1]->side_won] : []), ['class' => 'form-control'])!!}</td>
                             </tr>
                             @endfor
                         </tbody>

@@ -371,12 +371,13 @@ class GameController extends Controller {
         //round stuff
         $sides = Input::get('side');
         $fbs = Input::get('fb');
-        $sites = input::get('plant');
+        $sites = input::get('site');
         $planters = Input::get('planter');
         $lms = Input::get('lms');
         $victors = Input::get('victor');
         $aplayers = [];
         //first, set game variables
+
         //TODO: refactor this to be dynamic
         $modeid = 4;
         $mapmode = MapMode::where('map_id', '=', Input::get('map'))->where('mode_id', '=', $modeid)->first();
@@ -396,13 +397,14 @@ class GameController extends Controller {
         {
             $round = new SndRound;
             $round->snd_id = $mode->id;
-            $round->round_number = $i+1;
-            $round->side_won = $sides[$i];
-            $round->victor_id = $victors[$i];
-            $round->fb_player_id = $fbs[$i];
-            $round->lms_player_id = $lms[$i];
-            $round->planter_id = $planters[$i];
-            $round->plant_site = $sites[$i];
+            $round->round_number = $i;
+            $round->side_won = $sides[$i-1];
+            $round->victor_id = $victors[$i-1];
+            $round->fb_player_id = $fbs[$i-1];
+            $round->lms_player_id = $lms[$i-1];
+            $round->planter_id = $planters[$i-1];
+            $round->plant_site = $sites[$i-1];
+            //dd($round->plant_site);
             $round->save();
             $rounds[] = $round;
         }
