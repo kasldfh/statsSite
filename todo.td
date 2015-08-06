@@ -1,14 +1,3 @@
-The only thing left to fix snd is to get rounds properly displaying in update
-  --also possibly not saving when game is created
-
-
-Refactor SndRound stuff
- Store player round stats (lms/fb/lmsW/fbW) in rounds only
-  Remove these stats from SndPlayer(already stored in sndRound)
- Store team round stats (o/dW, plant/plantW)
-  Remove these stats from Snd (already stored in sndRound)
- Refactor SndController@edit
-
 Refactor GameController store method
  Store game/match, then hand off to the modecontrollers to store
 
@@ -17,7 +6,7 @@ migration. Added a rounds getter, perhaps do the team stats in sndcontroller?
 
 Put snd migrations back into migrations folder(when fixed)
 
-Refactor game_number to have its own text box in input, not rely on id hackery
+Add game_number controls to edit stuff, also move all the time divs to a partial
 
 Game shouldn't have score_type column, that's for match
 Update migration for snd stuff
