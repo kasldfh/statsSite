@@ -100,7 +100,7 @@ class GameController extends Controller {
         $map_mode = MapMode::where('map_id', $map)->where('mode_id', $mode)->first();
         $game = new Game;
         $game->match_id = $match->id;
-        $game->game_number = count(Game::where('match_id', $match->id)->get()) + 1;
+        $game->game_number = Input::get('game_num');
         $game->map_mode_id = $map_mode->id;
         $game->save();
         if($mode == 4) {
@@ -356,7 +356,7 @@ class GameController extends Controller {
 
         $game = new Game;
         $game->match_id = $match->id;
-        $game->game_number = count(Game::where('match_id', $match->id)->get()) + 1;
+        $game->game_number = Input::get('game_num');
 
         $mode = new Snd;
 

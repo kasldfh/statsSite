@@ -100,16 +100,20 @@ $( document ).ready(function() {
                 <div class="col-xs-2">
                     <div class="form-group">
                     <label for="minutes">Minutes</label>
-                    <input type="text" name="minutes" class="form-control" size="5">
+                    <input type="text" name="minutes" class="form-control">
                     </div>
                 </div>
 
                 <div class="col-xs-2">
                     <div class="form-group">
                     <label for="seconds">Seconds</label>
-                    <input type="text" name="seconds" class="form-control" size="5">
-                    {{--{!!Form::label('game_time', 'Game Time (IN SECONDS (MINUTES*60 + SECONDS))')!!}--}}
-                    {{--{!! Form::text('game_time', '' , array('class'=>'form-control')) !!}--}}
+                    <input type="text" name="seconds" class="form-control">
+                    </div>
+                </div>
+                <div class="col-xs-2">
+                    <div class="form-group">
+                    <label for="game_num">Game Number</label>
+                    <input type="text" name="game_num" class="form-control">
                     </div>
                 </div>
                 </div>
