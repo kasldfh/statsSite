@@ -12,7 +12,7 @@ use View;
 class TeamController extends Controller {
 
 	public function __construct() {
-    	$this->beforeFilter('auth');
+        $this->middleware('auth');
 	}
 
 	public function create() {

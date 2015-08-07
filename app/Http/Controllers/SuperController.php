@@ -8,7 +8,7 @@ use App\Http\Controllers\Controller;
 class SuperController extends Controller {
 
 	public function __construct() {
-    	$this->beforeFilter('super_auth');
+        $this->middleware('auth');
 	}
 
 	public function create() {

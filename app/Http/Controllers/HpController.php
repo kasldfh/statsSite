@@ -14,7 +14,7 @@ use View;
 
 class HpController extends Controller {
     public function __construct() {
-        $this->beforeFilter('auth');
+        $this->middleware('auth');
     }
     public function update() {
         //TODO: need to remove HpPlayers where player was "unselected"

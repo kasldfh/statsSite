@@ -14,7 +14,7 @@ use Input;
 use Redirect;
 class MatchController extends Controller {
 	public function __construct() {
-    	$this->beforeFilter('auth');
+        $this->middleware('auth');
 	}
 public function create() {
 		$events = Events::all();

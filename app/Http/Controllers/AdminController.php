@@ -8,7 +8,7 @@ use Mail;
 use View;
 class AdminController extends Controller {
 	public function __construct() {
-    	$this->beforeFilter('auth');
+        $this->middleware('auth');
 	}
 	/**
 	 * Display a listing of the resource.

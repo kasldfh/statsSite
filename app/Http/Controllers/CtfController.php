@@ -14,7 +14,7 @@ use View;
 
 class CtfController extends Controller {
     public function __construct() {
-        $this->beforeFilter('auth');
+        $this->middleware('auth');
     }
     public function update() {
         //TODO: need to remove CtfPlayers where player was "unselected"

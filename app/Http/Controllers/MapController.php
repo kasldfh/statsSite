@@ -13,7 +13,7 @@ use View;
 class MapController extends Controller {
 
 	public function __construct() {
-    	$this->beforeFilter('auth');
+        $this->middleware('auth');
 	}
 	public function create() {
 		$game_titles = GameTitle::all();

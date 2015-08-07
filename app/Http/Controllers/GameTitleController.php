@@ -12,7 +12,7 @@ use View;
 class GameTitleController extends Controller {
 
 	public function __construct() {
-    	$this->beforeFilter('auth');
+        $this->middleware('auth');
 	}
 	public function create() {
 		return View::make('admin.game_title.create');

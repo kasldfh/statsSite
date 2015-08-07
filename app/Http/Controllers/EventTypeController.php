@@ -12,7 +12,7 @@ use View;
 class EventTypeController extends Controller {
 
 	public function __construct() {
-    	$this->beforeFilter('auth');
+        $this->middleware('auth');
 	}
 	public function create() {
 		return View::make('admin.event_type.create');

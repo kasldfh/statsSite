@@ -17,14 +17,13 @@ Route::get('iseed', 'SeedController@seed');
 
 Route::resource('teams', 'TeamController');
 
+//start old user stuff
 Route::get('users/login', ['uses' => 'UsersController@login']);
 Route::get('users/logout', ['uses' => 'UsersController@logout']);
 Route::post('users/attempt', ['uses' => 'UsersController@attempt']);
 Route::get('users/create/{token}', ['uses' => 'UsersController@create']);
 Route::post('users/store', ['uses' => 'UsersController@store']);
-
-Route::get('admin/dashboard', ['uses' => 'AdminController@dashboard']);
-Route::get('admin/create', ['uses' => 'AdminController@create']);
+Route::controller('password', 'RemindersController');
 
 Route::get('admin/user/delete/{id}', ['uses' => 'SuperController@delete']);
 Route::get('admin/userv/delete_confirm/{id}', ['uses' => 'SuperController@deleteConfirm']);
@@ -32,6 +31,12 @@ Route::get('admin/userv/delete_confirm/{id}', ['uses' => 'SuperController@delete
 Route::get('admin/user/create', ['uses' => 'SuperController@create']);
 Route::post('admin/user/store', ['uses' => 'SuperController@store']);
 Route::get('admin/user/manage', ['uses' => 'SuperController@manage']);
+//end old user stuff
+
+
+
+Route::get('admin/dashboard', ['uses' => 'AdminController@dashboard']);
+Route::get('admin/create', ['uses' => 'AdminController@create']);
 
 Route::get('admin/test', ['uses' => 'AdminController@test']);
 
@@ -121,4 +126,3 @@ Route::get('leaderboards/uplink', ['uses' => 'LeaderboardController@viewUplink']
 Route::get('leaderboards/snd', ['uses' => 'LeaderboardController@viewSnD']);
 Route::get('leaderboards/{id}', ['uses' => 'LeaderboardController@viewByEvent']);
 
-Route::controller('password', 'RemindersController');

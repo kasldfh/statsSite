@@ -10,7 +10,7 @@ use Redirect;
 use View;
 class MatchTypeController extends Controller {
 	public function __construct() {
-    	$this->beforeFilter('auth');
+        $this->middleware('auth');
 	}
 
 	public function create() {

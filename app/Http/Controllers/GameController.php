@@ -26,7 +26,7 @@ use View;
 class GameController extends Controller {
 
     public function __construct() {
-        $this->beforeFilter('auth');
+        $this->middleware('auth');
     }
     public function create($id) {
         $match = Match::find($id);

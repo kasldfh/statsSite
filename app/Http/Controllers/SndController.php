@@ -16,7 +16,7 @@ use View;
 
 class SndController extends Controller {
     public function __construct() {
-        $this->beforeFilter('auth');
+        $this->middleware('auth');
     }
 
     public function update() {
