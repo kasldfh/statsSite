@@ -15,6 +15,7 @@
 Route::get('iseed', 'SeedController@seed');
 //now matt's routes start
 
+
 Route::resource('teams', 'TeamController');
 
 //start old user stuff

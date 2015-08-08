@@ -1,18 +1,24 @@
 <?php
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\Http\Requests;
+use App\Http\Controllers\Controller;
+
+use Redis;
+use Auth;
 
 class BaseController extends Controller {
 
-	/**
-	 * Setup the layout used by the controller.
-	 *
-	 * @return void
-	 */
-	protected function setupLayout()
-	{
-		if ( ! is_null($this->layout))
-		{
-			$this->layout = View::make($this->layout);
-		}
-	}
+    public function getCachedView($key)
+    {
+        if(Auth::guest())
+            return Redis::get($key);
+    }
 
+    public function cacheView($key, $value)
+    {
+        if(Auth::guest())
+            Redis::set($key, $value);
+    }
 }
