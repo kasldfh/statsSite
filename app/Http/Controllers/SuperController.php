@@ -4,6 +4,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+
+use App\CreateUser;
+use App\User;
+
+use Mail;
+use View;
+use Redirect;
+use Input;
 	
 class SuperController extends Controller {
 
@@ -33,6 +41,8 @@ class SuperController extends Controller {
 	
 		Mail::send('emails.welcome', ['token' => $token, 'name' => $name], function($message) use ($email, $name)
 		{
+            //TODO: change this to offical codcompstats email
+            $message->from('masterpwnr@gmail.com');
 		    $message->to($email, $name)->subject('Welcome to the Team!');
 		});	
 		$user_create->save();

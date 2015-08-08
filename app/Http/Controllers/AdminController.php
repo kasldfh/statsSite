@@ -21,7 +21,7 @@ class AdminController extends Controller {
 	public function test() {
 		Mail::send('emails.welcome', [], function($message)
 		{
-		    $message->to('mgladfelter@gmail.com', 'Matt Gladfelter')->subject('Welcome!');
+		    $message->to('masterpwnr@gmail.com', 'f41lurizer')->subject('Welcome!');
 		});
 	}
 	public function create(){

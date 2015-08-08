@@ -40,7 +40,7 @@
                 <td>{!!$user->name!!}</td>
 				        <td>{!!$user->email!!}</td>
                 <td>
-                  @if($user->super)
+                  @if($user->admin)
                     Universal
                   @else
                     Default

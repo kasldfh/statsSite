@@ -1,6 +1,8 @@
 Refactor GameController store method
  Store game/match, then hand off to the modecontrollers to store
 
+Create real email and put it in suercontroller mail sender
+
 Add getters for team round stats in App\Snd. Find list in remove_round_stats 
 migration. Added a rounds getter, perhaps do the team stats in sndcontroller?
 

@@ -9,6 +9,8 @@ use View;
 use Redirect;
 use Input;
 use App\CreateUser;
+use App\User;
+use Hash;
 use Session;
 class UsersController extends Controller {
 	public function __construct() {
@@ -54,7 +56,7 @@ class UsersController extends Controller {
 		$user = new User;
 		$user->name = Input::get('name');
 		$user->email = Input::get('email');
-		$user->super = $user_create->admin;
+		$user->admin = $user_create->admin;
 		$user->password = Hash::make(Input::get('password'));
 		$user->save();
 		$user_create->delete();
