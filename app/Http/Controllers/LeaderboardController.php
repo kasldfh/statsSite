@@ -7,10 +7,14 @@ use App\Http\Controllers\Controller;
 
 use App\Player;
 use App\Events;
+
 use View;
-class LeaderboardController extends Controller {
+class LeaderboardController extends BaseController {
 
 	public function view() {
+        $cached = parent::getCachedView('leaderboards.overall');
+        if($cached)
+            return $cached;
 		$players = Player::all();
 		$slayerPlayers = Player::all();
 		$sndPlayers = Player::all();
@@ -30,7 +34,9 @@ class LeaderboardController extends Controller {
 			return $sndPlayer->sndkd;
 		});
 
-		return view('leaderboards.view', compact('players', 'slayerPlayers', 'sndPlayers'));
+        $view = view('leaderboards.view', compact('players', 'slayerPlayers', 'sndPlayers'));
+        parent::cacheView('leaderboards.overall', $view);
+        return $view;
 	}
 
 	public function viewByEvent($id) {

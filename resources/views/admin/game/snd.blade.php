@@ -1,4 +1,4 @@
-@extends('layouts.main')
+@extends('layouts.admin')
 @section('content')
 {!! Form::open(array('action'=>'SndController@update', 'class'=>'form-inline', 'id' => 'form','method' => 'patch')) !!}
 {{--<form class="form-inline">--}}

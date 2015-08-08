@@ -1,4 +1,4 @@
-@extends('layouts.main')
+@extends('layouts.admin')
 @section('js')
 {{-- determine if given player id is in the list of players (for determining selected attribute --}}
 <?php
