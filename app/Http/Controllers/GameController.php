@@ -69,17 +69,28 @@ class GameController extends Controller {
         $map = $game->map()->first();
         $game->map = $map;
         $mode;
-        if($game->hp())
+        if($game->hp()->first())
+        {
             $mode = $game->hp()->first();
-        else if ($game->ctf())
+            return Redirect::action('HpController@edit', ['id' => $id]);
+        }
+        else if ($game->ctf()->first())
+        {
             $mode = $game->ctf()->first();
-        else if($game->uplink())
+            return Redirect::action('CtfController@edit', ['id' => $id]);
+        }
+        else if($game->uplink()->first())
+        {
             $mode = $game->uplink()->first();
-        else if($game->snd())
+            return Redirect::action('UplinkController@edit', ['id' => $id]);
+        }
+        else if($game->snd()->first())
+        {
             $mode = $game->snd()->first();
+            return Redirect::action('SndController@edit', ['id' => $id]);
+        }
         else
             dd("wtf");
-        return View::make('admin.game.edit', compact('game', 'mode', 'match', 'modes', 'maps', 'mode_map'));
     }
 
 

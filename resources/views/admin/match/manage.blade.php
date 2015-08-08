@@ -27,6 +27,7 @@
                 <th>Match Type</th>
                 <th>Score Type</th>
                 <th>Add Map</th>
+                <th>Manage Maps</th>
                 <th>Delete</th>
             </tr>
         </thead>
@@ -54,10 +55,12 @@
                 <td>{!! $match->type->name !!}</td>
                 <td>{!! $match->score->name_short !!}</td>
                 <td>
-                  @if($match->score_type_id != 3)
                   {!! link_to_action('GameController@create', 'Add Map', ['id' => $match->id], ['class' => 'btn btn-default']) !!}
-                  @endif
                 </td>
+                <td>
+                  {!! link_to_action('GameController@manage', 'Manage Maps', ['id' => $match->id], ['class' => 'btn btn-default']) !!}
+               </td> 
+
                 <td><button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#{!! $match->id !!}">Delete</button></td>
             </tr>
             <div class="modal fade" id="{!! $match->id !!}" tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true">

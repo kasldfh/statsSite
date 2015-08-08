@@ -119,8 +119,8 @@ class SndController extends Controller {
         //TODO: host stuff
     }
 
-    return ("<h1>Map Updated</h1>");
-    //return Redirect::action('AdminController@dashboard');
+    //return ("<h1>Map Updated</h1>");
+    return Redirect::action('AdminController@dashboard');
     //dd($aplayers);
     //dd($snd);
     //dd($match);
