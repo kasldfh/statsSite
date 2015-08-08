@@ -3,6 +3,10 @@ Refactor GameController store method
 
 Create real email and put it in suercontroller mail sender
 
+For caching, cache the smaller parts as we go along so eventually we
+don't need to cache full views (when this happens we can add back the
+admin and logout links to all pages)
+
 Add getters for team round stats in App\Snd. Find list in remove_round_stats 
 migration. Added a rounds getter, perhaps do the team stats in sndcontroller?
 
