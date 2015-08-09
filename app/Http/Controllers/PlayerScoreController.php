@@ -32,7 +32,6 @@ class PlayerScoreController extends BaseController {
                 {
                     if($game->hp()->first())
                     {
-                        dd($games);
                         $mode = $game->hp()->first();
                         foreach($mode->players()->get() as $hpPlayer)
                         {
