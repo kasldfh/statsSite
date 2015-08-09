@@ -18,6 +18,9 @@ Route::get('iseed', 'SeedController@seed');
 
 Route::resource('teams', 'TeamController');
 
+//player fantasy rankings
+Route::get('fantasy', ['uses' => 'PlayerScoreController@playerScores']);
+
 //start old user stuff
 Route::get('users/login', ['uses' => 'UsersController@login']);
 Route::get('users/logout', ['uses' => 'UsersController@logout']);
