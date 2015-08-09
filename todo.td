@@ -10,9 +10,13 @@ admin and logout links to all pages)
 Add getters for team round stats in App\Snd. Find list in remove_round_stats 
 migration. Added a rounds getter, perhaps do the team stats in sndcontroller?
 
+make game number something that is entered and edited
+
 Put snd migrations back into migrations folder(when fixed)
 
 Add game_number controls to edit stuff, also move all the time divs to a partial
+
+add host stuff back in
 
 Game shouldn't have score_type column, that's for match
 Update migration for snd stuff
@@ -51,3 +55,14 @@ Do I actually need the event_source stuff?
         $round->save
     }
 
+formula for vulcun
+hp kills * 1
+hp deaths * .6
+uplink kills * 1.1
+uplink deaths * -.8
+snd kills * 2
+snd deaths * -1.2
+hp caps 1
+hp defends 1
+uplink points 3
+snd plants 3

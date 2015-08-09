@@ -101,10 +101,10 @@ class Player extends Model {
 		foreach ($matches as $match) {
 			$games = $match->games;
 			foreach ($games as $game) {
-				$ctf = $game->ctf;
-				$snd = $game->snd;
-				$hp = $game->hp;
-				$uplink = $game->uplink;
+				$ctf = $game->ctf()->get();
+				$snd = $game->snd()->get();
+				$hp = $game->hp()->get();
+				$uplink = $game->uplink()->get();
 				foreach ($ctf as $ctf_game) {
 					foreach ($ctf_game->players as $player) {
 						if($player->player_id == $this->id) {
