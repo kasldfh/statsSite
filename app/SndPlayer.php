@@ -21,4 +21,8 @@ class SndPlayer extends Model {
 	public function game() {
 		return $this->hasOne("App\Snd", "id", "snd_id");
 	}
+
+    public function player() {
+        return $this->hasOne('App\Player', 'id', 'player_id');
+    }
 }

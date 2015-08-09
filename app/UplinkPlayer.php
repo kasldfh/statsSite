@@ -20,4 +20,8 @@ class UplinkPlayer extends Model {
 	public function game() {
 		return $this->hasOne("App\Uplink", "id", "uplink_id");
 	}
+
+    public function player() {
+        return $this->hasOne('App\Player', 'id', 'player_id');
+    }
 }

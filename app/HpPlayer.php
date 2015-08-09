@@ -20,4 +20,8 @@ class HpPlayer extends Model {
 	public function game() {
 		return $this->hasOne("App\Hp", "id", "hp_id");
 	}
+
+    public function player() {
+        return $this->hasOne('App\Player', 'id', 'player_id');
+    }
 }

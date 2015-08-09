@@ -20,4 +20,8 @@ class CtfPlayer extends Model {
 	public function game() {
 		return $this->hasOne("App\Ctf", "id", "ctf_id");
 	}
+
+    public function player() {
+        return $this->hasOne('App\Player', 'id', 'player_id');
+    }
 }
