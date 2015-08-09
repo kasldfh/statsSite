@@ -23,7 +23,7 @@ use Input;
 use Redirect;
 use View;
 
-class GameController extends Controller {
+class GameController extends BaseController {
 
     public function __construct() {
         $this->middleware('auth');
@@ -53,7 +53,7 @@ class GameController extends Controller {
         return View::make('admin.game.manage', compact('games'));
     }
     public function edit($id) {
-        //placeholder
+        parent::cacheRemove("stat*");
         $game = Game::findOrFail($id);
         $match = $game->match()->first();
         $modes = Mode::with('maplink.map')->get();
@@ -96,6 +96,7 @@ class GameController extends Controller {
 
     public function store() {
         //DBug::DBug(Input::all(), true);
+        parent::cacheRemove("stat*");
         $mode = Input::get('mode');
         if($mode == 4) {
             return $this->createSnd();
@@ -109,12 +110,13 @@ class GameController extends Controller {
         $map = Input::get('map');
         $mode = Input::get('mode');
         $map_mode = MapMode::where('map_id', $map)->where('mode_id', $mode)->first();
+        $mode = Mode::find($mode);
         $game = new Game;
         $game->match_id = $match->id;
         $game->game_number = Input::get('game_num');
         $game->map_mode_id = $map_mode->id;
         $game->save();
-        if($mode == 4) {
+        if($mode->name == 'Search and Destroy') {
             $snd = new Snd;
             $scores = Input::get('team');
             $side = Input::get('side');
@@ -251,7 +253,7 @@ class GameController extends Controller {
                 $snd_player->host = $pHost == $player;
                 $snd_player->save();
             }
-        } elseif($mode == 2) {
+        } elseif($mode->name == 'Capture the Flag') {
             $ctf = new Ctf;
             $ctf->game_id = $game->id;
             if(!is_null($host)) {
@@ -285,7 +287,7 @@ class GameController extends Controller {
                 $ctf_player->host = $pHost == $player;
                 $ctf_player->save();
             }
-        } elseif($mode == 4) {
+        } elseif($mode->name == 'Uplink') {
             $uplink = new Uplink;
             $uplink->game_id = $game->id;
             if(!is_null($host)) {
@@ -319,7 +321,7 @@ class GameController extends Controller {
                 $uplink_player->host = $pHost == $player;
                 $uplink_player->save();
             }
-        } elseif($mode == 5) {
+        } elseif($mode->name == 'Hardpoint') {
             $hp = new Hp;
             if(!is_null($host)) {
                 $hp->team_a_host = $host == 'a';
@@ -352,7 +354,6 @@ class GameController extends Controller {
                 $hp_player->save();
             }
         }
-
         return Redirect::action('MatchController@manage');
     }
 
