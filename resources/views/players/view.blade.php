@@ -118,7 +118,7 @@
         @if(!is_null($player->photo_url))
         <img class="player_img img-center img-responsive" src="{!!$player->photo_url!!}" style="width: 75%;"/>
         @else
-        <img class="player_img img-center img-responsive" src="http://codstreams.net/uploads/players/alt.png" style="width: 75%;"/>
+        <img class="player_img img-center img-responsive" src="{{ URL::to('/') }}/assets/img/default.png" style="width: 75%;"/>
         @endif
       </div>
 
