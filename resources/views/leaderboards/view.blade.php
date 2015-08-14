@@ -48,10 +48,6 @@
 @endsection
 
 @section('js')
-<script type="text/javascript">
-  var allPlayers = {!!$players!!};
-  console.log(allPlayers);
-</script>
 @endsection
 @section('content')
 @if(isset($event))
@@ -145,7 +141,7 @@
 
           </tr>
           <?php $j=1; ?>
-          @foreach($slayerPlayers as $player)
+          @foreach($slayers as $player)
           @if($j<=25)
           <tr>
             <td
