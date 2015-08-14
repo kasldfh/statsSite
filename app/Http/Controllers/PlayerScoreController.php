@@ -18,7 +18,7 @@ class PlayerScoreController extends BaseController {
         $hours_delay = $hours_delay ? $hours_delay : 12;
         $event_id = Input::get('event_id');
 
-        $cached = parent::getCached('stat:playerscores:'.$hours_delay);
+        $cached = parent::cacheGet('stat:playerscores:'.$hours_delay);
         if($cached)
             $cached = json_decode($cached);
         if(!$cached)
