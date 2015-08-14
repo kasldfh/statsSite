@@ -161,6 +161,8 @@ public function edit($id)
             if($player->player_id == $aplayer->player->id)
             {
                 $player->alias = $aplayer->player->alias;
+                if($player->host)
+                    $mode->pHost = $player->player_id;
                 $ascores[] = $player;
             }
     $bscores = [];
@@ -169,6 +171,8 @@ public function edit($id)
             if($player->player_id == $bplayer->player->id)
             {
                 $player->alias = $bplayer->player->alias;
+                if($player->host)
+                    $mode->pHost = $player->player_id;
                 $bscores[] = $player;
             }
 
