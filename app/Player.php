@@ -3,6 +3,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use App\Ctf;
 use App\CtfPlayer;
+use App\Match;
 class Player extends Model {
 
 	public $timestamps = true; 
@@ -18,6 +19,9 @@ class Player extends Model {
 	 *
 	 * @var array
 	 */
+    //protected $appends = ['kd'];
+    //protected $hidden = ['kd'];
+
 	public function rostermap() {
 		return $this->hasMany('App\PlayerRoster', 'player_id', 'id')->orderBy('id', 'desc');
 	}
@@ -47,6 +51,7 @@ class Player extends Model {
 		}
 		return ($deaths != 0) ? round($kills / $deaths, 2) : 0;
 	}
+
 	public function kdByEvent($id) {
 		$matches = Events::find($id)->matches;
 		$kills = 0;
@@ -194,31 +199,34 @@ class Player extends Model {
 		}
 		return $map_count;
 	}
-	public function sndkdByEvent($id) {
-		$matches = Events::find($id)->matches;
+    //if all events, leave id blank
+    //otherwise specify an event
+	public function sndkd($id = 0) {
+		//$matches = Events::find($id)->matches;
+		$matches = $id ? Events::find($id)->matches : Match::all();
 		$kills = 0;
 		$deaths = 0;
 		foreach ($matches as $match) {
 			$games = $match->games;
 			foreach ($games as $game) {
 				$snd = $game->snd;
-			
-				foreach ($snd as $snd_game) {
-					foreach ($snd_game->players as $player) {
+				if($snd) {
+					foreach ($snd->players as $player) {
 						if($player->player_id == $this->id) {
 							$kills += $player->kills;
 							$deaths += $player->deaths;
 						}
 					}
 				}
-				
 			}
 		}
 		return $deaths != 0 ? round(($kills / $deaths), 2) : 0;
 	}
 
-	public function slayerByEvent($id) {
-		$matches = Events::find($id)->matches;
+    //if all events, leave id blank
+    //otherwise specify an event
+	public function slayer($id = 0) {
+		$matches = $id ? Events::find($id)->matches : Match::all();
 		$kills = 0;
 		$game_time = 0;
 		foreach ($matches as $match) {
@@ -228,32 +236,32 @@ class Player extends Model {
 				$snd = $game->snd;
 				$hp = $game->hp;
 				$uplink = $game->uplink;
-				foreach ($ctf as $ctf_game) {
-					foreach ($ctf_game->players as $player) {
+				if($ctf){
+					foreach ($ctf->players as $player) {
 						if($player->player_id == $this->id) {
 							$kills += $player->kills;
 							$game_time += $player->game->game_time;
 						}
 					}
 				}
-				foreach ($snd as $snd_game) {
-					foreach ($snd_game->players as $player) {
+				if($snd) {
+					foreach ($snd->players as $player) {
 						if($player->player_id == $this->id) {
 							$kills += $player->kills;
 							$game_time += $player->game->game_time;
 						}
 					}
 				}
-				foreach ($hp as $hp_game) {
-					foreach ($hp_game->players as $player) {
+				if($hp) {
+					foreach ($hp->players as $player) {
 						if($player->player_id == $this->id) {
 							$kills += $player->kills;
 							$game_time += $player->game->game_time;
 						}
 					}
 				}
-				foreach ($uplink as $uplink_game) {
-					foreach ($uplink_game->players as $this->player) {
+				if($uplink) {
+					foreach ($uplink->players as $this->player) {
 						if($player->player_id == $id) {
 							$kills += $player->kills;
 							$game_time += $player->game->game_time;

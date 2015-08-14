@@ -9,40 +9,57 @@ use App\Player;
 use App\Events;
 
 use View;
+
 class LeaderboardController extends BaseController {
 
-	public function view() {
-        $cached = parent::getCachedView('leaderboards.overall');
-        if($cached)
-            return $cached;
-		$players = Player::all();
-		$slayerPlayers = Player::all();
-		$sndPlayers = Player::all();
-		
-		$players = $players->sortByDesc(function($player)
-		{
-			return $player->kd;
-		});
+    public function view() {
+        $players = parent::cacheRequest('stat:kd:all:all', function() {
+            $with = ['rostermap', 'rostermap.roster', 'rostermap.roster.team'];
+            $players = Player::with($with)->get();
+            for($i = 0; $i < count($players); $i++)
+            {
+                $players[$i]->kd = $players[$i]->kd;
+                parent::cacheSet('stat:kd:all:'.$players[$i]->id, 
+                    $players[$i]->kd);
+            }
+            $players = $players->sortByDesc('kd');
+            return $players;
+        }, true);
 
-		$slayerPlayers = $slayerPlayers->sortByDesc(function($slayerPlayer)
-		{
-			return $slayerPlayer->slayer;
-		});
+        $slayers = parent::cacheRequest('stat:slayer:all:all', function() {
+            $with = ['rostermap', 'rostermap.roster', 'rostermap.roster.team'];
+            $slayers = Player::with($with)->get();
+            for($i = 0; $i < count($slayers); $i++)
+            {
+                $slayers[$i]->slayer = $slayers[$i]->slayer();
+                parent::cacheSet('stat:slayer:all:'.$slayers[$i]->id, 
+                    $slayers[$i]->slayer());
+            }
+            $slayers = $slayers->sortByDesc('slayer');
+            return $slayers;
+        }, true);
 
-		$sndPlayers = $sndPlayers->sortByDesc(function($sndPlayer)
-		{
-			return $sndPlayer->sndkd;
-		});
+        $sndPlayers = parent::cacheRequest('stat:sndkd:all:all', function() {
+            $with = ['rostermap', 'rostermap.roster', 'rostermap.roster.team'];
+            $players = Player::with($with)->get();
+            for($i = 0; $i < count($players); $i++)
+            {
+                $players[$i]->sndkd = $players[$i]->sndkd();
+                parent::cacheSet('stat:sndkd:all:'.$players[$i]->id, 
+                    $players[$i]->sndkd());
+            }
+            $players = $players->sortByDesc('sndkd');
+            return $players;
+        }, true);
 
-        $view = view('leaderboards.view', compact('players', 'slayerPlayers', 'sndPlayers'));
-        parent::cacheView('leaderboards.overall', $view);
-        return $view;
-	}
+        return view('leaderboards.view', 
+            compact('players', 'slayers', 'sndPlayers'));
+    }
 
 	public function viewByEvent($id) {
 		$event = Events::find($id);
 		$players = Player::all();
-		$slayerPlayers = Player::all();
+		$slayers = Player::all();
 		$sndPlayers = Player::all();
 		
 		$players = $players->sortByDesc(function($player) use($id)
@@ -50,7 +67,7 @@ class LeaderboardController extends BaseController {
 			return $player->kdByEvent($id);
 		});
 
-		$slayerPlayers = $slayerPlayers->sortByDesc(function($slayerPlayer) use($id)
+		$slayers = $slayers->sortByDesc(function($slayerPlayer) use($id)
 		{
 			return $slayerPlayer->slayerByEvent($id);
 		});
@@ -61,8 +78,9 @@ class LeaderboardController extends BaseController {
 		});
 
 		// dd($players);
-		return View::make('leaderboards.view', compact('event', 'players', 'slayerPlayers', 'sndPlayers'));
+		return View::make('leaderboards.view', compact('event', 'players', 'slayers', 'sndPlayers'));
 	}
+
 	public function viewCTF() {
 		$ctfCapsPlayers = Player::all();
 		$ctfKDPlayers = Player::all();
