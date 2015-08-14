@@ -198,9 +198,7 @@ class GameController extends BaseController {
             }
 
             $snd->game_id = $game->id;
-            if(!is_null($host)) {
-                $snd->team_a_host = $host == 'a';
-            }
+            $snd->team_host_id = $host;
             $snd->team_a_score = Input::get('a_snd_score', 0);
             $snd->team_b_score = Input::get('b_snd_score', 0);
             $snd->a_offense_wins = $a_offense;
@@ -256,9 +254,7 @@ class GameController extends BaseController {
         } elseif($mode->name == 'Capture the Flag') {
             $ctf = new Ctf;
             $ctf->game_id = $game->id;
-            if(!is_null($host)) {
-                $ctf->team_a_host = $host == 'a';
-            }
+            $ctf->team_host_id = $host;
             $ctf->team_a_score = Input::get('a_ctf_score');
             $ctf->team_b_score = Input::get('b_ctf_score');
             $ctf->game_time = Input::get('minutes') * 60 + Input::get('seconds');
@@ -290,9 +286,7 @@ class GameController extends BaseController {
         } elseif($mode->name == 'Uplink') {
             $uplink = new Uplink;
             $uplink->game_id = $game->id;
-            if(!is_null($host)) {
-                $uplink->team_a_host = $host == 'a';
-            }
+            $uplink->team_host_id = $host;
             $uplink->team_a_score = Input::get('a_uplink_score');
             $uplink->team_b_score = Input::get('b_uplink_score');
             $uplink->game_time = Input::get('minutes') * 60 + Input::get('seconds');
@@ -323,9 +317,7 @@ class GameController extends BaseController {
             }
         } elseif($mode->name == 'Hardpoint') {
             $hp = new Hp;
-            if(!is_null($host)) {
-                $hp->team_a_host = $host == 'a';
-            }
+            $hp->team_host_id = $host;
             $hp->game_id = $game->id;
             $hp->team_a_score = Input::get('a_hp_score');
             $hp->team_b_score = Input::get('b_hp_score');
@@ -402,6 +394,8 @@ class GameController extends BaseController {
         $mode->game_time = Input::get('minutes') * 60 + Input::get('seconds');
         $mode->a_victory = $mode->team_a_score > $mode->team_b_score ? 1 : 0;
         $mode->game_id = $game->id;
+        $mode->team_host_id = Input::get('host');
+        $phost = Input::get('p_host');
         $mode->save();
 
         $rounds = [];
@@ -437,6 +431,7 @@ class GameController extends BaseController {
             $aplayer->first_blood_wins = $this->fbWins($rounds, $aplayerid, $match->roster_a_id);
             $aplayer->last_man_standing = $this->lms($rounds, $aplayerid);
             $aplayer->last_man_standing_wins = $this->lmsWins($rounds, $aplayerid, $match->roster_a_id);
+            $aplayer->host = $phost ? $phost : null;
             $aplayer->save();
             $i++;
             //TODO: host stuff
@@ -455,12 +450,14 @@ class GameController extends BaseController {
             $bplayer->first_blood_wins = $this->fbWins($rounds, $bplayerid, $match->roster_b_id);
             $bplayer->last_man_standing = $this->lms($rounds, $bplayerid);
             $bplayer->last_man_standing_wins = $this->lmsWins($rounds, $bplayerid, $match->roster_b_id);
+            $bplayer->host = $phost ? $phost : null;
             $bplayer->save();
             $i++;
             //TODO: host stuff
         }
-        return "<h1>Snd Map Stored</h1>";
+        return Redirect::action('MatchController@manage');
     }
+
     private function fbs($rounds, $id)
     {
         $fbs = 0;
