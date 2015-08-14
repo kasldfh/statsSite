@@ -1,7 +1,25 @@
 Refactor GameController store method
  Store game/match, then hand off to the modecontrollers to store
 
+host in createSnd
+
+in leaderboardcontroller@viewbyevent, don't use all players -- just the ones
+who are on rosters that were added to that event. this also means we have to
+add rosters to events, and have a manage thing. also, maybe add something 
+on event.php to return the list of players at that event 
+a roster_event class and model have been created -- still needs a controller
+for basic rest stuff
+
+refactor events to be event
+
+add caching in leaderboardcontroller@viewbyevent
+
+if something is nulled (ex hp kills), when editing map it should be
+blank, not 0
+
+
 Create real email and put it in suercontroller mail sender
+
 
 For caching, cache the smaller parts as we go along so eventually we
 don't need to cache full views (when this happens we can add back the
@@ -58,11 +76,20 @@ Do I actually need the event_source stuff?
 formula for vulcun
 hp kills * 1
 hp deaths * .6
-uplink kills * 1.1
-uplink deaths * -.8
-snd kills * 2
-snd deaths * -1.2
 hp caps 1
 hp defends 1
+
+uplink kills * 1.1
+uplink deaths * -.8
 uplink points 3
+
 snd plants 3
+snd kills * 2
+snd deaths * -1.2
+
+
+Add something liek this for the bans/picks/protects
+so im thinking it'll look like this
+pick 1 | player | ban/pro | thing | weapon used | specialist used| whatever else|
+.....
+pick 8
