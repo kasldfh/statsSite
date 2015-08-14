@@ -19,17 +19,17 @@ class DatabaseSeeder extends Seeder
 
         //Model::reguard();
     	$this->call('PlayerTableSeeder');
-		$this->call('CtfTableSeeder');
-		$this->call('CtfPlayerTableSeeder');
+		//$this->call('CtfTableSeeder');
+		//$this->call('CtfPlayerTableSeeder');
 		$this->call('EventTableSeeder');
 		$this->call('EventTypeTableSeeder');
-		$this->call('GameTableSeeder');
+		//$this->call('GameTableSeeder');
 		$this->call('GameTitleTableSeeder');
-		$this->call('HpTableSeeder');
-		$this->call('HpPlayerTableSeeder');
+		//$this->call('HpTableSeeder');
+		//$this->call('HpPlayerTableSeeder');
 		$this->call('MapTableSeeder');
 		$this->call('MapModeTableSeeder');
-		$this->call('MatchTableTableSeeder');
+		//$this->call('MatchTableTableSeeder');
 		$this->call('MatchTypeTableSeeder');
 		$this->call('MigrationsTableSeeder');
 		$this->call('ModeTableSeeder');
@@ -42,8 +42,8 @@ class DatabaseSeeder extends Seeder
 		//$this->call('SndTableSeeder');
 		//$this->call('SndPlayerTableSeeder');
 		$this->call('TeamTableSeeder');
-		$this->call('UplinkTableSeeder');
-		$this->call('UplinkPlayerTableSeeder');
-		$this->call('UsersTableSeeder');
+		//$this->call('UplinkTableSeeder');
+		//$this->call('UplinkPlayerTableSeeder');
+		//$this->call('UsersTableSeeder');
 	}
 }
