@@ -9,29 +9,40 @@ use Redis;
 use Auth;
 
 class BaseController extends Controller {
+    /* Cache key conventions 
+     * player:{id}              -- player model, json encoded
+     * player:all               -- player model all, json encoded
 
-    public function getCachedView($key)
-    {
+     * stat:{stat}:{all}:{all}      -- all events, all player kd's, sorted desc, json encoded
+     * stat:{stat}:{all}:{playerid} --      player kd, for all events
+     * stat:{stat}:{eventid}:{playerid} -- player kd at event
+     */
+
+    public function getCachedView($key) {
         if(Auth::guest())
             return Redis::get($key);
     }
 
-    public function cacheView($key, $value)
-    {
+    public function cacheView($key, $value) {
         if(Auth::guest())
             Redis::set($key, $value);
     }
 
-    public function getCached($key)
-    {
-        if(Auth::guest())
+    public function cacheGet($key) {
             return Redis::get($key);
     }
 
-    public function cache($key, $value)
-    {
-        if(Auth::guest())
+    public function cacheSet($key, $value) {
             Redis::set($key, $value);
+    }
+
+    public function cacheRequest($key, $closure, $json = false) {
+        $cached = $this->cacheGet($key);
+        if($cached)
+            return $json ? json_decode($cached) : $cached;
+        $cached = $json ? json_encode($closure()) : $closure();
+        $this->cacheSet($key, $cached);
+        return $json ? json_decode($cached) : $cached;
     }
 
     //remove keys by prefix, can be array or str
@@ -50,6 +61,11 @@ class BaseController extends Controller {
                 Redis::del($key);
             }
         }
-        dd($input);
+    }
+
+    //not sure if this will be used 
+    public function cacheClearCommon()
+    {
+        $this->cacheRemove(["stat*", "player*"]);
     }
 }
