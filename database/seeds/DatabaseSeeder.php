@@ -31,7 +31,6 @@ class DatabaseSeeder extends Seeder
 		$this->call('MapModeTableSeeder');
 		//$this->call('MatchTableTableSeeder');
 		$this->call('MatchTypeTableSeeder');
-		$this->call('MigrationsTableSeeder');
 		$this->call('ModeTableSeeder');
 		$this->call('PasswordRemindersTableSeeder');
 		$this->call('PasswordResetsTableSeeder');
