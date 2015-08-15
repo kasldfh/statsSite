@@ -18,10 +18,10 @@ class Hp extends Model {
 	 * @var array
 	 */
 	public function players() {
-		return $this->hasMany('App\Models\Models\HpPlayer', 'hp_id', 'id');
+		return $this->hasMany('App\Models\HpPlayer', 'hp_id', 'id');
 	}
     public function game()
     {
-        return $this->belongsTo('App\Models\Models\Game', 'game_id', 'id');
+        return $this->belongsTo('App\Models\Game', 'game_id', 'id');
     }
 }

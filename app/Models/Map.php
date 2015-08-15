@@ -18,7 +18,7 @@ class Map extends Model {
 	 * @var array
 	 */
 	public function title() {
-		return $this->hasOne('App\Models\Models\GameTitle', 'id', 'game_title_id');
+		return $this->hasOne('App\Models\GameTitle', 'id', 'game_title_id');
 	}
 	
 }

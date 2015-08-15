@@ -19,10 +19,10 @@ class PlayerRoster extends Model {
 	 */
 	
 	public function player() {
-		return $this->hasOne('App\Models\Models\Player', 'id', 'player_id');
+		return $this->hasOne('App\Models\Player', 'id', 'player_id');
 	}
 
 	public function roster() {
-		return $this->hasOne('App\Models\Models\Roster', 'id', 'roster_id');
+		return $this->hasOne('App\Models\Roster', 'id', 'roster_id');
 	}
 }

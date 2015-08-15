@@ -10,6 +10,6 @@ class SndRound extends Model
 	protected $table = 'snd_round';
 
 	public function game() {
-		return $this->hasOne("App\Models\Models\Snd", "id", "snd_id");
+		return $this->hasOne("App\Models\Snd", "id", "snd_id");
 	}
 }

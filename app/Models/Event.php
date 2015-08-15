@@ -18,15 +18,15 @@ class Event extends Model {
 	 * @var array
 	 */
 	public function title() {
-		return $this->hasOne('App\Models\Models\GameTitle', 'id', 'game_title_id');
+		return $this->hasOne('App\Models\GameTitle', 'id', 'game_title_id');
 	}
 
 	public function type() {
-		return $this->hasOne('App\Models\Models\EventType', 'id', 'event_type_id');
+		return $this->hasOne('App\Models\EventType', 'id', 'event_type_id');
 	}
 
 	public function matches() {
-		return $this->hasMany('App\Models\Models\Match', 'event_id', 'id');
+		return $this->hasMany('App\Models\Match', 'event_id', 'id');
 	}
 
 	public function getPlayed($id) {

@@ -19,10 +19,10 @@ class SndPlayer extends Model {
 	 */
 	
 	public function game() {
-		return $this->hasOne("App\Models\Models\Snd", "id", "snd_id");
+		return $this->hasOne("App\Models\Snd", "id", "snd_id");
 	}
 
     public function player() {
-        return $this->hasOne('App\Models\Models\Player', 'id', 'player_id');
+        return $this->hasOne('App\Models\Player', 'id', 'player_id');
     }
 }

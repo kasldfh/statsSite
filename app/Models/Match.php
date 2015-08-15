@@ -19,19 +19,19 @@ class Match extends Model {
 	 */
 
 	public function score() {
-		return $this->hasOne('App\Models\Models\ScoreType', 'id', 'score_type_id');
+		return $this->hasOne('App\Models\ScoreType', 'id', 'score_type_id');
 	}
 	public function rostera() {
-		return $this->hasOne('App\Models\Models\Roster', 'id', 'roster_a_id');
+		return $this->hasOne('App\Models\Roster', 'id', 'roster_a_id');
 	}
 	public function rosterb() {
-		return $this->hasOne('App\Models\Models\Roster', 'id', 'roster_b_id');
+		return $this->hasOne('App\Models\Roster', 'id', 'roster_b_id');
 	}
 	public function event() {
-		return $this->hasOne('App\Models\Models\Event', 'id', 'event_id');
+		return $this->hasOne('App\Models\Event', 'id', 'event_id');
 	}
 	public function type() {
-		return $this->hasOne('App\Models\Models\MatchType', 'id', 'match_type_id');
+		return $this->hasOne('App\Models\MatchType', 'id', 'match_type_id');
 	}
 
 	public function getTeamsAttribute(){
@@ -48,6 +48,6 @@ class Match extends Model {
 		return $teams;
 	}
 	public function games(){
-		return $this->hasMany('App\Models\Models\Game', 'match_id', 'id');
+		return $this->hasMany('App\Models\Game', 'match_id', 'id');
 	}
 }

@@ -18,23 +18,23 @@ class Game extends Model {
 	 * @var array
 	 */
 	public function hp() {
-		return $this->hasOne('App\Models\Models\Hp', 'game_id', 'id');
+		return $this->hasOne('App\Models\Hp', 'game_id', 'id');
 	}
 
 	public function ctf() {
-		return $this->hasOne('App\Models\Models\Ctf', 'game_id', 'id');
+		return $this->hasOne('App\Models\Ctf', 'game_id', 'id');
 	}
 
 	public function snd() {
-		return $this->hasOne('App\Models\Models\Snd', 'game_id', 'id');
+		return $this->hasOne('App\Models\Snd', 'game_id', 'id');
 	}
 
 	public function uplink() {
-		return $this->hasOne('App\Models\Models\Uplink', 'game_id', 'id');
+		return $this->hasOne('App\Models\Uplink', 'game_id', 'id');
 	}
     //added by fail (all under this)
     public function mapmode() {
-        $retval =  $this->hasOne('App\Models\Models\MapMode',  'id','map_mode_id');
+        $retval =  $this->hasOne('App\Models\MapMode',  'id','map_mode_id');
         return $retval;
         //return $mapMode;
     }
@@ -52,7 +52,7 @@ class Game extends Model {
     }
     public function match()
     {
-        return $this->belongsTo('App\Models\Models\Match');
+        return $this->belongsTo('App\Models\Match');
     }
 
 }

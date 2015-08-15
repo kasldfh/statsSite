@@ -18,11 +18,11 @@ class Snd extends Model {
 	 * @var array
 	 */
 	public function players() {
-		return $this->hasMany('App\Models\Models\SndPlayer', 'snd_id', 'id');
+		return $this->hasMany('App\Models\SndPlayer', 'snd_id', 'id');
 	}
 
     public function rounds() {
-        return $this->hasMany('App\Models\Models\SndRound', 'snd_id', 'id');
+        return $this->hasMany('App\Models\SndRound', 'snd_id', 'id');
     }
 
 }

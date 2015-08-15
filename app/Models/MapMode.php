@@ -19,10 +19,10 @@ class MapMode extends Model {
 	 */
 	
 	public function map() {
-		return $this->hasOne('App\Models\Models\Map', 'id', 'map_id');
+		return $this->hasOne('App\Models\Map', 'id', 'map_id');
 	}
 
 	public function mode() {
-		return $this->hasOne('App\Models\Models\Mode', 'id', 'mode_id');
+		return $this->hasOne('App\Models\Mode', 'id', 'mode_id');
 	}
 }

@@ -18,11 +18,11 @@ class Mode extends Model {
 	 * @var array
 	 */
 	public function title() {
-		return $this->hasOne('App\Models\Models\GameTitle', 'id', 'game_title_id');
+		return $this->hasOne('App\Models\GameTitle', 'id', 'game_title_id');
 	}
 
 	public function maplink(){
-		return $this->hasMany('App\Models\Models\MapMode', 'mode_id', 'id');
+		return $this->hasMany('App\Models\MapMode', 'mode_id', 'id');
 	}
 
 }
