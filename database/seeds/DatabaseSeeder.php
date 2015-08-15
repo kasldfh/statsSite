@@ -36,7 +36,6 @@ class DatabaseSeeder extends Seeder
 		$this->call('PasswordResetsTableSeeder');
 		$this->call('PlayerRosterTableSeeder');
 		$this->call('RosterTableSeeder');
-		$this->call('RosterToEventTableSeeder');
 		$this->call('ScoreTypeTableSeeder');
 		//$this->call('SndTableSeeder');
 		//$this->call('SndPlayerTableSeeder');
