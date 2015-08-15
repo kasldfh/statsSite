@@ -1,3 +1,3 @@
 @foreach ($players as $player)
-{{$player->name}}
+{!!$player->name!!}
 @endforeach

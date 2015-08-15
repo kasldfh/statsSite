@@ -12,10 +12,38 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        Model::unguard();
+        //Model::unguard();
 
-        // $this->call('UserTableSeeder');
+        //$this->call('UserTableSeeder');
+        //factory(App\User::class, 50)->create();
 
-        Model::reguard();
-    }
+        //Model::reguard();
+    	$this->call('PlayerTableSeeder');
+		//$this->call('CtfTableSeeder');
+		//$this->call('CtfPlayerTableSeeder');
+		$this->call('EventTableSeeder');
+		$this->call('EventTypeTableSeeder');
+		//$this->call('GameTableSeeder');
+		$this->call('GameTitleTableSeeder');
+		//$this->call('HpTableSeeder');
+		//$this->call('HpPlayerTableSeeder');
+		$this->call('MapTableSeeder');
+		$this->call('MapModeTableSeeder');
+		//$this->call('MatchTableTableSeeder');
+		$this->call('MatchTypeTableSeeder');
+		$this->call('MigrationsTableSeeder');
+		$this->call('ModeTableSeeder');
+		$this->call('PasswordRemindersTableSeeder');
+		$this->call('PasswordResetsTableSeeder');
+		$this->call('PlayerRosterTableSeeder');
+		$this->call('RosterTableSeeder');
+		$this->call('RosterToEventTableSeeder');
+		$this->call('ScoreTypeTableSeeder');
+		//$this->call('SndTableSeeder');
+		//$this->call('SndPlayerTableSeeder');
+		$this->call('TeamTableSeeder');
+		//$this->call('UplinkTableSeeder');
+		//$this->call('UplinkPlayerTableSeeder');
+		//$this->call('UsersTableSeeder');
+	}
 }

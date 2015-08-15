@@ -81,11 +81,10 @@ h2 span {
   <div class='col-md-12'>
     <div class='row'>
       <div class='col-md-3'>
-        @foreach($roster->player_roster as $player)
-        {{var_dump($player)}}
+        @foreach($roster as $player)
         <div class="image">
           <img class="player_img img-center img-responsive" src="http://codstreams.net/uploads/players/alt.png" style="width: 100%;"/>
-          <h2><span>{{$player->PlayerName}}</span></h2>
+          <h2><span>{!!$player->player->alias!!}</span></h2>
 
         </div>
         <div class='pad'></div>

@@ -18,10 +18,10 @@ class CreateSndTable extends Migration {
 			$table->integer('game_id');
 			$table->integer('team_a_score');
 			$table->integer('team_b_score');
-			$table->integer('a_offense_wins');
-			$table->integer('b_offense_wins');
-			$table->integer('a_defense_wins');
-			$table->integer('b_defense_wins');
+			$table->integer('a_offense_wins')->nullable();
+			$table->integer('b_offense_wins')->nullable();
+			$table->integer('a_defense_wins')->nullable();
+			$table->integer('b_defense_wins')->nullable();
 			$table->integer('a_plant_a')->nullable();
 			$table->integer('a_plant_b')->nullable();
 			$table->integer('a_plant_a_win')->nullable();
@@ -30,7 +30,7 @@ class CreateSndTable extends Migration {
 			$table->integer('b_plant_b')->nullable();
 			$table->integer('b_plant_a_win')->nullable();
 			$table->integer('b_plant_b_win')->nullable();
-			$table->boolean('team_a_host')->nullable();
+			$table->boolean('team_a_host');
 			$table->boolean('team_b_host');
 			$table->timestamps();
 			$table->integer('game_time');

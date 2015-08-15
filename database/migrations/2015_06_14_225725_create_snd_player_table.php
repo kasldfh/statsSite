@@ -15,18 +15,18 @@ class CreateSndPlayerTable extends Migration {
 		Schema::create('snd_player', function(Blueprint $table)
 		{
 			$table->integer('id', true);
-			$table->integer('snd_id')->nullable();
-			$table->integer('player_id')->nullable();
+			$table->integer('snd_id');
+			$table->integer('player_id');
 			$table->integer('first_bloods')->nullable();
 			$table->integer('first_blood_wins')->nullable();
 			$table->integer('plants')->nullable();
 			$table->integer('kills')->nullable();
 			$table->integer('deaths')->nullable();
 			$table->boolean('host')->nullable();
-			$table->timestamps();
 			$table->integer('defuse')->nullable();
-			$table->integer('last_man_standing');
-			$table->integer('last_man_standing_wins');
+			$table->integer('last_man_standing')->nullable();
+			$table->integer('last_man_standing_wins')->nullable();
+			$table->timestamps();
 		});
 	}
 

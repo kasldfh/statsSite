@@ -61,18 +61,18 @@
           <?php $i=1; ?>
           @foreach($ctfCapsPlayers as $player)
           <tr>
-            <td><b>{{$i}}</b></td>
+            <td><b>{!!$i!!}</b></td>
             <td>
               @if(!is_null($player->photo_url))
-              <img class="player_img img-center img-responsive" src="{{$player->photo_url}}" style="height: 75; width: 55;"/>
+              <img class="player_img img-center img-responsive" src="{!!$player->photo_url!!}" style="height: 75; width: 55;"/>
               @else
               <img class="player_img img-center img-responsive" src="http://codstreams.net/uploads/players/alt.png" style="height: 75; width: 55;"/>
               @endif
             </td>
-            <td><!-- <img class="team_img" src='http://hydra-media.cursecdn.com/cod.gamepedia.com/4/48/Optic.png?version=55115f8ad615910a2ed282dac9a39edc' height='20'/>  --> <b>{{$player->alias}}</b></td>
-            <td><span class="badge bg-green">{{$player->getCTFCapsAverage()}}</span></td>
-            <td><span class="badge bg-green">{{$player->getCTFCapsTotal()}}</span></td>
-            <td><span class="badge bg-green">{{$player->getCTFMapCount()}}</span></td>
+            <td><!-- <img class="team_img" src='http://hydra-media.cursecdn.com/cod.gamepedia.com/4/48/Optic.png?version=55115f8ad615910a2ed282dac9a39edc' height='20'/>  --> <b>{!!$player->alias!!}</b></td>
+            <td><span class="badge bg-green">{!!$player->getCTFCapsAverage()!!}</span></td>
+            <td><span class="badge bg-green">{!!$player->getCTFCapsTotal()!!}</span></td>
+            <td><span class="badge bg-green">{!!$player->getCTFMapCount()!!}</span></td>
           </tr>
           <?php $i++; ?>
           @endforeach
@@ -103,17 +103,17 @@
           <?php $i=1; ?>
           @foreach($ctfKDPlayers as $player)
           <tr>
-            <td><b>{{$i}}</b></td>
+            <td><b>{!!$i!!}</b></td>
             <td>
               @if(!is_null($player->photo_url))
-              <img class="player_img img-center img-responsive" src="{{$player->photo_url}}" style="height: 75; width: 55;"/>
+              <img class="player_img img-center img-responsive" src="{!!$player->photo_url!!}" style="height: 75; width: 55;"/>
               @else
               <img class="player_img img-center img-responsive" src="http://codstreams.net/uploads/players/alt.png" style="height: 75; width: 55;"/>
               @endif
             </td>
-            <td><!-- <img class="team_img" src='http://hydra-media.cursecdn.com/cod.gamepedia.com/4/48/Optic.png?version=55115f8ad615910a2ed282dac9a39edc' height='20'/>  --> <b>{{$player->alias}}</b></td>
-            <td><span class="badge bg-green">{{$player->getCTFKD()}}</span></td>
-            <td><span class="badge bg-green">{{$player->getCTFMapCount()}}</span></td>
+            <td><!-- <img class="team_img" src='http://hydra-media.cursecdn.com/cod.gamepedia.com/4/48/Optic.png?version=55115f8ad615910a2ed282dac9a39edc' height='20'/>  --> <b>{!!$player->alias!!}</b></td>
+            <td><span class="badge bg-green">{!!$player->getCTFKD()!!}</span></td>
+            <td><span class="badge bg-green">{!!$player->getCTFMapCount()!!}</span></td>
           </tr>
           <?php $i++; ?>
           @endforeach

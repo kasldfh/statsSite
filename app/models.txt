@@ -1,0 +1,11 @@
+-rwxrwxr-x 2 vagrant vagrant   221 Jun 22 00:45 CreateUser.php*
+-rwxrwxr-x 1 vagrant vagrant  1712 Jun 22 00:45 Events.php*
+-rwxrwxr-x 1 vagrant vagrant   269 Jun 22 00:45 EventType.php*
+-rwxrwxr-x 1 vagrant vagrant   572 Jun 22 00:45 Game.php*
+rwxrwxr-x 1 vagrant vagrant   269 Jun 22 00:45 GameTitle.php*
+-rwxrwxr-x 1 vagrant vagrant   419 Jun 22 00:45 MapMode.php*
+-rwxrwxr-x 1 vagrant vagrant   346 Jun 22 00:45 Map.php*
+-rwxrwxr-x 1 vagrant vagrant  1139 Jun 22 00:45 Match.php*
+-rwxrwxr-x 1 vagrant vagrant   269 Jun 22 00:45 MatchType.php*
+-rwxrwxr-x 1 vagrant vagrant   432 Jun 22 00:45 Mode.php*
+-rwxrwxr-x 1 vagrant vagrant   183 Jun 22 00:45 ScoreType.php*

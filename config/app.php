@@ -144,6 +144,12 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        /*for html/form stuff*/
+        'Illuminate\Html\HtmlServiceProvider',
+
+        //stuff for iseed
+        'Orangehill\Iseed\IseedServiceProvider'
+
     ],
 
     /*
@@ -191,6 +197,10 @@ return [
         'URL'       => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View'      => Illuminate\Support\Facades\View::class,
+        /*for html/form stuff*/
+
+        'HTML' => 'Illuminate\Html\HtmlFacade',
+        'Form' => 'Illuminate\Html\FormFacade',
 
     ],
 
