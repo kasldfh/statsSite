@@ -12,7 +12,7 @@ class CreateRosterEventTable extends Migration
      */
     public function up()
     {
-        Schema::table('roster_event', function (Blueprint $table) {
+        Schema::create('roster_event', function (Blueprint $table) {
 			$table->integer('id');
 			$table->integer('roster_id');
 			$table->integer('event_id');
@@ -26,7 +26,7 @@ class CreateRosterEventTable extends Migration
      */
     public function down()
     {
-        Schema::table('roster_event', function (Blueprint $table) {
+        Schema::drop('roster_event', function (Blueprint $table) {
             Schema::drop('roster_event');
         });
     }
