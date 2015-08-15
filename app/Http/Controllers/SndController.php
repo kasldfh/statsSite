@@ -1,14 +1,15 @@
 <?php
 //TODO: Refactor to only store fb/lms stats in App\SndRound only
 namespace App\Http\Controllers;
-use App\Mode;
-use App\Map;
-use App\MapMode;
-use App\Game;
-use App\Snd;
-use App\SndPlayer;
-use App\SndRound;
-use App\Match;
+
+use App\Models\Mode;
+use App\Models\Map;
+use App\Models\MapMode;
+use App\Models\Game;
+use App\Models\Snd;
+use App\Models\SndPlayer;
+use App\Models\SndRound;
+use App\Models\Match;
 
 use Input;
 use Redirect;

@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\EventType;
+
+use App\Models\EventType;
+
 use Input;
 use Redirect;
 use View;

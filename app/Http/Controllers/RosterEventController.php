@@ -1,13 +1,13 @@
 <?php
-namespace App\Http\Controllers;
+namespace App\Models\Models\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Requests;
-use App\Http\Controllers\Controller;
+use App\Models\Models\Http\Requests;
+use App\Models\Models\Http\Controllers\Controller;
 
 use Input;
-use App\Event;
-use App\RosterEvent;
+use App\Models\Models\Event;
+use App\Models\Models\RosterEvent;
 
 class RosterEventController extends Controller {
 

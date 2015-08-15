@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -10,6 +10,6 @@ class SndRound extends Model
 	protected $table = 'snd_round';
 
 	public function game() {
-		return $this->hasOne("App\Snd", "id", "snd_id");
+		return $this->hasOne("App\Models\Models\Snd", "id", "snd_id");
 	}
 }

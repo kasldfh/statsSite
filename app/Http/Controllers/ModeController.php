@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\GameTitle;
-use App\Mode;
+
+use App\Models\GameTitle;
+use App\Models\Mode;
+
 use Input;
 use Redirect;
 use View;

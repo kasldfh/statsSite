@@ -1,8 +1,8 @@
 <?php
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-class MapMode extends Model {
+class EventType extends Model {
 
 	public $timestamps = true; 
 	/**
@@ -10,7 +10,7 @@ class MapMode extends Model {
 	 *
 	 * @var string
 	 */
-	protected $table = 'map_mode';
+	protected $table = 'event_type';
 
 	/**
 	 * The attributes excluded from the model's JSON form.
@@ -18,11 +18,4 @@ class MapMode extends Model {
 	 * @var array
 	 */
 	
-	public function map() {
-		return $this->hasOne('App\Map', 'id', 'map_id');
-	}
-
-	public function mode() {
-		return $this->hasOne('App\Mode', 'id', 'mode_id');
-	}
 }

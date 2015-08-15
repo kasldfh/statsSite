@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Map;
-use App\Mode;
-use App\MapMode;
+
+use App\Models\Map;
+use App\Models\Mode;
+use App\Models\MapMode;
+
 use Input;
 use Redirect;
 use View;

@@ -1,12 +1,13 @@
 <?php
 namespace App\Http\Controllers;
-use App\Mode;
-use App\Map;
-use App\MapMode;
-use App\Game;
-use App\Uplink;
-use App\UplinkPlayer;
-use App\Match;
+
+use App\Models\Mode;
+use App\Models\Map;
+use App\Models\MapMode;
+use App\Models\Game;
+use App\Models\Uplink;
+use App\Models\UplinkPlayer;
+use App\Models\Match;
 
 use Input;
 use Redirect;

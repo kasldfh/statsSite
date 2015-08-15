@@ -5,8 +5,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-use App\CreateUser;
-use App\User;
+use App\Models\CreateUser;
+use App\Models\User;
 
 use Mail;
 use View;

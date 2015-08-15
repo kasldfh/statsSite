@@ -1,8 +1,8 @@
 <?php
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-class UplinkPlayer extends Model {
+class CtfPlayer extends Model {
 
 	public $timestamps = true; 
 	/**
@@ -10,7 +10,7 @@ class UplinkPlayer extends Model {
 	 *
 	 * @var string
 	 */
-	protected $table = 'uplink_player';
+	protected $table = 'ctf_player';
 
 	/**
 	 * The attributes excluded from the model's JSON form.
@@ -18,10 +18,10 @@ class UplinkPlayer extends Model {
 	 * @var array
 	 */
 	public function game() {
-		return $this->hasOne("App\Uplink", "id", "uplink_id");
+		return $this->hasOne("App\Models\Models\Ctf", "id", "ctf_id");
 	}
 
     public function player() {
-        return $this->hasOne('App\Player', 'id', 'player_id');
+        return $this->hasOne('App\Models\Models\Player', 'id', 'player_id');
     }
 }

@@ -4,13 +4,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 
-use App\Match;
-use App\Game;
-use App\Player;
+use App\Models\Match;
+use App\Models\Game;
+use App\Models\Player;
 
 use Input;
-use Carbon\Carbon;
 
 class PlayerScoreController extends BaseController {
     public function playerScores() {

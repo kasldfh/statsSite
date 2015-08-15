@@ -1,8 +1,8 @@
 <?php
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-class SndPlayer extends Model {
+class HpPlayer extends Model {
 
 	public $timestamps = true; 
 	/**
@@ -10,19 +10,18 @@ class SndPlayer extends Model {
 	 *
 	 * @var string
 	 */
-	protected $table = 'snd_player';
+	protected $table = 'hp_player';
 
 	/**
 	 * The attributes excluded from the model's JSON form.
 	 *
 	 * @var array
 	 */
-	
 	public function game() {
-		return $this->hasOne("App\Snd", "id", "snd_id");
+		return $this->hasOne("App\Models\Models\Hp", "id", "hp_id");
 	}
 
     public function player() {
-        return $this->hasOne('App\Player', 'id', 'player_id');
+        return $this->hasOne('App\Models\Models\Player', 'id', 'player_id');
     }
 }

@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Team;
-use App\Player;
-use App\Roster;
+
+use App\Models\Team;
+use App\Models\Player;
+use App\Models\Roster;
+
 use Input;
 use Redirect;
 use View;

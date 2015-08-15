@@ -5,8 +5,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-use App\Player;
-use App\Event;
+use App\Models\Player;
+use App\Models\Event;
 
 use View;
 

@@ -1,5 +1,5 @@
 <?php
-namespace App;
+namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 class Roster extends Model {
@@ -18,7 +18,7 @@ class Roster extends Model {
 	 * @var array
 	 */
 	public function playermap() {
-		return $this->hasMany('App\PlayerRoster', 'roster_id', 'id')->with('player');
+		return $this->hasMany('App\Models\Models\PlayerRoster', 'roster_id', 'id')->with('player');
 	}
 
 	public function getPlayersAttribute() {
@@ -29,7 +29,7 @@ class Roster extends Model {
 		return $roster;
 	}
 	public function team() {
-		return $this->hasOne('App\Team', 'id', 'team_id');
+		return $this->hasOne('App\Models\Models\Team', 'id', 'team_id');
 	}
 
 	public function getCurrentAttribute() {

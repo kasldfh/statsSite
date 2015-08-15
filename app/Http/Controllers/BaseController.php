@@ -5,8 +5,12 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use App\Models\Event;
+use App\Models\Team;
+
 use Redis;
 use Auth;
+use View;
 
 class BaseController extends Controller {
     /* Cache key conventions 
@@ -18,36 +22,40 @@ class BaseController extends Controller {
      * stat:{stat}:{eventid}:{playerid} -- player kd at event
      */
 
-    public function getCachedView($key) {
+    public function __construct()
+    {
+    }
+
+    public static function getCachedView($key) {
         if(Auth::guest())
             return Redis::get($key);
     }
 
-    public function cacheView($key, $value) {
+    public static function cacheView($key, $value) {
         if(Auth::guest())
             Redis::set($key, $value);
     }
 
-    public function cacheGet($key) {
+    public static function cacheGet($key) {
             return Redis::get($key);
     }
 
-    public function cacheSet($key, $value) {
+    public static function cacheSet($key, $value) {
             Redis::set($key, $value);
     }
 
-    public function cacheRequest($key, $closure, $json = false) {
-        $cached = $this->cacheGet($key);
+    public static function cacheRequest($key, $closure, $json = false) {
+        $cached = self::cacheGet($key);
         if($cached)
             return $json ? json_decode($cached) : $cached;
         $cached = $json ? json_encode($closure()) : $closure();
-        $this->cacheSet($key, $cached);
+        self::cacheSet($key, $cached);
         return $json ? json_decode($cached) : $cached;
     }
 
     //remove keys by prefix, can be array or str
     //make sure to use double quotes for inputs
-    public function cacheRemove($input)
+    public static function cacheRemove($input)
     {
         //if there's just one thing
         if(!is_array($input))
@@ -64,8 +72,8 @@ class BaseController extends Controller {
     }
 
     //not sure if this will be used 
-    public function cacheClearCommon()
+    public static function cacheClearCommon()
     {
-        $this->cacheRemove(["stat*", "player*"]);
+        self::cacheRemove(["stat*", "player*"]);
     }
 }

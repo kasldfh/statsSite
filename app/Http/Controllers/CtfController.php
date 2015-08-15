@@ -1,12 +1,13 @@
 <?php
 namespace App\Http\Controllers;
-use App\Mode;
-use App\Map;
-use App\MapMode;
-use App\Game;
-use App\Ctf;
-use App\CtfPlayer;
-use App\Match;
+
+use App\Models\Mode;
+use App\Models\Map;
+use App\Models\MapMode;
+use App\Models\Game;
+use App\Models\Ctf;
+use App\Models\CtfPlayer;
+use App\Models\Match;
 
 use Input;
 use Redirect;

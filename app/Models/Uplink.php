@@ -1,8 +1,8 @@
 <?php
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-class GameTitle extends Model {
+class Uplink extends Model {
 
 	public $timestamps = true; 
 	/**
@@ -10,12 +10,14 @@ class GameTitle extends Model {
 	 *
 	 * @var string
 	 */
-	protected $table = 'game_title';
+	protected $table = 'uplink';
 
 	/**
 	 * The attributes excluded from the model's JSON form.
 	 *
 	 * @var array
 	 */
-	
+	public function players() {
+		return $this->hasMany('App\Models\Models\UplinkPlayer', 'uplink_id', 'id');
+	}
 }

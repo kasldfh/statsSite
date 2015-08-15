@@ -1,8 +1,8 @@
 <?php
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-class ScoreType extends Model {
+class CreateUser extends Model {
 
 	public $timestamps = true; 
 	/**
@@ -11,7 +11,8 @@ class ScoreType extends Model {
 	 * @var string
 	 */
 
-	protected $table = 'score_type';
+	//protected $connection = 'users';
+	protected $table = 'user_creation';
 
 }
 

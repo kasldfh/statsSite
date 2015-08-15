@@ -1,5 +1,5 @@
 <?php
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 class RosterEvent extends Model {
@@ -7,11 +7,11 @@ class RosterEvent extends Model {
     protected $table = 'roster_event'
 
     public function roster() {
-        return $this->hasOne('App\Roster', 'roster_id', 'id');
+        return $this->hasOne('App\Models\Models\Roster', 'roster_id', 'id');
     }
 
     public function event() {
-        return $this->hasOne('App\Event', 'event_id', 'id');
+        return $this->hasOne('App\Models\Models\Event', 'event_id', 'id');
     }
 }
 

@@ -1,9 +1,9 @@
 <?php
-namespace App;
+namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
-use App\Ctf;
-use App\CtfPlayer;
-use App\Match;
+use App\Models\Models\Ctf;
+use App\Models\Models\CtfPlayer;
+use App\Models\Models\Match;
 class Player extends Model {
 
 	public $timestamps = true; 
@@ -23,7 +23,7 @@ class Player extends Model {
     //protected $hidden = ['kd'];
 
 	public function rostermap() {
-		return $this->hasMany('App\PlayerRoster', 'player_id', 'id')->orderBy('id', 'desc');
+		return $this->hasMany('App\Models\Models\PlayerRoster', 'player_id', 'id')->orderBy('id', 'desc');
 	}
 
 	public function getKdAttribute() {

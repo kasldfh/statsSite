@@ -1,8 +1,8 @@
 <?php
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-class Uplink extends Model {
+class Snd extends Model {
 
 	public $timestamps = true; 
 	/**
@@ -10,7 +10,7 @@ class Uplink extends Model {
 	 *
 	 * @var string
 	 */
-	protected $table = 'uplink';
+	protected $table = 'snd';
 
 	/**
 	 * The attributes excluded from the model's JSON form.
@@ -18,6 +18,11 @@ class Uplink extends Model {
 	 * @var array
 	 */
 	public function players() {
-		return $this->hasMany('App\UplinkPlayer', 'uplink_id', 'id');
+		return $this->hasMany('App\Models\Models\SndPlayer', 'snd_id', 'id');
 	}
+
+    public function rounds() {
+        return $this->hasMany('App\Models\Models\SndRound', 'snd_id', 'id');
+    }
+
 }

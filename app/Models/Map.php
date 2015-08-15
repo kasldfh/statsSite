@@ -1,8 +1,8 @@
 <?php
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-class MatchType extends Model {
+class Map extends Model {
 
 	public $timestamps = true; 
 	/**
@@ -10,12 +10,15 @@ class MatchType extends Model {
 	 *
 	 * @var string
 	 */
-	protected $table = 'match_type';
+	protected $table = 'map';
 
 	/**
 	 * The attributes excluded from the model's JSON form.
 	 *
 	 * @var array
 	 */
+	public function title() {
+		return $this->hasOne('App\Models\Models\GameTitle', 'id', 'game_title_id');
+	}
 	
 }

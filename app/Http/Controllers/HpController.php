@@ -1,12 +1,13 @@
 <?php
 namespace App\Http\Controllers;
-use App\Mode;
-use App\Map;
-use App\MapMode;
-use App\Game;
-use App\Hp;
-use App\HpPlayer;
-use App\Match;
+
+use App\Models\Mode;
+use App\Models\Map;
+use App\Models\MapMode;
+use App\Models\Game;
+use App\Models\Hp;
+use App\Models\HpPlayer;
+use App\Models\Match;
 
 use Input;
 use Redirect;

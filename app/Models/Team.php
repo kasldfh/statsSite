@@ -1,5 +1,5 @@
 <?php
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 class Team extends Model {
@@ -18,7 +18,7 @@ class Team extends Model {
 	 * @var array
 	 */
 	public function rosters() {
-		return $this->hasMany('App\Roster', 'team_id', 'id')->orderBy('created_at', 'DESC');
+		return $this->hasMany('App\Models\Models\Roster', 'team_id', 'id')->orderBy('created_at', 'DESC');
 	}
 
 	public function getCurrentAttribute() {

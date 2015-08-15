@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-use App\Match;
-use App\Event;
-use App\Team;
-use App\ScoreType;
-use App\MatchType;
+
+use App\Models\Match;
+use App\Models\Event;
+use App\Models\Team;
+use App\Models\ScoreType;
+use App\Models\MatchType;
+
 use View;
 use Input;
 use Redirect;

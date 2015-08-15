@@ -1,5 +1,5 @@
 <?php
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 class Event extends Model {
@@ -18,15 +18,15 @@ class Event extends Model {
 	 * @var array
 	 */
 	public function title() {
-		return $this->hasOne('App\GameTitle', 'id', 'game_title_id');
+		return $this->hasOne('App\Models\Models\GameTitle', 'id', 'game_title_id');
 	}
 
 	public function type() {
-		return $this->hasOne('App\EventType', 'id', 'event_type_id');
+		return $this->hasOne('App\Models\Models\EventType', 'id', 'event_type_id');
 	}
 
 	public function matches() {
-		return $this->hasMany('App\Match', 'event_id', 'id');
+		return $this->hasMany('App\Models\Models\Match', 'event_id', 'id');
 	}
 
 	public function getPlayed($id) {

@@ -1,8 +1,8 @@
 <?php
-namespace App;
 
+namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
-class Ctf extends Model {
+class Hp extends Model {
 
 	public $timestamps = true; 
 	/**
@@ -10,7 +10,7 @@ class Ctf extends Model {
 	 *
 	 * @var string
 	 */
-	protected $table = 'ctf';
+	protected $table = 'hp';
 
 	/**
 	 * The attributes excluded from the model's JSON form.
@@ -18,6 +18,10 @@ class Ctf extends Model {
 	 * @var array
 	 */
 	public function players() {
-		return $this->hasMany('App\CtfPlayer', 'ctf_id', 'id');
+		return $this->hasMany('App\Models\Models\HpPlayer', 'hp_id', 'id');
 	}
+    public function game()
+    {
+        return $this->belongsTo('App\Models\Models\Game', 'game_id', 'id');
+    }
 }

@@ -1,5 +1,5 @@
 <?php
-namespace App;
+namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 class PlayerRoster extends Model {
@@ -19,10 +19,10 @@ class PlayerRoster extends Model {
 	 */
 	
 	public function player() {
-		return $this->hasOne('App\Player', 'id', 'player_id');
+		return $this->hasOne('App\Models\Models\Player', 'id', 'player_id');
 	}
 
 	public function roster() {
-		return $this->hasOne('App\Roster', 'id', 'roster_id');
+		return $this->hasOne('App\Models\Models\Roster', 'id', 'roster_id');
 	}
 }

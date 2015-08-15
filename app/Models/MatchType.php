@@ -1,8 +1,8 @@
 <?php
-namespace App;
+namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-class EventType extends Model {
+class MatchType extends Model {
 
 	public $timestamps = true; 
 	/**
@@ -10,7 +10,7 @@ class EventType extends Model {
 	 *
 	 * @var string
 	 */
-	protected $table = 'event_type';
+	protected $table = 'match_type';
 
 	/**
 	 * The attributes excluded from the model's JSON form.
