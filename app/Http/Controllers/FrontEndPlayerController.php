@@ -5,7 +5,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Player;
-use App\Events;
+use App\Event;
 use View;
 	
 class FrontEndPlayerController extends Controller {
@@ -54,7 +54,7 @@ class FrontEndPlayerController extends Controller {
 			$color = "#E01E3C";
 			$team_name = "F/A";
 		}
-		$events = Events::orderBy('id', 'desc')->get();
+		$events = Event::orderBy('id', 'desc')->get();
 		$event_names = [];
 		$event_kd = [];
 		foreach ($events as $event) {

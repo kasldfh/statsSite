@@ -5,7 +5,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Match;
-use App\Events;
+use App\Event;
 use App\Team;
 use App\ScoreType;
 use App\MatchType;
@@ -17,7 +17,7 @@ class MatchController extends Controller {
         $this->middleware('auth');
 	}
 public function create() {
-		$events = Events::all();
+		$events = Event::all();
 		$match_types = MatchType::all();
 		$teams = Team::all();
 		$score_types = ScoreType::all();
@@ -25,7 +25,7 @@ public function create() {
 	}
 
 	public function update($id) {
-		$events = Events::all();
+		$events = Event::all();
 		$match_types = MatchType::all();
 		$teams = Team::all();
 		$score_types = ScoreType::all();

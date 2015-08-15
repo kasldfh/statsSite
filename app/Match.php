@@ -28,7 +28,7 @@ class Match extends Model {
 		return $this->hasOne('App\Roster', 'id', 'roster_b_id');
 	}
 	public function event() {
-		return $this->hasOne('App\Events', 'id', 'event_id');
+		return $this->hasOne('App\Event', 'id', 'event_id');
 	}
 	public function type() {
 		return $this->hasOne('App\MatchType', 'id', 'match_type_id');

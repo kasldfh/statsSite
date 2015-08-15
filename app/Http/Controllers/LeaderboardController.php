@@ -6,7 +6,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\Player;
-use App\Events;
+use App\Event;
 
 use View;
 
@@ -57,7 +57,7 @@ class LeaderboardController extends BaseController {
     }
 
 	public function viewByEvent($id) {
-		$event = Events::find($id);
+		$event = Event::find($id);
 		$players = Player::all();
 		$slayers = Player::all();
 		$sndPlayers = Player::all();

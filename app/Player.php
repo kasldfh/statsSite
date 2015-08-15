@@ -53,7 +53,7 @@ class Player extends Model {
 	}
 
 	public function kdByEvent($id) {
-		$matches = Events::find($id)->matches;
+		$matches = Event::find($id)->matches;
 		$kills = 0;
 		$deaths = 0;
 		foreach ($matches as $match) {
@@ -101,7 +101,7 @@ class Player extends Model {
 	}
 
 	public function getMapCountByEvent($id) {
-		$matches = Events::find($id)->matches;
+		$matches = Event::find($id)->matches;
 		$map_count = 0;
 		foreach ($matches as $match) {
 			$games = $match->games;
@@ -144,7 +144,7 @@ class Player extends Model {
 	}
 
 	public function getRespawnMapCountByEvent($id) {
-		$matches = Events::find($id)->matches;
+		$matches = Event::find($id)->matches;
 		$map_count = 0;
 		foreach ($matches as $match) {
 			$games = $match->games;
@@ -180,7 +180,7 @@ class Player extends Model {
 	}
 	
 	public function getSndMapCountByEvent($id) {
-		$matches = Events::find($id)->matches;
+		$matches = Event::find($id)->matches;
 		$map_count = 0;
 		foreach ($matches as $match) {
 			$games = $match->games;
@@ -202,8 +202,8 @@ class Player extends Model {
     //if all events, leave id blank
     //otherwise specify an event
 	public function sndkd($id = 0) {
-		//$matches = Events::find($id)->matches;
-		$matches = $id ? Events::find($id)->matches : Match::all();
+		//$matches = Event::find($id)->matches;
+		$matches = $id ? Event::find($id)->matches : Match::all();
 		$kills = 0;
 		$deaths = 0;
 		foreach ($matches as $match) {
@@ -226,7 +226,7 @@ class Player extends Model {
     //if all events, leave id blank
     //otherwise specify an event
 	public function slayer($id = 0) {
-		$matches = $id ? Events::find($id)->matches : Match::all();
+		$matches = $id ? Event::find($id)->matches : Match::all();
 		$kills = 0;
 		$game_time = 0;
 		foreach ($matches as $match) {

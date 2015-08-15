@@ -6,7 +6,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\EventType;
 use App\GameTitle;
-use App\Events;
+use App\Event;
 use View;
 use Input;
 use Redirect;
@@ -24,7 +24,7 @@ class EventController extends Controller {
 	}
 
 	public function store() {
-		$event = new Events;
+		$event = new Event;
 		$event->name = Input::get('event_name');
 		$event->game_title_id = Input::get('game_title');
 		$event->event_type_id = Input::get('event_type');
@@ -33,12 +33,12 @@ class EventController extends Controller {
 	}
 	
 	public function manage() {
-		$events = Events::all();
+		$events = Event::all();
 		return View::make('admin.event.manage', compact('events'));
 	}
 
 	public function delete($id) {
-		Events::destroy($id);
+		Event::destroy($id);
 		return Redirect::action('EventController@manage');
 	}
 }
