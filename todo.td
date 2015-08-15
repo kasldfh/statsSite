@@ -10,8 +10,6 @@ on event.php to return the list of players at that event
 a roster_event class and model have been created -- still needs a controller
 for basic rest stuff
 
-figure out a way to pass the predone varialbes to layouts.main 
-
 finish roster_event stuff
 
 add caching in leaderboardcontroller@viewbyevent
@@ -19,13 +17,7 @@ add caching in leaderboardcontroller@viewbyevent
 if something is nulled (ex hp kills), when editing map it should be
 blank, not 0
 
-
 Create real email and put it in suercontroller mail sender
-
-
-For caching, cache the smaller parts as we go along so eventually we
-don't need to cache full views (when this happens we can add back the
-admin and logout links to all pages)
 
 Add getters for team round stats in App\Snd. Find list in remove_round_stats 
 migration. Added a rounds getter, perhaps do the team stats in sndcontroller?
@@ -39,6 +31,7 @@ Add game_number controls to edit stuff, also move all the time divs to a partial
 add host stuff back in
 
 Game shouldn't have score_type column, that's for match
+
 Update migration for snd stuff
  We have lms and fb_wins
  foreach player, 1o
