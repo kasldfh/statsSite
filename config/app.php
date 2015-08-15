@@ -144,6 +144,9 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        //for passing events and teams to all views
+        App\Providers\SharedViewDataProvider::class,
+
         /*for html/form stuff*/
         'Illuminate\Html\HtmlServiceProvider',
 

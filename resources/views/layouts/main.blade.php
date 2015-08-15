@@ -1,7 +1,3 @@
-<?php
-    $events = App\Events::all();
-    $teams = App\Team::all();
-?>
 <html>
 	<head>
 		<title>@yield('title')</title>
