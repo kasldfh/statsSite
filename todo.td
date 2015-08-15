@@ -10,7 +10,8 @@ on event.php to return the list of players at that event
 a roster_event class and model have been created -- still needs a controller
 for basic rest stuff
 
-finish roster_event stuff
+finish roster_event stuff -- how to send delete button stuff correctly? Is 
+there an example of this somewhere in the other admin pages?
 
 add caching in leaderboardcontroller@viewbyevent
 

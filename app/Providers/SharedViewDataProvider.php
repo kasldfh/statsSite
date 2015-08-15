@@ -6,6 +6,9 @@ use Illuminate\Support\ServiceProvider;
 
 use App\Http\Controllers\BaseController;
 
+use App\Models\Event;
+use App\Models\Team;
+
 use View;
 
 class SharedViewDataProvider extends ServiceProvider
