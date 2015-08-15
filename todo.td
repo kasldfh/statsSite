@@ -10,7 +10,9 @@ on event.php to return the list of players at that event
 a roster_event class and model have been created -- still needs a controller
 for basic rest stuff
 
-refactor events to be event
+figure out a way to pass the predone varialbes to layouts.main 
+
+finish roster_event stuff
 
 add caching in leaderboardcontroller@viewbyevent
 
