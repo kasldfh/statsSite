@@ -6,14 +6,14 @@
 
 @section('content')
     
-	<h4 class="text">Add Roster to Event {!!$event->name!!}</h4>
+	<h4 class="text">Manage Rosters at Event {!!$event->name!!}</h4>
 	<table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
         <thead>
             <tr>
                 <th>Team</th>
                 <th>Players</th>
                 <th>Current</th>
-                <th>Add to Event</th>
+                <th>Remove</th>
             </tr>
         </thead>
 
@@ -35,9 +35,9 @@
                     <span class="bg-warning">Outdated Roster</span>
                   @endif
                 </td>
-                    <td>
-                        <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#{!!$roster->id!!}">Add</button>
-                    </td>
+                <td>
+                    <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#{!!$roster->id!!}">Remove</button>
+                </td>
             </tr>
 
             <div class="modal fade" id="{!!$roster->id!!}" tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true">
@@ -48,11 +48,11 @@
                     <h4 class="modal-title" id="myModalLabel">Confirmation</h4>
                   </div>
                   <div class="modal-body">
-                    <p>Are you sure you want to add this {!!$roster->team->name!!} roster to {!!$event->name!!}?</p>
+                    <p>Are you sure you want to remove this {!!$roster->team->name!!} roster from {!!$event->name!!}?</p>
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    {!!link_to_action('RosterEventController@store', 'Add', ['roster_id' => $roster->id, 'event_id' => $event->id], ['class' => 'btn btn-primary'])!!}
+                    {!!link_to_action('RosterEventController@store', 'Remove', ['roster_id' => $roster->id, 'event_id' => $event->id], ['class' => 'btn btn-danger'])!!}
                   </div>
                 </div>
             </div>

@@ -61,7 +61,9 @@ Route::get('admin/event_type/delete/{id}', ['uses' => 'EventTypeController@delet
 
 //TODO: finish roster event stuff
 Route::get('admin/roster_event/create/{id}', ['uses' => 'RosterEventController@create']);
-Route::post('admin/roster_event/store', ['uses' => 'RosterEventController@store']);
+Route::get('admin/roster_event/manage/{id}', ['uses' => 'RosterEventController@manage']);
+Route::get('admin/roster_event/store', ['uses' => 'RosterEventController@store']);
+Route::post('admin/roster_event/delete/{id}', ['uses' => 'RosterEventController@delete']);
 
 Route::get('admin/map/delete/{id}', ['uses' => 'MapController@delete']);
 Route::post('admin/map/store', ['uses' => 'MapController@store']);

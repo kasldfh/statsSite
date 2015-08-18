@@ -38,4 +38,11 @@ class Roster extends Model {
 		return ($this->id == $first->id);
 	}
 
+    public function getMatchesAt($id)
+    {
+        if(Event::find($id))
+            return true;
+        else
+            return false;
+    }
 }

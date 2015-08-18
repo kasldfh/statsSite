@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Team;
 use App\Models\Player;
 use App\Models\Roster;
+use App\Models\PlayerRoster;
 
 use Input;
 use Redirect;
