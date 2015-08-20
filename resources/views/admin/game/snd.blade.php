@@ -102,14 +102,12 @@
                         </tr>
                     </thead>
                     <tbody>
-{{--<?php $str = "";?>--}}
                         @for($i = 1; $i<=4; $i++)
                         <tr>
                             {{--<td>{!!Form::select('player[]', ['' => 'Select'] + $match->rostera->players, [], ['class' => 'form-control'])!!}</td>--}}
                             <td>
                             <select name="aplayers[]" class="form-control">
                                 <option value="{!!$ascores[$i-1]->player_id!!}" selected>{!! $ascores[$i-1]->alias !!}</option>
-{{--<?php $str .= $ascores[$i-1]->alias; ?>--}}
                                 @foreach($aplayers as $aplayer)
                                     @if($ascores[$i-1]->alias != $aplayer->player->alias)
                                         <option value="{!!$aplayer->player_id!!}">{!!$aplayer->player->alias!!}</option>
@@ -136,7 +134,6 @@
                             {{--<td>{!! Form::text('defends[]', '' , array('class'=>'form-control')) !!}</td>--}}
                         </tr>
                         @endfor
-{{--<?php dd($str);?>--}}
                     </tbody>
                 </table>
             </div>
