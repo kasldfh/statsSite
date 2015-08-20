@@ -6,9 +6,21 @@ who are on rosters that were added to that event.
 
 add caching in leaderboardcontroller@viewbyevent
 
-Create real email and put it in suercontroller mail sender
+make all the model deletion delete dependencies
+match
+ game
+  mode
+   player
+   round (snd)
+team
+ rosters
+event
+ matches
 
-Add game_number controls to edit stuff, also move all the time divs to a partial
+
+when creating a match, only show rosters that are at that event
+
+Create real email and put it in suercontroller mail sender
 
 For creating games select each primary player by default
 
