@@ -1,41 +1,16 @@
 Refactor GameController store method
  Store game/match, then hand off to the modecontrollers to store
 
-host in createSnd
-
 in leaderboardcontroller@viewbyevent, don't use all players -- just the ones
-who are on rosters that were added to that event. this also means we have to
-add rosters to events, and have a manage thing. also, maybe add something 
-on event.php to return the list of players at that event 
-a roster_event class and model have been created -- still needs a controller
-for basic rest stuff
+who are on rosters that were added to that event. 
 
 add caching in leaderboardcontroller@viewbyevent
 
-if something is nulled (ex hp kills), when editing map it should be
-blank, not 0
-
 Create real email and put it in suercontroller mail sender
-
-Add getters for team round stats in App\Snd. Find list in remove_round_stats 
-migration. Added a rounds getter, perhaps do the team stats in sndcontroller?
-
-make game number something that is entered and edited
-
-Put snd migrations back into migrations folder(when fixed)
 
 Add game_number controls to edit stuff, also move all the time divs to a partial
 
-add host stuff back in
-
-Game shouldn't have score_type column, that's for match
-
-Update migration for snd stuff
- We have lms and fb_wins
- foreach player, 1o
-
-For creating snd (and all games) select each primary player by default
-
+For creating games select each primary player by default
 
 Notes:
 Do I actually need the event_source stuff?

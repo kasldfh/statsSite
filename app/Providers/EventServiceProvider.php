@@ -32,16 +32,16 @@ class EventServiceProvider extends ServiceProvider
     public function boot(DispatcherContract $events)
     {
         parent::boot($events);
-        HpPlayer::creating(function($hp_player) {
+        HpPlayer::saving(function($hp_player) {
             $this->validateHpPlayer($hp_player);
         }); 
-        CtfPlayer::creating(function($ctf_player) {
+        CtfPlayer::saving(function($ctf_player) {
             $this->validateCtfPlayer($ctf_player);
         }); 
-        UplinkPlayer::creating(function($uplink_player) {
+        UplinkPlayer::saving(function($uplink_player) {
             $this->validateCtfPlayer($uplink_player);
         }); 
-        SndPlayer::creating(function($snd_player) {
+        SndPlayer::saving(function($snd_player) {
             $this->validateCtfPlayer($snd_player);
         }); 
         //
