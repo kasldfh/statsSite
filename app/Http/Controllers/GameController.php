@@ -99,160 +99,25 @@ class GameController extends BaseController {
         //DBug::DBug(Input::all(), true);
         parent::cacheRemove("stat*");
         $mode = Input::get('mode');
-        if($mode == 4) {
-            return $this->createSnd();
-        }
-
+        $mode = Mode::find($mode);
         $match = Match::find(Input::get('match_id'));
         $host = Input::get('host');
         $pHost = Input::get('p_host');
         $roster_a = $match->rostera->id;
         $roster_b = $match->rosterb->id;
         $map = Input::get('map');
-        $mode = Input::get('mode');
-        $map_mode = MapMode::where('map_id', $map)->where('mode_id', $mode)->first();
-        $mode = Mode::find($mode);
+        $map_mode = MapMode::where('map_id', $map)->where('mode_id', $mode->id)->first();
         $game = new Game;
         $game->match_id = $match->id;
         $game->game_number = Input::get('game_num');
         $game->map_mode_id = $map_mode->id;
         $game->save();
+
         if($mode->name == 'Search and Destroy') {
-            $snd = new Snd;
-            $scores = Input::get('team');
-            $side = Input::get('side');
-            $fb = Input::get('fb');
-            $planter = Input::get('planter');
-            $site = Input::get('site');
-            $a_score = 0;
-            $b_score = 0;
-            $a_offense = 0;
-            $b_offense = 0;
-            $a_defense = 0;
-            $b_defense = 0;
-            $a_a = 0;
-            $a_b = 0;
-            $a_a_win = 0;
-            $a_b_win = 0;
-            $b_a = 0;
-            $b_b = 0;
-            $b_a_win = 0;
-            $b_b_win = 0;
-            $i = 0;
-            $fb_wins = [[]];
-            while($scores[$i] != "") {
-                if($planter[$i] != "") {
-                    if($planter[$i] == $roster_a){
-                        if($site[$i] == 'a') {
-                            $a_a++;
-                            if($scores[$i] == $roster_a) {
-                                $a_a_win++;
-                            }
-                        } else {
-                            $a_b++;
-                            if($scores[$i] == $roster_a) {
-                                $a_b_win++;
-                            }
-                        }
-                    } else {
-                        if($site[$i] == 'a') {
-                            $b_a++;
-                            if($scores[$i] == $roster_b) {
-                                $b_a_win++;
-                            }
-                        } else {
-                            $b_b++;
-                            if($scores[$i] == $roster_b) {
-                                $b_b_win++;
-                            }
-                        }
-                    }
-                }
-                if($scores[$i] == $roster_a){
-                    if(!isset($fb_wins[$fb[$i]])){
-                        $fb_wins[$fb[$i]] = 0;
-                    }
-                    if(array_key_exists($fb[$i], $match->rostera->players)) {
-                        $fb_wins[$fb[$i]] += 1;
-                    }
-                    $a_score++;
-                    if($side[$i] == 'o') {
-                        $a_offense++;
-                    } else {
-                        $a_defense++;
-                    }
-                } else {
-                    if(!isset($fb_wins[$fb[$i]])){
-                        $fb_wins[$fb[$i]] = 0;
-                    }
-                    if(array_key_exists($fb[$i], $match->rosterb->players)) {
-                        $fb_wins[$fb[$i]] += 1;
-                    }
-                    $b_score++;
-                    if($side[$i] == 'o') {
-                        $b_offense++;
-                    } else {
-                        $b_defense++;
-                    }
-                }
-                $i++;
-            }
+            return $this->createSnd();
+        }
 
-            $snd->game_id = $game->id;
-            $snd->team_host_id = $host;
-            $snd->team_a_score = Input::get('a_snd_score', 0);
-            $snd->team_b_score = Input::get('b_snd_score', 0);
-            $snd->a_offense_wins = $a_offense;
-            $snd->a_defense_wins = $a_defense;
-            $snd->b_offense_wins = $b_offense;
-            $snd->b_defense_wins = $b_defense;
-            $snd->a_plant_a = $a_a;
-            $snd->a_plant_b = $a_b;
-            $snd->a_plant_a_win = $a_a_win;
-            $snd->a_plant_b_win = $a_b_win;
-            $snd->b_plant_a = $b_a;
-            $snd->b_plant_b = $b_b;
-            $snd->b_plant_a_win = $b_a_win;
-            $snd->b_plant_b_win = $b_b_win;
-            $mode->game_time = Input::get('minutes') * 60 + Input::get('seconds');
-            $snd->save();
-            if(Input::get('a_snd_score', 0) > Input::get('b_snd_score', 0)) {
-                $match->a_map_count++;
-            } else {
-                $match->b_map_count++;
-            }
-            $match->save();
-            $players = Input::get('snd_player');
-            //DBug::DBug($fb_wins, true);
-            $plants = Input::get('plants');
-            $snd_kills = Input::get('snd_kills');
-            $snd_deaths = Input::get('snd_deaths');
-            $defuses = Input::get('defuses');
-            $fb_count = array_count_values($fb);
-            foreach ($players as $i => $player) {
-                $snd_player = new SndPlayer;
-                $snd_player->snd_id = $snd->id;
-                $snd_player->player_id = $player;
-                if(isset($fb_count[$player])){
-                    $snd_player->first_bloods = $fb_count[$player];
-                    if(isset($fb_wins[$player])) {
-                        $snd_player->first_blood_wins = $fb_wins[$player];
-                    } else {
-                        $snd_player->first_blood_wins = 0;
-                    }
-                } else {
-                    $snd_player->first_bloods = 0;
-                    $snd_player->first_blood_wins = 0;
-                }
-
-                $snd_player->plants = $plants[$i];
-                $snd_player->kills = $snd_kills[$i];
-                $snd_player->deaths = $snd_deaths[$i];
-                $snd_player->defuse = $defuses[$i];
-                $snd_player->host = $pHost == $player;
-                $snd_player->save();
-            }
-        } elseif($mode->name == 'Capture the Flag') {
+        elseif($mode->name == 'Capture the Flag') {
             $ctf = new Ctf;
             $ctf->game_id = $game->id;
             $ctf->team_host_id = $host;
@@ -284,7 +149,8 @@ class GameController extends BaseController {
                 $ctf_player->host = $pHost == $player;
                 $ctf_player->save();
             }
-        } elseif($mode->name == 'Uplink') {
+        }
+        elseif($mode->name == 'Uplink') {
             $uplink = new Uplink;
             $uplink->game_id = $game->id;
             $uplink->team_host_id = $host;
@@ -316,7 +182,8 @@ class GameController extends BaseController {
                 $uplink_player->host = $pHost == $player;
                 $uplink_player->save();
             }
-        } elseif($mode->name == 'Hardpoint') {
+        }
+        elseif($mode->name == 'Hardpoint') {
             $hp = new Hp;
             $hp->team_host_id = $host;
             $hp->game_id = $game->id;
@@ -333,18 +200,24 @@ class GameController extends BaseController {
             $players = Input::get('hp_player');
             $hp_kills = Input::get('hp_kills');
             $hp_deaths = Input::get('hp_deaths');
-            $captures = Input::get('hp_captures');
-            $defends = Input::get('hp_defends');
+            $hp_captures = Input::get('hp_captures');
+            $hp_defends = Input::get('hp_defends');
             foreach ($players as $i => $player) {
                 $hp_player = new HpPlayer;
+                $kills = $hp_kills[$i];
+                $deaths = $hp_deaths[$i];
+                $captures = $hp_captures[$i];
+                $defends = $hp_defends[$i];
+
                 $hp_player->hp_id = $hp->id;
                 $hp_player->player_id = $player;
-                $hp_player->kills = $hp_kills[$i];
-                $hp_player->deaths = $hp_deaths[$i];
-                $hp_player->captures = $captures[$i];
-                $hp_player->defends = $defends[$i];
+                $hp_player->kills = $kills;// == "" ? null : $kills;
+                $hp_player->deaths = $deaths;// == "" ? null : $deaths;
+                $hp_player->captures = $captures;// == "" ? null : $captures;
+                $hp_player->defends = $defends;// == "" ? null : $defends;
                 $hp_player->host = $pHost == $player;
                 $hp_player->save();
+                var_dump($hp_player->kills);
             }
         }
         return Redirect::action('MatchController@manage');
