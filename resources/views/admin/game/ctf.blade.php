@@ -32,36 +32,8 @@ function containsId($players, $id)
                     <h5 class="text">{!!$match->rostera->team->name!!} vs. {!!$match->rosterb->team->name!!} at {!!$match->event->name!!}</h5>
                 </div>
             </div>
-            <div class="row" style="margin-bottom:10px">
-                <div class="col-xs-12 col-sm-8 col-md-8 col-lg-8">
-                    <div class="form-group">
-                    {{--!!Form::label('map', 'Map')!!--}}
-                    <label for="map">Map</label>
-                    <select class="form-control" id="map" name="map">
-                        @foreach($maps as $mapoption)
-                           @if($game->map->name == $mapoption->name) 
-                                <option value="{!!$mapoption->id!!}" selected="selected"> {!! $mapoption->name!!}</option>
-                           @else
-                                <option value="{!!$mapoption->id!!}">{!!$mapoption->name!!}</option>
-                            @endif
-                        @endforeach
-                    </select>
-                    </div>
-                </div>
-                <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
-                    <div class="form-group">
-                    <label for="minutes">Minutes</label>
-                    <input type="text" name="minutes" class="form-control" size="5" value="{!!(int)($mode->game_time / 60)!!}">
-                    <label for="seconds">Seconds</label>
-                    <input type="text" name="seconds" class="form-control" size="5" value="{!!$mode->game_time % 60!!}">
-                    {{--{!!Form::label('game_time', 'Game Time (IN SECONDS (MINUTES*60 + SECONDS))')!!}--}}
-                    {{--{!! Form::text('game_time', '' , array('class'=>'form-control')) !!}--}}
-                    </div>
-                </div>
-            </div>
-            {{-- fix this (online add back online stuff) later --}}
-{{--yield('host'--}}
-@include('admin.game.host')
+@include('admin.game.general')
+@yield('general')
 @yield('host')
                     <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
                         <h4 type="text">{!!$match->rostera->team->name!!}</h4>
