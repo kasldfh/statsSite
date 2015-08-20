@@ -17,15 +17,15 @@ class CreateSndPlayerTable extends Migration {
 			$table->integer('id', true);
 			$table->integer('snd_id');
 			$table->integer('player_id');
-			$table->integer('first_bloods')->nullable();
-			$table->integer('first_blood_wins')->nullable();
-			$table->integer('plants')->nullable();
 			$table->integer('kills')->nullable();
 			$table->integer('deaths')->nullable();
-			$table->boolean('host')->nullable();
+			$table->integer('plants')->nullable();
 			$table->integer('defuse')->nullable();
+			$table->integer('first_bloods')->nullable();
+			$table->integer('first_blood_wins')->nullable();
 			$table->integer('last_man_standing')->nullable();
 			$table->integer('last_man_standing_wins')->nullable();
+			$table->boolean('host')->nullable();
 			$table->timestamps();
 		});
 	}
