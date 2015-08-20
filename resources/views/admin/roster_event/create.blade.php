@@ -1,4 +1,4 @@
-@extends('layouts.main')
+@extends('layouts.admin')
 
 @section('js')
 
@@ -36,27 +36,9 @@
                   @endif
                 </td>
                     <td>
-                        <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#{!!$roster->id!!}">Add</button>
+                    {!!link_to_action('RosterEventController@store', 'Add', ['roster_id' => $roster->id, 'event_id' => $event->id], ['class' => 'btn btn-primary'])!!}
                     </td>
             </tr>
-
-            <div class="modal fade" id="{!!$roster->id!!}" tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true">
-              <div class="modal-dialog">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">Confirmation</h4>
-                  </div>
-                  <div class="modal-body">
-                    <p>Are you sure you want to add this {!!$roster->team->name!!} roster to {!!$event->name!!}?</p>
-                  </div>
-                  <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    {!!link_to_action('RosterEventController@store', 'Add', ['roster_id' => $roster->id, 'event_id' => $event->id], ['class' => 'btn btn-primary'])!!}
-                  </div>
-                </div>
-            </div>
-        </div>
            	@endforeach
         </tbody>
 	</table>
