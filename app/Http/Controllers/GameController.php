@@ -224,8 +224,9 @@ class GameController extends BaseController {
     }
 
     public function delete($id) {
+        $match_id = Game::find($id)->match_id;
         Game::destroy($id);
-        return Redirect::action('GameController@manage');
+        return Redirect::action('GameController@manage', ['id' => $match_id ]);
     }
     public function createSnd() {
         //TODO: need to remove SndPlayers where player was "unselected"
