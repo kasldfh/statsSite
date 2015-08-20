@@ -39,10 +39,10 @@ class EventServiceProvider extends ServiceProvider
             $this->validateCtfPlayer($ctf_player);
         }); 
         UplinkPlayer::saving(function($uplink_player) {
-            $this->validateCtfPlayer($uplink_player);
+            $this->validateUplinkPlayer($uplink_player);
         }); 
         SndPlayer::saving(function($snd_player) {
-            $this->validateCtfPlayer($snd_player);
+            $this->validateSndPlayer($snd_player);
         }); 
         //
     }
