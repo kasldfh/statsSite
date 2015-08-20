@@ -14,6 +14,10 @@ use App\Models\Roster;
 
 class RosterEventController extends BaseController {
 
+    public function __construct() {
+        $this->middleware('auth');
+    }
+
     public function create($id)
     {
         $event = Event::find($id);
