@@ -59,14 +59,6 @@ $( document ).ready(function() {
 <br>
 @endforeach
 
-
-
-
-
-
-
-
-
 @endsection
 @section('content')
     {!! Form::open(array('action'=>'GameController@store', 'class'=>'form-login', 'id' => 'form')) !!}
