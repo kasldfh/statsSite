@@ -132,8 +132,7 @@ public function create() {
     dd($input);
     
 }
-public function edit($id)
-{
+public function edit($id) {
     //id is game id for now (change this later?)
     $game = Game::findOrFail($id);
     $match = $game->match()->first();
@@ -155,6 +154,12 @@ public function edit($id)
     //lists of all players per roster
     $aplayers = $match->rostera()->first()->playermap()->get();
     $bplayers = $match->rosterb()->first()->playermap()->get();
+    foreach($aplayers as $aplayer) {
+        $aplayerarr[$aplayer->player->id] = $aplayer->player->alias;
+    }
+    foreach($bplayers as $bplayer) {
+        $bplayerarr[$bplayer->player->id] = $bplayer->player->alias;
+    }
     //generate list of players by roster
     $ascores = [];
     foreach($players as $player)
@@ -179,7 +184,9 @@ public function edit($id)
 
     //dd($ascores);
     //dd($aplayers);
-    return View::make('admin.game.snd', compact('game', 'match', 'mode', 'maps', 'players', 'aplayers', 'bplayers', 'ascores', 'bscores', 'rounds'));
+    return View::make('admin.game.snd', compact('game', 'match', 'mode',
+        'maps', 'players', 'aplayers', 'bplayers', 'ascores', 'bscores',
+        'rounds', 'aplayerarr', 'bplayerarr'));
 }
 
 private function fbs($rounds, $id)

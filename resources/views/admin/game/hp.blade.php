@@ -35,6 +35,8 @@ function containsId($players, $id)
 @include('admin.game.general')
 @yield('general')
 @yield('host')
+        </div>
+    </div>
                     <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
                         <h4 type="text">{!!$match->rostera->team->name!!}</h4>
                     </div>
@@ -54,38 +56,24 @@ function containsId($players, $id)
                                 </tr>
                             </thead>
                             <tbody>
-                                @for($i = 1; $i<=4; $i++)
+                                @for($i = 1; $i <= 4; $i++)
                                 <tr>
-                                    {{--<td>{!!Form::select('player[]', ['' => 'Select'] + $match->rostera->players, [], ['class' => 'form-control'])!!}</td>--}}
-                                    <td>
-                                    <select name="aplayers[]" class="form-control">
-                                        <option value="{!!$ascores[$i-1]->player_id!!}" selected>{!! $ascores[$i-1]->alias !!}</option>
-                                        @foreach($aplayers as $aplayer)
-                                            @if($ascores[$i-1]->alias != $aplayer->player->alias)
-                                                <option value="{!!$aplayer->player_id!!}">{!!$aplayer->player->alias!!}</option>
-                                            @endif
-                                        @endforeach
-                                    </select>
-                                    </td>
-                                    <td>
-                                      <input type="text" class="form-control" name="kills[]" value="{!!$ascores[$i-1]->kills!!}">
-                                   </td>
-                                   <td>
-                                        <input type="text" class="form-control" name="deaths[]" value="{!!$ascores[$i-1]->deaths!!}">
-                                    </td>
-                                   <td>
-                                        <input type="text" class="form-control" name="captures[]" value="{!!$ascores[$i-1]->captures!!}">
-                                    </td>
-                                   <td>
-                                        <input type="text" class="form-control" name="defends[]" value="{!!$ascores[$i-1]->defends!!}">
-                                    </td>
-
-                                    {{-- <td>{!! Form::text('kills[]', '' , array('class'=>'form-control')) !!}</td> --}}
-                                    {{--<td>{!! Form::text('deaths[]', '' , array('class'=>'form-control')) !!}</td>--}}
-                                    {{--<td>{!! Form::text('captures[]', '' , array('class'=>'form-control')) !!}</td>--}}
-                                    {{--<td>{!! Form::text('defends[]', '' , array('class'=>'form-control')) !!}</td>--}}
+                                    <td>{!! Form::select('aplayers[]', $aplayerarr, $ascores[$i-1]->player_id, ['class'=>'form-control']) !!}</td>
+                                    <td>{!! Form::text('kills[]', $ascores[$i-1]->kills , ['class'=>'form-control']) !!}</td>
+                                    <td>{!! Form::text('deaths[]', $ascores[$i-1]->deaths , ['class'=>'form-control']) !!}</td>
+                                    <td>{!! Form::text('captures[]', $ascores[$i-1]->captures , ['class'=>'form-control']) !!}</td>
+                                    <td>{!! Form::text('defends[]', $ascores[$i-1]->defends , ['class'=>'form-control']) !!}</td>
                                 </tr>
                                 @endfor
+                                {{--@for($i = count($ascores); $i < 4; $i++)--}}
+                                {{--<tr>--}}
+                                    {{--<td>{!! Form::select('aplayers[]', ['' => 'Select'] + $aplayerarr, ['class'=>'form-control']) !!}</td>--}}
+                                    {{--<td>{!! Form::text('kills[]', '', ['class'=>'form-control']) !!}</td>--}}
+                                    {{--<td>{!! Form::text('deaths[]', '', ['class'=>'form-control']) !!}</td>--}}
+                                    {{--<td>{!! Form::text('captures[]', '', ['class'=>'form-control']) !!}</td>--}}
+                                    {{--<td>{!! Form::text('defends[]', '', ['class'=>'form-control']) !!}</td>--}}
+                                {{--</tr>--}}
+                                {{--@endfor--}}
                             </tbody>
                         </table>
                     </div>
@@ -108,42 +96,24 @@ function containsId($players, $id)
                                 </tr>
                             </thead>
                             <tbody>
-
-                                @for($i = 1; $i<=4; $i++)
+                                @for($i = 1; $i <= 4; $i++)
                                 <tr>
-                                    {{--<td>{!!Form::select('player[]', ['' => 'Select'] + $match->rostera->players, [], ['class' => 'form-control'])!!}</td>--}}
-                                    <td>
-                                    <select name="bplayers[]" class="form-control">
-                                        <option value="{!!$bscores[$i-1]->player_id!!}" selected>{!! $bscores[$i-1]->alias !!}</option>
-                                        @foreach($bplayers as $bplayer)
-                                            @if($bscores[$i-1]->alias != $bplayer->player->alias)
-                                                <option value="{!!$bplayer->player_id!!}">{!!$bplayer->player->alias!!}</option>
-                                            @endif
-                                        @endforeach
-                                    </select>
-                                    </td>
-                                    <td>
-                                      <input type="text" class="form-control" name="kills[]" value="{!!$bscores[$i-1]->kills!!}">
-                                   </td>
-                                   <td>
-                                        <input type="text" class="form-control" name="deaths[]" value="{!!$bscores[$i-1]->deaths!!}">
-                                    </td>
-                                   <td>
-                                        <input type="text" class="form-control" name="captures[]" value="{!!$bscores[$i-1]->captures!!}">
-                                    </td>
-                                   <td>
-                                        <input type="text" class="form-control" name="defends[]" value="{!!$bscores[$i-1]->defends!!}">
-                                    </td>
-                                {{--@for($i = 1; $i<=4; $i++)
-
-                                <tr>
-                                    <td>{!!Form::select('player[]', ['' => 'Select'] + $match->rosterb->players, [], ['class' => 'form-control'])!!}</td>
-                                    <td>{!! Form::text('kills[]', '' , array('class'=>'form-control')) !!}</td>
-                                    <td>{!! Form::text('deaths[]', '' , array('class'=>'form-control')) !!}</td>
-                                    <td>{!! Form::text('captures[]', '' , array('class'=>'form-control')) !!}</td>
-                                    <td>{!! Form::text('defends[]', '' , array('class'=>'form-control')) !!}</td>--}}
+                                    <td>{!! Form::select('bplayers[]', $bplayerarr, $bscores[$i-1]->player_id, ['class'=>'form-control']) !!}</td>
+                                    <td>{!! Form::text('kills[]', $bscores[$i-1]->kills , ['class'=>'form-control']) !!}</td>
+                                    <td>{!! Form::text('deaths[]', $bscores[$i-1]->deaths , ['class'=>'form-control']) !!}</td>
+                                    <td>{!! Form::text('captures[]', $bscores[$i-1]->captures , ['class'=>'form-control']) !!}</td>
+                                    <td>{!! Form::text('defends[]', $bscores[$i-1]->defends , ['class'=>'form-control']) !!}</td>
                                 </tr>
                                 @endfor
+                                {{--@for($i = count($bscores); $i < 4; $i++)--}}
+                                {{--<tr>--}}
+                                    {{--<td>{!! Form::select('bplayers[]', ['' => 'Select'] + $bplayerarr, ['class'=>'form-control']) !!}</td>--}}
+                                    {{--<td>{!! Form::text('kills[]', '', ['class'=>'form-control']) !!}</td>--}}
+                                    {{--<td>{!! Form::text('deaths[]', '', ['class'=>'form-control']) !!}</td>--}}
+                                    {{--<td>{!! Form::text('captures[]', '', ['class'=>'form-control']) !!}</td>--}}
+                                    {{--<td>{!! Form::text('defends[]', '', ['class'=>'form-control']) !!}</td>--}}
+                                {{--</tr>--}}
+                                {{--@endfor--}}
                             </tbody>
                         </table>
                     </div>

@@ -93,8 +93,7 @@ class CtfController extends Controller {
         //dd($ctf);
         //dd($match);
     }
-    public function edit($id)
-    {
+    public function edit($id) {
         //id is game id for now (change this later?)
         $game = Game::findOrFail($id);
         $match = $game->match()->first();
@@ -113,6 +112,12 @@ class CtfController extends Controller {
         //lists of all players per roster
         $aplayers = $match->rostera()->first()->playermap()->get();
         $bplayers = $match->rosterb()->first()->playermap()->get();
+        foreach($aplayers as $aplayer) {
+            $aplayerarr[$aplayer->player->id] = $aplayer->player->alias;
+        }
+        foreach($bplayers as $bplayer) {
+            $bplayerarr[$bplayer->player->id] = $bplayer->player->alias;
+        }
         //generate list of players by roster
         $ascores = [];
         foreach($players as $player)
@@ -137,6 +142,8 @@ class CtfController extends Controller {
 
         //dd($ascores);
         //dd($aplayers);
-        return View::make('admin.game.ctf', compact('game', 'match', 'mode', 'maps', 'players', 'aplayers', 'bplayers', 'ascores', 'bscores'));
+        return View::make('admin.game.ctf', compact('game', 'match', 'mode',
+            'maps', 'players', 'aplayers', 'bplayers', 'ascores', 'bscores',
+            'aplayerarr', 'bplayerarr'));
     }
 }
