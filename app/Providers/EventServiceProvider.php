@@ -105,8 +105,8 @@ class EventServiceProvider extends ServiceProvider
         if($snd_player->plants == "")
             $snd_player->plants = null;
 
-        if($snd_player->defues == "")
-            $snd_player->defues = null;
+        if($snd_player->defuses == "")
+            $snd_player->defuses = null;
 
         if($snd_player->first_bloods == "")
             $snd_player->first_bloods = null;
