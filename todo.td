@@ -23,6 +23,10 @@ when creating a match, only show rosters that are at that event
 Create real email and put it in suercontroller mail sender
 
 For creating games select each primary player by default
+ Actually, is this a good idea? Make people enter players manually so there's
+ a distinction when a player wasn't at a game
+
+map count for manage events isn't updating, how is that being calculated?
 
 Notes:
 Do I actually need the event_source stuff?
