@@ -40,8 +40,6 @@ class GameController extends BaseController {
             }
 
         }
-        // DBug::DBug($match->rostera->players);
-        // die();
         return View::make('admin.game.create', compact('modes', 'match', 'mode_map'));
     }
     public function manage($id) {
