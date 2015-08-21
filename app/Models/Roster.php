@@ -22,6 +22,10 @@ class Roster extends Model {
 		return $this->hasMany('App\Models\PlayerRoster', 'roster_id', 'id')->with('player');
 	}
 
+    public function starters() {
+        return $this->hasMany('App\Models\PlayerRoster', 'roster_id', 'id')->where('starter', '=', 1)->with('player');
+    }
+
 	public function getPlayersAttribute() {
 		$roster = [];
 		foreach ($this->playermap as $playermap) {
