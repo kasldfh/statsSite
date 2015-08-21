@@ -180,7 +180,7 @@ $( document ).ready(function() {
                             <tbody>
                                 @for($i = 1; $i<=4; $i++)
                                 <tr>
-                                    <td>{!!Form::select('aplayers[]', ['' => 'Select'] + $match->rostera->players, [], ['class' => 'form-control'])!!}</td>
+                                    <td>{!!Form::select('aplayers[]', ['' => 'Select'] + $match->rostera->players, $match->rostera->starters[$i-1]->player_id, ['class' => 'form-control'])!!}</td>
                                     <td>{!! Form::text('kills[]', '' , array('class'=>'form-control')) !!}</td>
                                     <td>{!! Form::text('deaths[]', '' , array('class'=>'form-control')) !!}</td>
                                     <td>{!! Form::text('plants[]', '' , array('class'=>'form-control')) !!}</td>
@@ -216,7 +216,7 @@ $( document ).ready(function() {
                             <tbody>
                                 @for($i = 1; $i<=4; $i++)
                                 <tr>
-                                    <td>{!!Form::select('bplayers[]', ['' => 'Select'] + $match->rosterb->players, [], ['class' => 'form-control'])!!}</td>
+                                    <td>{!!Form::select('bplayers[]', ['' => 'Select'] + $match->rosterb->players, $match->rosterb->starters[$i-1]->player_id, ['class' => 'form-control'])!!}</td>
                                     <td>{!! Form::text('kills[]', '' , array('class'=>'form-control')) !!}</td>
                                     <td>{!! Form::text('deaths[]', '' , array('class'=>'form-control')) !!}</td>
                                     <td>{!! Form::text('plants[]', '' , array('class'=>'form-control')) !!}</td>
@@ -253,7 +253,7 @@ $( document ).ready(function() {
                             <tbody>
                                 @for($i = 1; $i<=4; $i++)
                                 <tr>
-                                    <td>{!!Form::select('ctf_player[]', ['' => 'Select'] + $match->rostera->players, [], ['class' => 'form-control'])!!}</td>
+                                    <td>{!!Form::select('ctf_player[]', ['' => 'Select'] + $match->rostera->players, $match->rostera->starters[$i-1]->player_id, ['class' => 'form-control'])!!}</td>
                                     <td>{!! Form::text('ctf_kills[]', '' , array('class'=>'form-control')) !!}</td>
                                     <td>{!! Form::text('ctf_deaths[]', '' , array('class'=>'form-control')) !!}</td>
                                     <td>{!! Form::text('ctf_captures[]', '' , array('class'=>'form-control')) !!}</td>
@@ -289,7 +289,7 @@ $( document ).ready(function() {
                             <tbody>
                                 @for($i = 1; $i<=4; $i++)
                                 <tr>
-                                    <td>{!!Form::select('ctf_player[]', ['' => 'Select'] + $match->rosterb->players, [], ['class' => 'form-control'])!!}</td>
+                                    <td>{!!Form::select('ctf_player[]', ['' => 'Select'] + $match->rosterb->players, $match->rosterb->starters[$i-1]->player_id, ['class' => 'form-control'])!!}</td>
                                     <td>{!! Form::text('ctf_kills[]', '' , array('class'=>'form-control')) !!}</td>
                                     <td>{!! Form::text('ctf_deaths[]', '' , array('class'=>'form-control')) !!}</td>
                                     <td>{!! Form::text('ctf_captures[]', '' , array('class'=>'form-control')) !!}</td>
@@ -326,7 +326,7 @@ $( document ).ready(function() {
                             <tbody>
                                 @for($i = 1; $i<=4; $i++)
                                 <tr>
-                                    <td>{!!Form::select('uplink_player[]', ['' => 'Select'] + $match->rostera->players, [], ['class' => 'form-control'])!!}</td>
+                                    <td>{!!Form::select('uplink_player[]', ['' => 'Select'] + $match->rostera->players, $match->rostera->starters[$i-1]->player_id, ['class' => 'form-control'])!!}</td>
                                     <td>{!! Form::text('uplink_kills[]', '' , array('class'=>'form-control')) !!}</td>
                                     <td>{!! Form::text('uplink_deaths[]', '' , array('class'=>'form-control')) !!}</td>
                                     <td>{!! Form::text('uplinks[]', '' , array('class'=>'form-control')) !!}</td>
@@ -362,7 +362,7 @@ $( document ).ready(function() {
                             <tbody>
                                 @for($i = 1; $i<=4; $i++)
                                 <tr>
-                                    <td>{!!Form::select('uplink_player[]', ['' => 'Select'] + $match->rosterb->players, [], ['class' => 'form-control'])!!}</td>
+                                    <td>{!!Form::select('uplink_player[]', ['' => 'Select'] + $match->rosterb->players, $match->rosterb->starters[$i-1]->player_id, ['class' => 'form-control'])!!}</td>
                                     <td>{!! Form::text('uplink_kills[]', '' , array('class'=>'form-control')) !!}</td>
                                     <td>{!! Form::text('uplink_deaths[]', '' , array('class'=>'form-control')) !!}</td>
                                     <td>{!! Form::text('uplinks[]', '' , array('class'=>'form-control')) !!}</td>
@@ -397,7 +397,7 @@ $( document ).ready(function() {
                             <tbody>
                                 @for($i = 1; $i<=4; $i++)
                                 <tr>
-                                    <td>{!!Form::select('hp_player[]', ['' => 'Select'] + $match->rostera->players, [], ['class' => 'form-control'])!!}</td>
+                                    <td>{!!Form::select('hp_player[]', ['' => 'Select'] + $match->rostera->players, $match->rostera->starters[$i-1]->player_id, ['class' => 'form-control'])!!}</td>
                                     <td>{!! Form::text('hp_kills[]', '' , array('class'=>'form-control')) !!}</td>
                                     <td>{!! Form::text('hp_deaths[]', '' , array('class'=>'form-control')) !!}</td>
                                     <td>{!! Form::text('hp_captures[]', '' , array('class'=>'form-control')) !!}</td>
@@ -431,7 +431,7 @@ $( document ).ready(function() {
                             <tbody>
                                 @for($i = 1; $i<=4; $i++)
                                 <tr>
-                                    <td>{!!Form::select('hp_player[]', ['' => 'Select'] + $match->rosterb->players, [], ['class' => 'form-control'])!!}</td>
+                                    <td>{!!Form::select('hp_player[]', ['' => 'Select'] + $match->rosterb->players, $match->rosterb->starters[$i-1]->player_id, ['class' => 'form-control'])!!}</td>
                                     <td>{!! Form::text('hp_kills[]', '' , array('class'=>'form-control')) !!}</td>
                                     <td>{!! Form::text('hp_deaths[]', '' , array('class'=>'form-control')) !!}</td>
                                     <td>{!! Form::text('hp_captures[]', '' , array('class'=>'form-control')) !!}</td>
