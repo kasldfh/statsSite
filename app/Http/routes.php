@@ -21,6 +21,17 @@ Route::resource('teams', 'TeamController');
 //player fantasy rankings
 Route::get('fantasy', ['uses' => 'PlayerScoreController@playerScores']);
 
+//article routes
+Route::get('articles', 'ArticleController@index');
+Route::get('article/create', 'ArticleController@create');
+Route::get('article/{id}', 'ArticleController@show');
+Route::get('article/{id}/edit', 'ArticleController@edit');
+Route::patch('article/{id}/update', 'ArticleController@update');
+Route::post('article', 'ArticleController@store');
+Route::get('article/delete/{id}', 'ArticleController@delete');
+
+//Route::resource('articles', 'ArticleController');
+
 //start old user stuff
 Route::get('users/login', ['uses' => 'UsersController@login']);
 Route::get('users/logout', ['uses' => 'UsersController@logout']);
