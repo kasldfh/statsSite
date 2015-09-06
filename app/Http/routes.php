@@ -22,6 +22,7 @@ Route::resource('teams', 'TeamController');
 Route::get('fantasy', ['uses' => 'PlayerScoreController@playerScores']);
 
 //article routes
+Route::get('article/manage', 'ArticleController@manage');
 Route::get('articles', 'ArticleController@index');
 Route::get('article/create', 'ArticleController@create');
 Route::get('article/{id}', 'ArticleController@show');

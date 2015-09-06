@@ -51,4 +51,10 @@ class ArticleController extends Controller {
        Article::destroy($id);
        return redirect('articles');
     }
+
+    public function manage() {
+        $this->middleware('auth');
+        $articles = Article::all();
+        return view('articles.manage', compact('articles'));
+    }
 }
