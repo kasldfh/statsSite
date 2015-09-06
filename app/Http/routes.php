@@ -22,13 +22,13 @@ Route::resource('teams', 'TeamController');
 Route::get('fantasy', ['uses' => 'PlayerScoreController@playerScores']);
 
 //article routes
+Route::post('article', 'ArticleController@store');
 Route::get('article/manage', 'ArticleController@manage');
 Route::get('articles', 'ArticleController@index');
 Route::get('article/create', 'ArticleController@create');
 Route::get('article/{id}', 'ArticleController@show');
 Route::get('article/{id}/edit', 'ArticleController@edit');
 Route::patch('article/{id}/update', 'ArticleController@update');
-Route::post('article', 'ArticleController@store');
 Route::get('article/delete/{id}', 'ArticleController@delete');
 
 //Route::resource('articles', 'ArticleController');

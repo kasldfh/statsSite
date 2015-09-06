@@ -3,7 +3,7 @@
 @section('content')
 	<h1>Write a new Article</h1>
 	<hr/>
-	{!! Form::open(['url' => 'articles']) !!}
+	{!! Form::open(['url' => 'article']) !!}
 		@include('articles.form', ['submitButtonText' => 'Add article'])
 
 

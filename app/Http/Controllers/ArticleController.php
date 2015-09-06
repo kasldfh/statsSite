@@ -30,7 +30,6 @@ class ArticleController extends Controller {
 	public function store(ArticleRequest $request) {
         //$this->middleware('auth');
 		Article::create($request->all());
-        dd('lele');
         return Redirect::action('ArticleController@index');
 	}
 
@@ -54,7 +53,7 @@ class ArticleController extends Controller {
 
     public function manage() {
         $this->middleware('auth');
-        $articles = Article::all();
+        $articles = Article::orderBy('created_at', 'desc')->get();
         return view('articles.manage', compact('articles'));
     }
 }
