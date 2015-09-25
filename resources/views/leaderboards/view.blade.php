@@ -11,12 +11,6 @@
   text-align: center;
 }
 
-.player_img{border:1px solid #;
-  -webkit-border-radius: 10px;
-  -moz-border-radius: 10px;
-  border-radius: 10px;
-  vertical-align: middle;
-}
 
 .team_img{
   padding-right: 5px;
@@ -50,6 +44,9 @@
 @section('js')
 @endsection
 @section('content')
+    <header class="header bg-light b-b">
+        <p>Leaderboards - Overall</p>
+    </header>
 @if(isset($event))
 <div class="row">
   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
@@ -58,21 +55,95 @@
 </div>
 @endif
 <div class="row">
-  <div class="col-md-4">
-    <div class="box">
+    <div class="col-md-4 col-sm-6">
+        <div class="panel b-a" style="box-shadow: inset 0px -31px 55px -13px rgba(44,224,27,0.27);">
+            <div class="panel-heading bg-primary text-center">
+                <a href="#">
+                    <i class="fa fa-star icon">
+                    </i> Top KDR
+                </a>
+            </div>
+            <div class="padder-v text-center clearfix">
+                <div class="col-xs-3 b-r" style="">
+                    <div class="thumb avatar"><img src="{!!asset('assets/img/headshots/1.png')!!}" style="width: 50px; height: 50px;"/></div>
+                </div>
+                <div class="col-xs-4 b-r">
+                    <div class="h3 font-bold">2.12</div>
+                    <small class="text-muted">KD/R</small>
+                </div>
 
-      <div class="box-header">
-        <h3 class="box-title">Overall K/D Leaderboard</h3>
-              <div class="box-tools pull-right">
-        <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-      </div>
-      </div><!-- /.box-header -->
-      <div class="box-body no-padding">
-        <table class="table table-condensed" id="cssTable">
+                <div class="col-xs-5">
+                    <div class="h3 font-bold">Scump</div>
+                    <small class="text-muted">Player</small>
+                </div>
+            </div>
+            <div class="text-xs text-center m-b-sm"> OpTic gaming</div>
+        </div>
+    </div>
+    <div class="col-md-4 col-sm-6">
+        <div class="panel b-a" style="box-shadow: inset 0px -31px 55px -13px rgba(222,29,29,0.27);">
+            <div class="panel-heading bg-primary text-center">
+                <a href="#">
+                    <i class="fa fa-star icon">
+                    </i> Top Slayer
+                </a>
+            </div>
+            <div class="padder-v text-center clearfix">
+                <div class="col-xs-3 b-r">
+                    <div class="thumb avatar"><img src="{!!asset('assets/img/headshots/4.png')!!}" style="width: 50px; height: 50px;"/></div>
+                </div>
+                <div class="col-xs-4 b-r">
+                    <div class="h3 font-bold">343</div>
+                    <small class="text-muted">Slay</small>
+                </div>
+                <div class="col-xs-5">
+                    <div class="h3 font-bold">Nadeshot</div>
+                    <small class="text-muted">Player</small>
+                </div>
+
+            </div>
+            <div class="text-xs text-center m-b-sm">FaZe Red</div>
+        </div>
+    </div>
+    <div class="col-md-4 col-sm-6">
+        <div class="panel b-a" style="box-shadow: inset 0px -31px 55px -13px rgba(44,224,27,.27);" >
+            <div class="panel-heading bg-primary text-center">
+                <a href="#">
+                    <i class="fa fa-star icon">
+                    </i>  Top S&D
+                </a>
+            </div>
+            <div class="padder-v text-center clearfix" >
+                <div class="col-xs-3 b-r">
+                    <div class="thumb avatar"><img src="{!!asset('assets/img/headshots/5.png')!!}" style="width: 50px; height: 50px;"/></div>
+                </div>
+                <div class="col-xs-4 b-r">
+                    <div class="h3 font-bold">1.22</div>
+                    <small class="text-muted">KD/R</small>
+                </div>
+                <div class="col-xs-5">
+                    <div class="h3 font-bold">Clayster</div>
+                    <small class="text-muted">Player</small>
+                </div>
+
+            </div>
+            <div class="text-xs text-center m-b-sm">OpTic Gaming</div>
+        </div>
+    </div>
+</div>
+<div class="row panel">
+  <div class="col-md-4">
+      <div class="no-padding">
+          <section class="panel b-a">
+              <header class="panel-heading bg-light">
+
+                  Overall K/D Leaderboard
+              </header>
+          <table class="table table-striped">
           <tbody><tr>
             <th style="width: 10px"></th>
             <th style="width: 10px"></th>
-            <th style="width: 20px; text-align: center;">Player</th>
+            <th style="width: 10px; text-align: center;">Player</th>
             <th style="width: 10px; text-align: center;">K/D</th>
             <th style="width: 10px; text-align: center;">Maps</th>
           </tr>
@@ -91,9 +162,9 @@
             ><b>{!!$i!!}</b></td>
             <td>
               @if(!is_null($player->photo_url))
-              <img class="player_img img-center img-responsive" src="{!!$player->photo_url!!}" style="height: 75; width: 55;"/>
+              <div class="thumb avatar"><img class="img-center img-responsive" src="{!!$player->photo_url!!}" style="height: 35; width: 35;"/></div>
               @else
-              <img class="player_img img-center img-responsive" src="{{ URL::to('/') }}/assets/img/default.png" style="height: 75; width: 55;"/>
+                    <div class="thumb avatar"><img class="img-center img-responsive" src="{{ URL::to('/') }}/assets/img/default.png" style="height: 35; width: 35;"/></div>
               @endif
             </td>
             <td><!-- <img class="team_img" src='http://hydra-media.cursecdn.com/cod.gamepedia.com/4/48/Optic.png?version=55115f8ad615910a2ed282dac9a39edc' height='20'/>  --> 
@@ -103,7 +174,7 @@
               @else
                <span class="flair flair-fa"></span>
               @endif
-              <b>{!!$player->alias!!}</b></td>
+              {!!$player->alias!!}</td>
               @if(isset($event))
                 <td><span class="">{!!$player->kdByEvent($event->id)!!}</span></td>
             <td><span class="">{!!$player->getMapCountByEvent($event->id)!!}</span></td>
@@ -116,22 +187,18 @@
           @endif
           @endforeach
 
-        </tbody></table>
+        </tbody></table></section>
       </div><!-- /.box-body -->
     </div>
-  </div>
 
   <div class="col-md-4">
-    <div class="box">
+          <div class="no-padding">
+              <section class="panel b-a">
+                  <header class="panel-heading bg-light">
 
-      <div class="box-header">
-        <h3 class="box-title">Slayer Leaderboard</h3>
-              <div class="box-tools pull-right">
-        <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-      </div>
-      </div><!-- /.box-header -->
-      <div class="box-body no-padding">
-        <table class="table table-condensed" id="cssTable">
+                      Slayer leaderboard
+                  </header>
+                  <table class="table table-striped">
           <tbody><tr>
             <th style="width: 10px"></th>
             <th style="width: 30px"></th>
@@ -155,9 +222,9 @@
             ><b>{!!$j!!}</b></td>
             <td>              
               @if(!is_null($player->photo_url))
-              <img class="player_img img-center img-responsive" src="{!!$player->photo_url!!}" style="height: 75; width: 55;"/>
+                    <div class="thumb avatar"><img class="img-center img-responsive" src="{!!$player->photo_url!!}" style="height: 35; width: 35;"/></div>
               @else
-              <img class="player_img img-center img-responsive" src="{{ URL::to('/') }}/assets/img/default.png" style="height: 75; width: 55;"/>
+                    <div class="thumb avatar"><img class="img-center img-responsive" src="{{ URL::to('/') }}/assets/img/default.png" style="height: 35; width: 35;"/></div>
               @endif
             </td>
             <td><!-- <img class="team_img" src='http://hydra-media.cursecdn.com/cod.gamepedia.com/4/48/Optic.png?version=55115f8ad615910a2ed282dac9a39edc' height='20'/> -->  
@@ -167,7 +234,7 @@
               @else
                <span class="flair flair-fa"></span>
               @endif
-              <b>{!!$player->alias!!}</b></td>
+              {!!$player->alias!!}</td>
               @if(isset($event))
                 <td><span class="">{!!$player->slayerByEvent($event->id)!!}</span></td>
             <td><span class="">{!!$player->getRespawnMapCountByEvent($event->id)!!}</span></td>
@@ -182,20 +249,16 @@
 
         </tbody></table>
       </div><!-- /.box-body -->
-    </div>
   </div>
 
   <div class="col-md-4">
-    <div class="box">
+      <div class="no-padding">
+          <section class="panel b-a">
+              <header class="panel-heading bg-light">
 
-      <div class="box-header">
-        <h3 class="box-title">SnD K/D Leaderboard</h3>
-              <div class="box-tools pull-right">
-        <button class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i></button>
-      </div>
-      </div><!-- /.box-header -->
-      <div class="box-body no-padding">
-        <table class="table table-condensed" id="cssTable">
+                  S&D K/D Leaderboard
+              </header>
+              <table class="table table-striped">
           <tbody><tr>
             <th style="width: 10px"></th>
             <th style="width: 30px"></th>
@@ -219,9 +282,9 @@
 		><b>{!!$k!!}</b></td>
             <td>              
               @if(!is_null($player->photo_url))
-              <img class="player_img img-center img-responsive" src="{!!$player->photo_url!!}" style="height: 75; width: 55;"/>
-              @else
-              <img class="player_img img-center img-responsive" src="{{ URL::to('/') }}/assets/img/default.png" style="height: 75; width: 55;"/>
+                    <div class="thumb avatar"><img class="img-center img-responsive" src="{!!$player->photo_url!!}" style="height: 35; width: 35;"/></div>
+                @else
+                    <div class="thumb avatar"><img class="img-center img-responsive" src="{{ URL::to('/') }}/assets/img/default.png" style="height: 35; width: 35;"/></div>
               @endif
             </td>
             <td><!-- <img class="team_img" src='http://hydra-media.cursecdn.com/cod.gamepedia.com/4/48/Optic.png?version=55115f8ad615910a2ed282dac9a39edc' height='20'/> -->  
@@ -231,7 +294,7 @@
               @else
                <span class="flair flair-fa"></span>
               @endif
-              <b>{!!$player->alias!!}</b></td>
+              {!!$player->alias!!}</td>
 
               @if(isset($event))
                 <td><span class="">{!!$player->sndkdByEvent($event->id)!!}</span></td>
