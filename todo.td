@@ -6,6 +6,10 @@ who are on rosters that were added to that event.
 
 add caching in leaderboardcontroller@viewbyevent
 
+add article management by user, users that can only add articles, auth for article, article to admin dashboard 
+
+make article url the title of article instead of article id
+
 make all the model deletion delete dependencies
 match
  game
