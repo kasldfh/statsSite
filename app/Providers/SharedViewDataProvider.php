@@ -10,6 +10,7 @@ use App\Models\Event;
 use App\Models\Team;
 
 use View;
+use Schema;
 
 class SharedViewDataProvider extends ServiceProvider
 {
@@ -20,16 +21,20 @@ class SharedViewDataProvider extends ServiceProvider
      */
     public function boot()
     {
-        //get list of all events
-        $events = BaseController::cacheRequest('event:all', function () {
-            return Event::all();
-        }, true);
+        //this fixes php artisan complaining when this tries to use tables
+        //that dont exist
+        if(Schema::hasTable('event') && Schema::hasTable('team')) {
+            //get list of all events
+            $events = BaseController::cacheRequest('event:all', function () {
+                return Event::all();
+            }, true);
 
-        $teams = BaseController::cacheRequest('team:all', function () {
-            return Team::all();
-        }, true);
-        View::share('events', $events);
-        View::share('teams', $teams);
+            $teams = BaseController::cacheRequest('team:all', function () {
+                return Team::all();
+            }, true);
+            View::share('events', $events);
+            View::share('teams', $teams);
+        }
     }
 
     /**
