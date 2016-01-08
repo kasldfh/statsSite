@@ -42,7 +42,6 @@ class DatabaseSeeder extends Seeder
 		$this->call('TeamTableSeeder');
 		//$this->call('UplinkTableSeeder');
 		//$this->call('UplinkPlayerTableSeeder');
-		//$this->call('UsersTableSeeder');
         //$this->call('ItemTableSeeder');
 	}
 }
