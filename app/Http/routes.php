@@ -87,6 +87,11 @@ Route::post('admin/mode/store', ['uses' => 'ModeController@store']);
 Route::get('admin/mode/create', ['uses' => 'ModeController@create']);
 Route::get('admin/mode/manage', ['uses' => 'ModeController@manage']);
 
+Route::get('admin/item/delete/{id}', ['uses' => 'ItemController@delete']);
+Route::post('admin/item/store', ['uses' => 'ItemController@store']);
+Route::get('admin/item/create', ['uses' => 'ItemController@create']);
+Route::get('admin/item/manage', ['uses' => 'ItemController@manage']);
+
 Route::get('admin/map_mode/delete/{id}', ['uses' => 'MapModeController@delete']);
 Route::post('admin/map_mode/store', ['uses' => 'MapModeController@store']);
 Route::get('admin/map_mode/create', ['uses' => 'MapModeController@create']);

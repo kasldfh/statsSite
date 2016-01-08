@@ -80,6 +80,7 @@
 					  <li role="presentation" >{!!link_to_action('MapController@create', 'Create Map', [], [])!!}</li>
 					  <li role="presentation" >{!!link_to_action('ModeController@create', 'Create Mode', [], [])!!}</li>
 					  <li role="presentation" >{!!link_to_action('MapModeController@create', 'Create Competitive Map/Mode', [], [])!!}</li>
+					  <li role="presentation" >{!!link_to_action('ItemController@create', 'Create Item', [], [])!!}</li>
 					</ul>
 				</div>
 				<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
@@ -88,6 +89,7 @@
 					  <li role="presentation" class="presentation">{!!link_to_action('MapController@manage', 'Manage Maps', [], [])!!}</li>
 					  <li role="presentation" class="presentation">{!!link_to_action('ModeController@manage', 'Manage Modes', [], [])!!}</li>
 					  <li role="presentation" class="presentation">{!!link_to_action('MapModeController@manage', 'Manage Competitive Maps/Modes', [], [])!!}</li>
+					  <li role="presentation" class="presentation">{!!link_to_action('ItemController@manage', 'Manage Items', [], [])!!}</li>
 					</ul>
 				</div>
 				</div>
