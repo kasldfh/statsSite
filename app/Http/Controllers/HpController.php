@@ -8,12 +8,15 @@ use App\Models\Game;
 use App\Models\Hp;
 use App\Models\HpPlayer;
 use App\Models\Match;
+use App\Models\Event;
+use App\Models\Item;
+use App\Models\Pick;
 
 use Input;
 use Redirect;
 use View;
 
-class HpController extends Controller {
+class HpController extends BaseModeAdminController {
     public function __construct() {
         $this->middleware('auth');
     }
@@ -46,7 +49,6 @@ class HpController extends Controller {
         $extras = HpPlayer::whereNotIn('player_id', $aplayerids + $bplayerids)->where('hp_id', '=', $mode->id);
         foreach($extras as $extra)
         {
-            dd($extra);
             $extra->delete();
         }
 
@@ -84,14 +86,12 @@ class HpController extends Controller {
             //TODO: host stuff
         }
 
-        //return ("<h1>Map Updated</h1>");
+        //update picks
+        parent::update_picks($game->id);
+
         return Redirect::action('AdminController@dashboard');
-        //dd($aplayers);
-        //dd($hp);
-        //dd($match);
     }
-    public function edit($id)
-    {
+    public function edit($id) {
         //id is game id for now (change this later?)
         $game = Game::findOrFail($id);
         $match = $game->match()->first();
@@ -140,10 +140,11 @@ class HpController extends Controller {
                     $bscores[] = $player;
                 }
 
-        //dd($ascores);
-        //dd($aplayers);
+        $items = parent::get_pick_items($match->event_id);
+        $picks = Pick::where('game_id', $game->id)->orderBy('number')->get();
+
         return View::make('admin.game.hp', compact('game', 'match', 'mode', 
             'maps', 'players', 'aplayers', 'bplayers', 'ascores', 'bscores', 
-            'aplayerarr', 'bplayerarr'));
+            'aplayerarr', 'bplayerarr', 'items', 'picks', 'items'));
     }
 }

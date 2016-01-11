@@ -1,3 +1,15 @@
+Team scores for hp aren't saving (always 0)?
+
+fix snd entry (right now it makes 2x snd maps each time, wtf)
+
+Calculate map counts dynamically, or make sure to decrement map count when deleting a map
+addresses:
+map count for manage events isn't updating, how is that being calculated?
+
+when creating a match, only show rosters that are at that event
+
+fix host stuff in modecontrollers (apparently it's not there?) shoudl be quick
+
 Refactor GameController store method
  Store game/match, then hand off to the modecontrollers to store
 
@@ -21,12 +33,7 @@ team
 event
  matches
 
-
-when creating a match, only show rosters that are at that event
-
 Create real email and put it in suercontroller mail sender
-
-map count for manage events isn't updating, how is that being calculated?
 
 Notes:
 Do I actually need the event_source stuff?
@@ -82,3 +89,4 @@ not sure if this is needed but possibly add a getAtEvent($id)
 attribute to roster model instead of doing that logic in the 
 controller
 
+coding style pls

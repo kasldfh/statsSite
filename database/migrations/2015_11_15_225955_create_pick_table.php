@@ -20,10 +20,17 @@ class CreatePickTable extends Migration
 
             //first, second, third, etc
             $table->integer('number');
+            $table->integer('item_id');
 
             //if its not a ban then its gotta be a protect
-            $table->boolean('is_ban');
-            $table->integer('item_id');
+            /* for pick types, we expect
+                0 for no selection
+                1 for a protect
+                2 for a ban
+                3 for a missed choice
+                4 for no choice
+             */
+            $table->integer('pick_type');
             $table->timestamps();
         });
     }

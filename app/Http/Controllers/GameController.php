@@ -19,6 +19,9 @@ use App\Models\UplinkPlayer;
 use App\Models\HpPlayer;
 use App\Models\SndPlayer;
 use App\Models\SndRound;
+use App\Models\Item;
+use App\Models\Pick;
+use App\Models\Event;
 
 use Input;
 use Redirect;
@@ -38,9 +41,16 @@ class GameController extends BaseController {
             foreach ($mode->maplink as $maplink) {
                 $mode_map[$mode->id][$maplink->map->id] = $maplink->map->name;
             }
-
         }
-        return View::make('admin.game.create', compact('modes', 'match', 'mode_map'));
+        $event = Event::where('id', $match->event_id)->first();
+        $items = Item::where('game_title_id', $event->game_title_id)->get();
+        $items = $items->lists('name', 'id');
+        $pick_types = ['1'=> 'Protect', 
+            '2' => 'Ban', 
+            '3' => 'Missed',
+            '4' => 'No Choice'];
+        return View::make('admin.game.create', 
+            compact('modes', 'match', 'mode_map', 'items', 'pick_types'));
     }
     public function manage($id) {
         $games = Match::find($id)->games;
@@ -110,6 +120,27 @@ class GameController extends BaseController {
         $game->game_number = Input::get('game_num');
         $game->map_mode_id = $map_mode->id;
         $game->save();
+
+        //do picks and bans stuff
+        //TODO:get if event has pickban or not...
+        //if($event->has_picks) {
+        $pickers = Input::get('pickers');
+        $pick_types = Input::get('pick_types');
+        $pick_items = Input::get('pick_items');
+        for($i = 1; $i <= 8; $i++) {
+            //if there was a pick
+            if($pickers[$i-1]) {
+                $pick = new Pick;
+                $pick->game_id = $game->id;
+                $pick->player_id = $pickers[$i-1];
+                if($pick_types[$i-1] == 1 || $pick_types[$i-1] == 2) {
+                    $pick->item_id = $pick_items[$i-1];
+                }
+                $pick->number = $i;
+                $pick->pick_type = $pick_types[$i-1];
+                $pick->save();
+            }
+        }
 
         if($mode->name == 'Search and Destroy') {
             return $this->createSnd();
@@ -219,216 +250,216 @@ class GameController extends BaseController {
             }
         }
         return Redirect::action('MatchController@manage');
-    }
-
-    public function delete($id) {
-        $match_id = Game::find($id)->match_id;
-        Game::destroy($id);
-        return Redirect::action('GameController@manage', ['id' => $match_id ]);
-    }
-    public function createSnd() {
-        //TODO: need to remove SndPlayers where player was "unselected"
-        //dd(Input::all());
-        $match = Match::find(Input::get('match_id'));
-
-        $game = new Game;
-        $game->match_id = $match->id;
-        $game->game_number = Input::get('game_num');
-
-        $mode = new Snd;
-
-        $kills = Input::get('kills');
-        $deaths = Input::get('deaths');
-        $plants = Input::get('plants');
-        $defuses = Input::get('defuses');
-        $defends = Input::get('defends');
-        $aplayerids = Input::get('aplayers');
-        //dd($aplayerids);
-        $bplayerids = Input::get('bplayers');
-        //round stuff
-        $sides = Input::get('side');
-        $fbs = Input::get('fb');
-        $sites = input::get('site');
-        $planters = Input::get('planter');
-        $lms = Input::get('lms');
-        $victors = Input::get('victor');
-        $aplayers = [];
-        //first, set game variables
-
-        //TODO: refactor this to be dynamic
-        $modeid = 4;
-        $mapmode = MapMode::where('map_id', '=', Input::get('map'))->where('mode_id', '=', $modeid)->first();
-        $game->map_mode_id = $mapmode->id;
-        $game->save();
-        //next, set snd variables
-        //TODO:set host stuff
-        $mode->team_a_score = Input::get('a_score');
-        $mode->team_b_score = Input::get('b_score');
-        $mode->game_time = Input::get('minutes') * 60 + Input::get('seconds');
-        $mode->a_victory = $mode->team_a_score > $mode->team_b_score ? 1 : 0;
-        $mode->game_id = $game->id;
-        $mode->team_host_id = Input::get('host');
-        $phost = Input::get('p_host');
-        $mode->save();
-
-        $rounds = [];
-        for($i = 1; $i <= $mode->team_a_score + $mode->team_b_score; $i++)
-        {
-            $round = new SndRound;
-            $round->snd_id = $mode->id;
-            $round->round_number = $i;
-            $round->side_won = $sides[$i-1];
-            $round->victor_id = $victors[$i-1];
-            $round->fb_player_id = $fbs[$i-1];
-            $round->lms_player_id = $lms[$i-1];
-            $round->planter_id = $planters[$i-1];
-            $round->plant_site = $sites[$i-1];
-            //dd($round->plant_site);
-            $round->save();
-            $rounds[] = $round;
-        }
-        //dd($rounds);
-        //TODO: set team snd stats (plants/etc)
-        //set new players
-        $i = 0;
-        foreach($aplayerids as $aplayerid)
-        {
-            $aplayer = new SndPlayer;
-            $aplayer->player_id = $aplayerid;
-            $aplayer->snd_id = $mode->id;
-            $aplayer->kills = $kills[$i];
-            $aplayer->deaths = $deaths[$i];
-            $aplayer->plants = $plants[$i];
-            $aplayer->defuses = $defuses[$i];
-            $aplayer->first_bloods = $this->fbs($rounds, $aplayerid);
-            $aplayer->first_blood_wins = $this->fbWins($rounds, $aplayerid, $match->roster_a_id);
-            $aplayer->last_man_standing = $this->lms($rounds, $aplayerid);
-            $aplayer->last_man_standing_wins = $this->lmsWins($rounds, $aplayerid, $match->roster_a_id);
-            $aplayer->host = $phost ? $phost : null;
-            $aplayer->save();
-            $i++;
-            //TODO: host stuff
         }
 
-        foreach($bplayerids as $bplayerid)
-        {
-            $bplayer = new SndPlayer;
-            $bplayer->player_id = $bplayerid;
-            $bplayer->snd_id = $mode->id;
-            $bplayer->kills = $kills[$i];
-            $bplayer->deaths = $deaths[$i];
-            $bplayer->plants = $plants[$i];
-            $bplayer->defuses = $defuses[$i];
-            $bplayer->first_bloods = $this->fbs($rounds, $bplayerid);
-            $bplayer->first_blood_wins = $this->fbWins($rounds, $bplayerid, $match->roster_b_id);
-            $bplayer->last_man_standing = $this->lms($rounds, $bplayerid);
-            $bplayer->last_man_standing_wins = $this->lmsWins($rounds, $bplayerid, $match->roster_b_id);
-            $bplayer->host = $phost ? $phost : null;
-            $bplayer->save();
-            $i++;
-            //TODO: host stuff
+        public function delete($id) {
+            $match_id = Game::find($id)->match_id;
+            Game::destroy($id);
+            return Redirect::action('GameController@manage', ['id' => $match_id ]);
         }
-        return Redirect::action('MatchController@manage');
-    }
+        public function createSnd() {
+            //TODO: need to remove SndPlayers where player was "unselected"
+            //dd(Input::all());
+            $match = Match::find(Input::get('match_id'));
 
-    private function fbs($rounds, $id)
-    {
-        $fbs = 0;
-        $noRecs = true;
-        foreach($rounds as $round)
-        {
-            if($round->fb_player_id == $id)
-                $fbs++;
-            if($round->fb_player_id)
-                $noRecs = false;
-        }
-        return $noRecs ? null : $fbs;
-    }
+            $game = new Game;
+            $game->match_id = $match->id;
+            $game->game_number = Input::get('game_num');
 
-    private function fbWins($rounds, $id, $roster_id)
-    {
-        $fbWins = 0;
-        $noRecs = true;
-        foreach($rounds as $round)
-        {
-            if($round->fb_player_id == $id && $round->victor_id == $roster_id)
-                $fbWins++;
-            if($round->fb_player_id && $round->victor_id)
-                $noRecs = false;
-        }
-        return $noRecs ? null : $fbWins;
-    }
+            $mode = new Snd;
 
-    private function lms($rounds, $id)
-    {
-        $lms = 0;
-        $noRecs = true;
-        foreach($rounds as $round)
-        {
-            if($round->lms_player_id == $id)
-                $lms++;
-            if($round->lms)
-                $noRecs = false;
-        }
-        return $noRecs ? null : $lms;
-    }
+            $kills = Input::get('kills');
+            $deaths = Input::get('deaths');
+            $plants = Input::get('plants');
+            $defuses = Input::get('defuses');
+            $defends = Input::get('defends');
+            $aplayerids = Input::get('aplayers');
+            //dd($aplayerids);
+            $bplayerids = Input::get('bplayers');
+            //round stuff
+            $sides = Input::get('side');
+            $fbs = Input::get('fb');
+            $sites = input::get('site');
+            $planters = Input::get('planter');
+            $lms = Input::get('lms');
+            $victors = Input::get('victor');
+            $aplayers = [];
+            //first, set game variables
 
-    private function lmsWins($rounds, $id, $roster_id)
-    {
-        $lmsWins = 0;
-        $noRecs = true;
-        foreach($rounds as $round)
-        {
-            if($round->lms_player_id == $id && $round->victor_id == $roster_id)
-                $lmsWins++;
-            if($round->lms && $round->victor_id)
-                $noRecs = false;
-        }
-        return $noRecs ? null : $lmsWins;
-    }
+            //TODO: refactor this to be dynamic
+            $modeid = 4;
+            $mapmode = MapMode::where('map_id', '=', Input::get('map'))->where('mode_id', '=', $modeid)->first();
+            $game->map_mode_id = $mapmode->id;
+            $game->save();
+            //next, set snd variables
+            //TODO:set host stuff
+            $mode->team_a_score = Input::get('a_score');
+            $mode->team_b_score = Input::get('b_score');
+            $mode->game_time = Input::get('minutes') * 60 + Input::get('seconds');
+            $mode->a_victory = $mode->team_a_score > $mode->team_b_score ? 1 : 0;
+            $mode->game_id = $game->id;
+            $mode->team_host_id = Input::get('host');
+            $phost = Input::get('p_host');
+            $mode->save();
 
-    //get wins for a particular site (offense or defense)
-    private function sideWins($rounds, $roster_id, $side)
-    {
-        $sideWins = 0;
-        $noRecs = true;
-        foreach($rounds as $round)
-        {
-            if($round->side_won == $side)
-                $sideWins++;
-            if($round->side_won)
-                $noRecs = false;
-        }
-        return $noRecs ? null : $sideWins;
-    }
+            $rounds = [];
+            for($i = 1; $i <= $mode->team_a_score + $mode->team_b_score; $i++)
+            {
+                $round = new SndRound;
+                $round->snd_id = $mode->id;
+                $round->round_number = $i;
+                $round->side_won = $sides[$i-1];
+                $round->victor_id = $victors[$i-1];
+                $round->fb_player_id = $fbs[$i-1];
+                $round->lms_player_id = $lms[$i-1];
+                $round->planter_id = $planters[$i-1];
+                $round->plant_site = $sites[$i-1];
+                //dd($round->plant_site);
+                $round->save();
+                $rounds[] = $round;
+            }
+            //dd($rounds);
+            //TODO: set team snd stats (plants/etc)
+            //set new players
+            $i = 0;
+            foreach($aplayerids as $aplayerid)
+            {
+                $aplayer = new SndPlayer;
+                $aplayer->player_id = $aplayerid;
+                $aplayer->snd_id = $mode->id;
+                $aplayer->kills = $kills[$i];
+                $aplayer->deaths = $deaths[$i];
+                $aplayer->plants = $plants[$i];
+                $aplayer->defuses = $defuses[$i];
+                $aplayer->first_bloods = $this->fbs($rounds, $aplayerid);
+                $aplayer->first_blood_wins = $this->fbWins($rounds, $aplayerid, $match->roster_a_id);
+                $aplayer->last_man_standing = $this->lms($rounds, $aplayerid);
+                $aplayer->last_man_standing_wins = $this->lmsWins($rounds, $aplayerid, $match->roster_a_id);
+                $aplayer->host = $phost ? $phost : null;
+                $aplayer->save();
+                $i++;
+                //TODO: host stuff
+            }
 
-    private function sitePlants($rounds, $site, $players) {
-        $sitePlants = 0;
-        $noRecs = true;
-        foreach($rounds as $round)
-        {
-            $containsPlanter = containsId($players, $round->planter_id);
-            if($containsPlanter && $round->plant_site == $site)
-                $sitePlants++;
-            if($round->player_id && $round->plant_site)
-                $noRecs = false;
+            foreach($bplayerids as $bplayerid)
+            {
+                $bplayer = new SndPlayer;
+                $bplayer->player_id = $bplayerid;
+                $bplayer->snd_id = $mode->id;
+                $bplayer->kills = $kills[$i];
+                $bplayer->deaths = $deaths[$i];
+                $bplayer->plants = $plants[$i];
+                $bplayer->defuses = $defuses[$i];
+                $bplayer->first_bloods = $this->fbs($rounds, $bplayerid);
+                $bplayer->first_blood_wins = $this->fbWins($rounds, $bplayerid, $match->roster_b_id);
+                $bplayer->last_man_standing = $this->lms($rounds, $bplayerid);
+                $bplayer->last_man_standing_wins = $this->lmsWins($rounds, $bplayerid, $match->roster_b_id);
+                $bplayer->host = $phost ? $phost : null;
+                $bplayer->save();
+                $i++;
+                //TODO: host stuff
+            }
+            return Redirect::action('MatchController@manage');
         }
-        return $noRecs ? null : $sitePlants;
-    }
 
-    private function sitePlantWins($rounds, $site, $players, $roster_id) {
-        $plantWins = 0;
-        $noRecs = true;
-        foreach($rounds as $round)
+        private function fbs($rounds, $id)
         {
-            $containsPlanter = containsId($players, $round->planter_id);
-            $isVictor = $round->victor_id == $roster_id;
-            $isSite = $round->plant_site == $site;
-            if($containsPlanter && $isSite && $isVictor)
-                $plantWins++;
-            if($round->player_id && $round->plant_site && $round->victor_id)
-                $noRecs = false;
+            $fbs = 0;
+            $noRecs = true;
+            foreach($rounds as $round)
+            {
+                if($round->fb_player_id == $id)
+                    $fbs++;
+                if($round->fb_player_id)
+                    $noRecs = false;
+            }
+            return $noRecs ? null : $fbs;
         }
-        return $noRecs ? null : $plantWins;
+
+        private function fbWins($rounds, $id, $roster_id)
+        {
+            $fbWins = 0;
+            $noRecs = true;
+            foreach($rounds as $round)
+            {
+                if($round->fb_player_id == $id && $round->victor_id == $roster_id)
+                    $fbWins++;
+                if($round->fb_player_id && $round->victor_id)
+                    $noRecs = false;
+            }
+            return $noRecs ? null : $fbWins;
+        }
+
+        private function lms($rounds, $id)
+        {
+            $lms = 0;
+            $noRecs = true;
+            foreach($rounds as $round)
+            {
+                if($round->lms_player_id == $id)
+                    $lms++;
+                if($round->lms)
+                    $noRecs = false;
+            }
+            return $noRecs ? null : $lms;
+        }
+
+        private function lmsWins($rounds, $id, $roster_id)
+        {
+            $lmsWins = 0;
+            $noRecs = true;
+            foreach($rounds as $round)
+            {
+                if($round->lms_player_id == $id && $round->victor_id == $roster_id)
+                    $lmsWins++;
+                if($round->lms && $round->victor_id)
+                    $noRecs = false;
+            }
+            return $noRecs ? null : $lmsWins;
+        }
+
+        //get wins for a particular site (offense or defense)
+        private function sideWins($rounds, $roster_id, $side)
+        {
+            $sideWins = 0;
+            $noRecs = true;
+            foreach($rounds as $round)
+            {
+                if($round->side_won == $side)
+                    $sideWins++;
+                if($round->side_won)
+                    $noRecs = false;
+            }
+            return $noRecs ? null : $sideWins;
+        }
+
+        private function sitePlants($rounds, $site, $players) {
+            $sitePlants = 0;
+            $noRecs = true;
+            foreach($rounds as $round)
+            {
+                $containsPlanter = containsId($players, $round->planter_id);
+                if($containsPlanter && $round->plant_site == $site)
+                    $sitePlants++;
+                if($round->player_id && $round->plant_site)
+                    $noRecs = false;
+            }
+            return $noRecs ? null : $sitePlants;
+        }
+
+        private function sitePlantWins($rounds, $site, $players, $roster_id) {
+            $plantWins = 0;
+            $noRecs = true;
+            foreach($rounds as $round)
+            {
+                $containsPlanter = containsId($players, $round->planter_id);
+                $isVictor = $round->victor_id == $roster_id;
+                $isSite = $round->plant_site == $site;
+                if($containsPlanter && $isSite && $isVictor)
+                    $plantWins++;
+                if($round->player_id && $round->plant_site && $round->victor_id)
+                    $noRecs = false;
+            }
+            return $noRecs ? null : $plantWins;
+        }
     }
-}

@@ -54,3 +54,48 @@
     </div>
     @endif
 @endsection
+
+@section('picks')
+<div class="row" style="">
+  <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
+    <h4 type="text">Picks and Bans</h4>
+  </div>
+
+  <div class="" style="">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>Player</th>
+            <th>Pick or Ban</th>
+            <th>Item</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for($i = 1; $i<=8; $i++)
+          <tr>
+          <?php 
+          $player = '';
+          $item = '';
+          $type = '';
+          foreach($picks as $pick) {
+            if($pick->number == $i) {
+              $player = $pick->player_id;
+              $item = $pick->item_id;
+              $type = $pick->pick_type;
+            }
+          }
+          ?>
+
+          <td>{!!Form::select('pickers[]', ['' => 'Select'] + $match->rostera->players + $match->rosterb->players, $player, ['class' => 'form-control'])!!}</td>
+              {{--we expect this numbering in the gamecontroller store method--}}
+              <td>{!! Form::select('pick_types[]', ['0' => 'Select', '1' => 'Protect', '2' => 'Ban', '3' => 'Missed', '4' => 'No Choice'], $type, ['class'=>'form-control']) !!}</td>
+              <td>{!! Form::select('pick_items[]', [''=>'Select'] + $items->toArray(), $item,  ['class'=>'form-control']) !!}</td>
+          </tr>
+          @endfor
+        </tbody>
+      </table>
+    </div>
+  </div>
+@endsection
+

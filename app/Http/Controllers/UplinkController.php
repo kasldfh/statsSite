@@ -8,12 +8,13 @@ use App\Models\Game;
 use App\Models\Uplink;
 use App\Models\UplinkPlayer;
 use App\Models\Match;
+use App\Models\Pick;
 
 use Input;
 use Redirect;
 use View;
 
-class UplinkController extends Controller {
+class UplinkController extends BaseModeAdminController {
     public function __construct() {
         $this->middleware('auth');
     }
@@ -46,7 +47,6 @@ class UplinkController extends Controller {
         $extras = UplinkPlayer::whereNotIn('player_id', $aplayerids + $bplayerids)->where('uplink_id', '=', $mode->id);
         foreach($extras as $extra)
         {
-            dd($extra);
             $extra->delete();
         }
 
@@ -84,14 +84,11 @@ class UplinkController extends Controller {
             //TODO: host stuff
         }
 
-        //return ("<h1>Map Updated</h1>");
+        //update picks
+        parent::update_picks($game->id);
         return Redirect::action('AdminController@dashboard');
-        //dd($aplayers);
-        //dd($hp);
-        //dd($match);
     }
-    public function edit($id)
-    {
+    public function edit($id) {
         //id is game id for now (change this later?)
         $game = Game::findOrFail($id);
         $match = $game->match()->first();
@@ -138,10 +135,11 @@ class UplinkController extends Controller {
                     $bscores[] = $player;
                 }
 
-        //dd($ascores);
-        //dd($aplayers);
+        $items = parent::get_pick_items($match->event_id);
+        $picks = Pick::where('game_id', $game->id)->orderBy('number')->get();
+
         return View::make('admin.game.uplink', compact('game', 'match', 'mode',
             'maps', 'players', 'aplayers', 'bplayers', 'ascores', 'bscores',
-            'aplayerarr', 'bplayerarr'));
+            'aplayerarr', 'bplayerarr', 'picks', 'items'));
     }
 }

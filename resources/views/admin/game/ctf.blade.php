@@ -35,6 +35,7 @@ function containsId($players, $id)
 @include('admin.game.general')
 @yield('general')
 @yield('host')
+@yield('picks')
                     <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
                         <h4 type="text">{!!$match->rostera->team->name!!}</h4>
                     </div>

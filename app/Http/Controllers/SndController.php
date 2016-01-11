@@ -10,12 +10,13 @@ use App\Models\Snd;
 use App\Models\SndPlayer;
 use App\Models\SndRound;
 use App\Models\Match;
+use App\Models\Pick;
 
 use Input;
 use Redirect;
 use View;
 
-class SndController extends Controller {
+class SndController extends BaseModeAdminController {
     public function __construct() {
         $this->middleware('auth');
     }
@@ -74,7 +75,6 @@ class SndController extends Controller {
     $extras = SndPlayer::whereNotIn('player_id', $aplayerids + $bplayerids)->where('snd_id', '=', $mode->id);
     foreach($extras as $extra)
     {
-        dd($extra);
         $extra->delete();
     }
 
@@ -120,11 +120,10 @@ class SndController extends Controller {
         //TODO: host stuff
     }
 
-    //return ("<h1>Map Updated</h1>");
+    //update picks
+    parent::update_picks($game->id);
+
     return Redirect::action('AdminController@dashboard');
-    //dd($aplayers);
-    //dd($snd);
-    //dd($match);
 }
 
 public function create() {
@@ -182,11 +181,12 @@ public function edit($id) {
                 $bscores[] = $player;
             }
 
-    //dd($ascores);
-    //dd($aplayers);
+    $items = parent::get_pick_items($match->event_id);
+    $picks = Pick::where('game_id', $game->id)->orderBy('number')->get();
+
     return View::make('admin.game.snd', compact('game', 'match', 'mode',
         'maps', 'players', 'aplayers', 'bplayers', 'ascores', 'bscores',
-        'rounds', 'aplayerarr', 'bplayerarr'));
+        'rounds', 'aplayerarr', 'bplayerarr', 'picks', 'items'));
 }
 
 private function fbs($rounds, $id)
