@@ -14,7 +14,7 @@ class CreateModeTable extends Migration {
 	{
 		Schema::create('mode', function(Blueprint $table)
 		{
-			$table->integer('id', true);
+			$table->increments('id');
 			$table->string('name', 100);
 			$table->integer('game_title_id');
 			$table->timestamps();

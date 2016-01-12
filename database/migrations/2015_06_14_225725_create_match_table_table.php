@@ -14,7 +14,7 @@ class CreateMatchTableTable extends Migration {
 	{
 		Schema::create('match_table', function(Blueprint $table)
 		{
-			$table->integer('id', true);
+			$table->increments('id');
 			$table->integer('event_id');
 			$table->integer('roster_a_id');
 			$table->integer('roster_b_id');

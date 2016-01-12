@@ -14,7 +14,7 @@ class CreateScoreTypeTable extends Migration {
 	{
 		Schema::create('score_type', function(Blueprint $table)
 		{
-			$table->integer('id', true);
+			$table->increments('id');
 			$table->string('name', 100);
 			$table->string('name_short', 50);
 			$table->timestamps();

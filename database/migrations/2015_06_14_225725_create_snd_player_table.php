@@ -14,7 +14,7 @@ class CreateSndPlayerTable extends Migration {
 	{
 		Schema::create('snd_player', function(Blueprint $table)
 		{
-			$table->integer('id', true);
+			$table->increments('id');
 			$table->integer('snd_id');
 			$table->integer('player_id');
 			$table->integer('kills')->nullable();

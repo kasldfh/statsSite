@@ -14,7 +14,7 @@ class CreateUplinkPlayerTable extends Migration {
 	{
 		Schema::create('uplink_player', function(Blueprint $table)
 		{
-			$table->integer('id', true);
+			$table->increments('id');
 			$table->integer('uplink_id')->nullable();
 			$table->integer('player_id')->nullable();
 			$table->integer('kills')->nullable();

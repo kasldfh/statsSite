@@ -14,7 +14,7 @@ class CreateGameTitleTable extends Migration {
 	{
 		Schema::create('game_title', function(Blueprint $table)
 		{
-			$table->integer('id', true);
+			$table->increments('id');
 			$table->string('title', 150);
 			$table->timestamps();
 		});

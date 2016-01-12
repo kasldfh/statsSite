@@ -14,7 +14,7 @@ class CreatePlayerRosterTable extends Migration {
 	{
 		Schema::create('player_roster', function(Blueprint $table)
 		{
-			$table->integer('id', true);
+			$table->increments('id');
 			$table->integer('roster_id');
 			$table->integer('player_id');
 			$table->timestamps();

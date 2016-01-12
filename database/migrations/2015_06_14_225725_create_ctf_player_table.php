@@ -14,7 +14,7 @@ class CreateCtfPlayerTable extends Migration {
 	{
 		Schema::create('ctf_player', function(Blueprint $table)
 		{
-			$table->integer('id', true);
+			$table->increments('id'));
 			$table->integer('ctf_id')->nullable();
 			$table->integer('player_id')->nullable();
 			$table->integer('defends')->nullable();

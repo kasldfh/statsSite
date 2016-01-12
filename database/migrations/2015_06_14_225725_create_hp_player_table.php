@@ -14,7 +14,7 @@ class CreateHpPlayerTable extends Migration {
 	{
 		Schema::create('hp_player', function(Blueprint $table)
 		{
-			$table->integer('id', true);
+			$table->increments('id');
 			$table->integer('hp_id')->nullable();
 			$table->integer('player_id')->nullable();
 			$table->integer('kills')->nullable();

@@ -14,7 +14,7 @@ class CreateMapModeTable extends Migration {
 	{
 		Schema::create('map_mode', function(Blueprint $table)
 		{
-			$table->integer('id', true);
+			$table->increments('id');
 			$table->integer('map_id');
 			$table->integer('mode_id');
 			$table->timestamps();

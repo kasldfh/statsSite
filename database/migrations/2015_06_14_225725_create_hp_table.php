@@ -14,7 +14,7 @@ class CreateHpTable extends Migration {
 	{
 		Schema::create('hp', function(Blueprint $table)
 		{
-			$table->integer('id', true);
+			$table->increments('id');
 			$table->integer('game_id');
 			$table->integer('team_a_score');
 			$table->integer('team_b_score');
