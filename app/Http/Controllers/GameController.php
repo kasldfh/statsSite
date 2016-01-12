@@ -253,10 +253,54 @@ class GameController extends BaseController {
         }
 
         public function delete($id) {
-            $match_id = Game::find($id)->match_id;
+            //delete game
+            //update map count in match
+            //delete mode
+            //delete mode players
+            //delete picks
+            $game = Game::find($id);
+            $match = Match::find($game->match_id);
+            //delete map and players
+            $mode;
+            if($game->hp()->first()) {
+                $mode = $game->hp()->first();
+                HpPlayer::where('hp_id', $mode->id)->delete();
+            }
+            if($game->ctf()->first()) {
+                $mode = $game->ctf()->first();
+                CtfPlayer::where('ctf_id', $mode->id)->delete();
+            }
+            if($game->uplink()->first()) {
+                $mode = $game->uplink()->first();
+                UplinkPlayer::where('uplink_id', $mode->id)->delete();
+            }
+            if($game->snd()->first()) {
+                $mode = $game->snd()->first();
+                SndPlayer::where('snd_id', $game->id)->delete();
+                SndRound::where('snd_id', $game->id)->delete();
+            }
+
+
+            //update map counts for the match
+            if($mode->team_a_score > $mode->team_b_score) {
+                $match->a_map_count--;
+            }
+            if($mode->team_b_score > $mode->team_a_score) {
+                $match->b_map_count--;
+            }
+            $match->save();
+
+            //delete mode
+            $mode->delete();
+
+            //delete picks
+            Pick::where('game_id', $game->id)->delete();
+
+            //delete game
             Game::destroy($id);
-            return Redirect::action('GameController@manage', ['id' => $match_id ]);
+            return Redirect::action('GameController@manage', ['id' => $match->id ]);
         }
+
         public function createSnd($game_id) {
             //TODO: need to remove SndPlayers where player was "unselected"
             //dd(Input::all());
