@@ -7,11 +7,11 @@ class RosterEvent extends Model {
     protected $table = 'roster_event';
 
     public function roster() {
-        return $this->hasOne('App\Models\Roster', 'roster_id', 'id');
+        return $this->hasOne('App\Models\Roster', 'id', 'roster_id');
     }
 
     public function event() {
-        return $this->hasOne('App\Models\Event', 'event_id', 'id');
+        return $this->hasOne('App\Models\Event', 'id', 'event_id');
     }
 }
 

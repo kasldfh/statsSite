@@ -13,7 +13,7 @@ class CreateRosterEventTable extends Migration
     public function up()
     {
         Schema::create('roster_event', function (Blueprint $table) {
-			$table->integer('id');
+			$table->increments('id');
 			$table->integer('roster_id');
 			$table->integer('event_id');
         });
