@@ -14,7 +14,7 @@ class CreateCtfTable extends Migration {
 	{
 		Schema::create('ctf', function(Blueprint $table)
 		{
-			$table->increments('id'));
+			$table->increments('id');
 			$table->integer('game_id');
 			$table->integer('team_a_score')->nullable();
 			$table->integer('team_b_score')->nullable();

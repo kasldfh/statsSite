@@ -18,7 +18,6 @@ class CreateArticleTable extends Migration
 			$table->text('excerpt')->nullable();
 			$table->text('body');
 			$table->timestamp('published_at');
-            $table->increments('id');
             $table->timestamps();
         });
     }
