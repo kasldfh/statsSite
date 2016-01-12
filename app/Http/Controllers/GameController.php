@@ -143,7 +143,7 @@ class GameController extends BaseController {
         }
 
         if($mode->name == 'Search and Destroy') {
-            return $this->createSnd();
+            return $this->createSnd($game->id);
         }
 
         elseif($mode->name == 'Capture the Flag') {
@@ -257,15 +257,11 @@ class GameController extends BaseController {
             Game::destroy($id);
             return Redirect::action('GameController@manage', ['id' => $match_id ]);
         }
-        public function createSnd() {
+        public function createSnd($game_id) {
             //TODO: need to remove SndPlayers where player was "unselected"
             //dd(Input::all());
             $match = Match::find(Input::get('match_id'));
-
-            $game = new Game;
-            $game->match_id = $match->id;
-            $game->game_number = Input::get('game_num');
-
+            $game = Game::find($game_id);
             $mode = new Snd;
 
             $kills = Input::get('kills');
