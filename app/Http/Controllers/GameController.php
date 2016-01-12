@@ -324,13 +324,7 @@ class GameController extends BaseController {
             $lms = Input::get('lms');
             $victors = Input::get('victor');
             $aplayers = [];
-            //first, set game variables
 
-            //TODO: refactor this to be dynamic
-            $modeid = 4;
-            $mapmode = MapMode::where('map_id', '=', Input::get('map'))->where('mode_id', '=', $modeid)->first();
-            $game->map_mode_id = $mapmode->id;
-            $game->save();
             //next, set snd variables
             //TODO:set host stuff
             $mode->team_a_score = Input::get('a_score');
