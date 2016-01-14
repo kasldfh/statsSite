@@ -13,8 +13,7 @@ use App\Models\Event;
 
 use Input;
 
-class BaseModeAdminController extends Controller
-{
+class BaseModeAdminController extends BaseController {
     public function update_picks($game_id) {
         $pickers = Input::get('pickers');
         $pick_types = Input::get('pick_types');
@@ -47,4 +46,106 @@ class BaseModeAdminController extends Controller
         $items = $items->lists('name', 'id');
         return $items;
     }
+    //snd methods
+    public function fbs($rounds, $id)
+    {
+        $fbs = 0;
+        $noRecs = true;
+        foreach($rounds as $round)
+        {
+            if($round->fb_player_id == $id)
+                $fbs++;
+            if($round->fb_player_id)
+                $noRecs = false;
+        }
+        return $noRecs ? null : $fbs;
+    }
+
+    public function fbWins($rounds, $id, $roster_id)
+    {
+        $fbWins = 0;
+        $noRecs = true;
+        foreach($rounds as $round)
+        {
+            if($round->fb_player_id == $id && $round->victor_id == $roster_id)
+                $fbWins++;
+            if($round->fb_player_id && $round->victor_id)
+                $noRecs = false;
+        }
+        return $noRecs ? null : $fbWins;
+    }
+
+    public function lms($rounds, $id)
+    {
+        $lms = 0;
+        $noRecs = true;
+        foreach($rounds as $round)
+        {
+            if($round->lms_player_id == $id)
+                $lms++;
+            if($round->lms)
+                $noRecs = false;
+        }
+        return $noRecs ? null : $lms;
+    }
+
+    public function lmsWins($rounds, $id, $roster_id)
+    {
+        $lmsWins = 0;
+        $noRecs = true;
+        foreach($rounds as $round)
+        {
+            if($round->lms_player_id == $id && $round->victor_id == $roster_id)
+                $lmsWins++;
+            if($round->lms && $round->victor_id)
+                $noRecs = false;
+        }
+        return $noRecs ? null : $lmsWins;
+    }
+
+    //get wins for a particular site (offense or defense)
+    public function sideWins($rounds, $roster_id, $side)
+    {
+        $sideWins = 0;
+        $noRecs = true;
+        foreach($rounds as $round)
+        {
+            if($round->side_won == $side)
+                $sideWins++;
+            if($round->side_won)
+                $noRecs = false;
+        }
+        return $noRecs ? null : $sideWins;
+    }
+
+    public function sitePlants($rounds, $site, $players) {
+        $sitePlants = 0;
+        $noRecs = true;
+        foreach($rounds as $round)
+        {
+            $containsPlanter = containsId($players, $round->planter_id);
+            if($containsPlanter && $round->plant_site == $site)
+                $sitePlants++;
+            if($round->player_id && $round->plant_site)
+                $noRecs = false;
+        }
+        return $noRecs ? null : $sitePlants;
+    }
+
+    public function sitePlantWins($rounds, $site, $players, $roster_id) {
+        $plantWins = 0;
+        $noRecs = true;
+        foreach($rounds as $round)
+        {
+            $containsPlanter = containsId($players, $round->planter_id);
+            $isVictor = $round->victor_id == $roster_id;
+            $isSite = $round->plant_site == $site;
+            if($containsPlanter && $isSite && $isVictor)
+                $plantWins++;
+            if($round->player_id && $round->plant_site && $round->victor_id)
+                $noRecs = false;
+        }
+        return $noRecs ? null : $plantWins;
+    }
+
 }

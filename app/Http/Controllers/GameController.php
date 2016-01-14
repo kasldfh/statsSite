@@ -27,7 +27,7 @@ use Input;
 use Redirect;
 use View;
 
-class GameController extends BaseController {
+class GameController extends BaseModeAdminController {
 
     public function __construct() {
         $this->middleware('auth');
@@ -156,7 +156,8 @@ class GameController extends BaseController {
             $ctf->save();
             if($ctf->team_a_score > $ctf->team_b_score) {
                 $match->a_map_count++;
-            } else {
+            } 
+            else {
                 $match->b_map_count++;
             }
             $match->save();
@@ -250,250 +251,157 @@ class GameController extends BaseController {
             }
         }
         return Redirect::action('MatchController@manage');
-        }
-
-        public function delete($id) {
-            //delete game
-            //update map count in match
-            //delete mode
-            //delete mode players
-            //delete picks
-            $game = Game::find($id);
-            $match = Match::find($game->match_id);
-            //delete map and players
-            $mode;
-            if($game->hp()->first()) {
-                $mode = $game->hp()->first();
-                HpPlayer::where('hp_id', $mode->id)->delete();
-            }
-            if($game->ctf()->first()) {
-                $mode = $game->ctf()->first();
-                CtfPlayer::where('ctf_id', $mode->id)->delete();
-            }
-            if($game->uplink()->first()) {
-                $mode = $game->uplink()->first();
-                UplinkPlayer::where('uplink_id', $mode->id)->delete();
-            }
-            if($game->snd()->first()) {
-                $mode = $game->snd()->first();
-                SndPlayer::where('snd_id', $game->id)->delete();
-                SndRound::where('snd_id', $game->id)->delete();
-            }
-
-
-            //update map counts for the match
-            if($mode->team_a_score > $mode->team_b_score) {
-                $match->a_map_count--;
-            }
-            if($mode->team_b_score > $mode->team_a_score) {
-                $match->b_map_count--;
-            }
-            $match->save();
-
-            //delete mode
-            $mode->delete();
-
-            //delete picks
-            Pick::where('game_id', $game->id)->delete();
-
-            //delete game
-            Game::destroy($id);
-            return Redirect::action('GameController@manage', ['id' => $match->id ]);
-        }
-
-        public function createSnd($game_id) {
-            //TODO: need to remove SndPlayers where player was "unselected"
-            //dd(Input::all());
-            $match = Match::find(Input::get('match_id'));
-            $game = Game::find($game_id);
-            $mode = new Snd;
-
-            $kills = Input::get('kills');
-            $deaths = Input::get('deaths');
-            $plants = Input::get('plants');
-            $defuses = Input::get('defuses');
-            $defends = Input::get('defends');
-            $aplayerids = Input::get('aplayers');
-            //dd($aplayerids);
-            $bplayerids = Input::get('bplayers');
-            //round stuff
-            $sides = Input::get('side');
-            $fbs = Input::get('fb');
-            $sites = input::get('site');
-            $planters = Input::get('planter');
-            $lms = Input::get('lms');
-            $victors = Input::get('victor');
-            $aplayers = [];
-
-            //next, set snd variables
-            //TODO:set host stuff
-            $mode->team_a_score = Input::get('a_score');
-            $mode->team_b_score = Input::get('b_score');
-            $mode->game_time = Input::get('minutes') * 60 + Input::get('seconds');
-            $mode->a_victory = $mode->team_a_score > $mode->team_b_score ? 1 : 0;
-            $mode->game_id = $game->id;
-            $mode->team_host_id = Input::get('host');
-            $phost = Input::get('p_host');
-            $mode->save();
-
-            $rounds = [];
-            for($i = 1; $i <= $mode->team_a_score + $mode->team_b_score; $i++)
-            {
-                $round = new SndRound;
-                $round->snd_id = $mode->id;
-                $round->round_number = $i;
-                $round->side_won = $sides[$i-1];
-                $round->victor_id = $victors[$i-1];
-                $round->fb_player_id = $fbs[$i-1];
-                $round->lms_player_id = $lms[$i-1];
-                $round->planter_id = $planters[$i-1];
-                $round->plant_site = $sites[$i-1];
-                //dd($round->plant_site);
-                $round->save();
-                $rounds[] = $round;
-            }
-            //dd($rounds);
-            //TODO: set team snd stats (plants/etc)
-            //set new players
-            $i = 0;
-            foreach($aplayerids as $aplayerid)
-            {
-                $aplayer = new SndPlayer;
-                $aplayer->player_id = $aplayerid;
-                $aplayer->snd_id = $mode->id;
-                $aplayer->kills = $kills[$i];
-                $aplayer->deaths = $deaths[$i];
-                $aplayer->plants = $plants[$i];
-                $aplayer->defuses = $defuses[$i];
-                $aplayer->first_bloods = $this->fbs($rounds, $aplayerid);
-                $aplayer->first_blood_wins = $this->fbWins($rounds, $aplayerid, $match->roster_a_id);
-                $aplayer->last_man_standing = $this->lms($rounds, $aplayerid);
-                $aplayer->last_man_standing_wins = $this->lmsWins($rounds, $aplayerid, $match->roster_a_id);
-                $aplayer->host = $phost ? $phost : null;
-                $aplayer->save();
-                $i++;
-                //TODO: host stuff
-            }
-
-            foreach($bplayerids as $bplayerid)
-            {
-                $bplayer = new SndPlayer;
-                $bplayer->player_id = $bplayerid;
-                $bplayer->snd_id = $mode->id;
-                $bplayer->kills = $kills[$i];
-                $bplayer->deaths = $deaths[$i];
-                $bplayer->plants = $plants[$i];
-                $bplayer->defuses = $defuses[$i];
-                $bplayer->first_bloods = $this->fbs($rounds, $bplayerid);
-                $bplayer->first_blood_wins = $this->fbWins($rounds, $bplayerid, $match->roster_b_id);
-                $bplayer->last_man_standing = $this->lms($rounds, $bplayerid);
-                $bplayer->last_man_standing_wins = $this->lmsWins($rounds, $bplayerid, $match->roster_b_id);
-                $bplayer->host = $phost ? $phost : null;
-                $bplayer->save();
-                $i++;
-                //TODO: host stuff
-            }
-            return Redirect::action('MatchController@manage');
-        }
-
-        private function fbs($rounds, $id)
-        {
-            $fbs = 0;
-            $noRecs = true;
-            foreach($rounds as $round)
-            {
-                if($round->fb_player_id == $id)
-                    $fbs++;
-                if($round->fb_player_id)
-                    $noRecs = false;
-            }
-            return $noRecs ? null : $fbs;
-        }
-
-        private function fbWins($rounds, $id, $roster_id)
-        {
-            $fbWins = 0;
-            $noRecs = true;
-            foreach($rounds as $round)
-            {
-                if($round->fb_player_id == $id && $round->victor_id == $roster_id)
-                    $fbWins++;
-                if($round->fb_player_id && $round->victor_id)
-                    $noRecs = false;
-            }
-            return $noRecs ? null : $fbWins;
-        }
-
-        private function lms($rounds, $id)
-        {
-            $lms = 0;
-            $noRecs = true;
-            foreach($rounds as $round)
-            {
-                if($round->lms_player_id == $id)
-                    $lms++;
-                if($round->lms)
-                    $noRecs = false;
-            }
-            return $noRecs ? null : $lms;
-        }
-
-        private function lmsWins($rounds, $id, $roster_id)
-        {
-            $lmsWins = 0;
-            $noRecs = true;
-            foreach($rounds as $round)
-            {
-                if($round->lms_player_id == $id && $round->victor_id == $roster_id)
-                    $lmsWins++;
-                if($round->lms && $round->victor_id)
-                    $noRecs = false;
-            }
-            return $noRecs ? null : $lmsWins;
-        }
-
-        //get wins for a particular site (offense or defense)
-        private function sideWins($rounds, $roster_id, $side)
-        {
-            $sideWins = 0;
-            $noRecs = true;
-            foreach($rounds as $round)
-            {
-                if($round->side_won == $side)
-                    $sideWins++;
-                if($round->side_won)
-                    $noRecs = false;
-            }
-            return $noRecs ? null : $sideWins;
-        }
-
-        private function sitePlants($rounds, $site, $players) {
-            $sitePlants = 0;
-            $noRecs = true;
-            foreach($rounds as $round)
-            {
-                $containsPlanter = containsId($players, $round->planter_id);
-                if($containsPlanter && $round->plant_site == $site)
-                    $sitePlants++;
-                if($round->player_id && $round->plant_site)
-                    $noRecs = false;
-            }
-            return $noRecs ? null : $sitePlants;
-        }
-
-        private function sitePlantWins($rounds, $site, $players, $roster_id) {
-            $plantWins = 0;
-            $noRecs = true;
-            foreach($rounds as $round)
-            {
-                $containsPlanter = containsId($players, $round->planter_id);
-                $isVictor = $round->victor_id == $roster_id;
-                $isSite = $round->plant_site == $site;
-                if($containsPlanter && $isSite && $isVictor)
-                    $plantWins++;
-                if($round->player_id && $round->plant_site && $round->victor_id)
-                    $noRecs = false;
-            }
-            return $noRecs ? null : $plantWins;
-        }
     }
+
+    public function delete($id) {
+        //delete game
+        //update map count in match
+        //delete mode
+        //delete mode players
+        //delete picks
+        $game = Game::find($id);
+        $match = Match::find($game->match_id);
+        //delete map and players
+        $mode;
+        if($game->hp()->first()) {
+            $mode = $game->hp()->first();
+            HpPlayer::where('hp_id', $mode->id)->delete();
+        }
+        if($game->ctf()->first()) {
+            $mode = $game->ctf()->first();
+            CtfPlayer::where('ctf_id', $mode->id)->delete();
+        }
+        if($game->uplink()->first()) {
+            $mode = $game->uplink()->first();
+            UplinkPlayer::where('uplink_id', $mode->id)->delete();
+        }
+        if($game->snd()->first()) {
+            $mode = $game->snd()->first();
+            SndPlayer::where('snd_id', $game->id)->delete();
+            SndRound::where('snd_id', $game->id)->delete();
+        }
+
+
+        //update map counts for the match
+        if($mode->team_a_score > $mode->team_b_score) {
+            $match->a_map_count--;
+        }
+        if($mode->team_b_score > $mode->team_a_score) {
+            $match->b_map_count--;
+        }
+        $match->save();
+
+        //delete mode
+        $mode->delete();
+
+        //delete picks
+        Pick::where('game_id', $game->id)->delete();
+
+        //delete game
+        Game::destroy($id);
+        return Redirect::action('GameController@manage', ['id' => $match->id ]);
+    }
+
+    public function createSnd($game_id) {
+        //TODO: need to remove SndPlayers where player was "unselected"
+        //dd(Input::all());
+        $match = Match::find(Input::get('match_id'));
+        $game = Game::find($game_id);
+        $mode = new Snd;
+
+        $kills = Input::get('kills');
+        $deaths = Input::get('deaths');
+        $plants = Input::get('plants');
+        $defuses = Input::get('defuses');
+        $defends = Input::get('defends');
+        $aplayerids = Input::get('aplayers');
+        //dd($aplayerids);
+        $bplayerids = Input::get('bplayers');
+        //round stuff
+        $sides = Input::get('side');
+        $fbs = Input::get('fb');
+        $sites = input::get('site');
+        $planters = Input::get('planter');
+        $lms = Input::get('lms');
+        $victors = Input::get('victor');
+        $aplayers = [];
+
+        //next, set snd variables
+        //TODO:set host stuff
+        $mode->team_a_score = Input::get('a_score');
+        $mode->team_b_score = Input::get('b_score');
+        $mode->game_time = Input::get('minutes') * 60 + Input::get('seconds');
+        $mode->a_victory = $mode->team_a_score > $mode->team_b_score ? 1 : 0;
+        $mode->game_id = $game->id;
+        $mode->team_host_id = Input::get('host');
+        $phost = Input::get('p_host');
+        $mode->save();
+        //update map count
+        if($mode->team_a_score > $mode->team_b_score) {
+            $match->a_map_count++;
+        } 
+        else {
+            $match->b_map_count++;
+        }
+        $match->save();
+
+        $rounds = [];
+        for($i = 1; $i <= $mode->team_a_score + $mode->team_b_score; $i++)
+        {
+            $round = new SndRound;
+            $round->snd_id = $mode->id;
+            $round->round_number = $i;
+            $round->side_won = $sides[$i-1];
+            $round->victor_id = $victors[$i-1];
+            $round->fb_player_id = $fbs[$i-1];
+            $round->lms_player_id = $lms[$i-1];
+            $round->planter_id = $planters[$i-1];
+            $round->plant_site = $sites[$i-1];
+            //dd($round->plant_site);
+            $round->save();
+            $rounds[] = $round;
+        }
+        //dd($rounds);
+        //TODO: set team snd stats (plants/etc)
+        //set new players
+        $i = 0;
+        foreach($aplayerids as $aplayerid)
+        {
+            $aplayer = new SndPlayer;
+            $aplayer->player_id = $aplayerid;
+            $aplayer->snd_id = $mode->id;
+            $aplayer->kills = $kills[$i];
+            $aplayer->deaths = $deaths[$i];
+            $aplayer->plants = $plants[$i];
+            $aplayer->defuses = $defuses[$i];
+            $aplayer->first_bloods = parent::fbs($rounds, $aplayerid);
+            $aplayer->first_blood_wins = parent::fbWins($rounds, $aplayerid, $match->roster_a_id);
+            $aplayer->last_man_standing = parent::lms($rounds, $aplayerid);
+            $aplayer->last_man_standing_wins = parent::lmsWins($rounds, $aplayerid, $match->roster_a_id);
+            $aplayer->host = $phost ? $phost : null;
+            $aplayer->save();
+            $i++;
+            //TODO: host stuff
+        }
+
+        foreach($bplayerids as $bplayerid)
+        {
+            $bplayer = new SndPlayer;
+            $bplayer->player_id = $bplayerid;
+            $bplayer->snd_id = $mode->id;
+            $bplayer->kills = $kills[$i];
+            $bplayer->deaths = $deaths[$i];
+            $bplayer->plants = $plants[$i];
+            $bplayer->defuses = $defuses[$i];
+            $bplayer->first_bloods = parent::fbs($rounds, $bplayerid);
+            $bplayer->first_blood_wins = parent::fbWins($rounds, $bplayerid, $match->roster_b_id);
+            $bplayer->last_man_standing = parent::lms($rounds, $bplayerid);
+            $bplayer->last_man_standing_wins = parent::lmsWins($rounds, $bplayerid, $match->roster_b_id);
+            $bplayer->host = $phost ? $phost : null;
+            $bplayer->save();
+            $i++;
+            //TODO: host stuff
+        }
+        return Redirect::action('MatchController@manage');
+    }
+}
