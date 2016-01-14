@@ -13,6 +13,12 @@ fix host stuff in modecontrollers (apparently it's not there?) shoudl be quick
 Refactor GameController store method
  Store game/match, then hand off to the modecontrollers to store
 
+Refactor match so it doesn't need to have the map counts actually saved...its redundant
+
+Refactor all the migrations to use ->increments instead of integer(id, true)
+
+properly set up redis init on production server
+
 in leaderboardcontroller@viewbyevent, don't use all players -- just the ones
 who are on rosters that were added to that event. 
 

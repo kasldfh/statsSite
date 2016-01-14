@@ -11,6 +11,10 @@ class ScoreType extends Model {
 	 * @var string
 	 */
 
+    //we expect 1 to be best of 5
+    //we expect 2 to be forfeit
+
+
 	protected $table = 'score_type';
 
 }
