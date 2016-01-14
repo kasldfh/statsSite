@@ -148,7 +148,6 @@ $( document ).ready(function() {
                                    <tr>
                                      <td>{!!$i!!}</td>
                                      <td>{!!Form::select('pickers[]', ['' => 'Select'] + $match->rostera->players + $match->rosterb->players, '', ['class' => 'form-control'])!!}</td>
-
                                         {{--we expect this numbering in the gamecontroller store method--}}
                                         <td>{!! Form::select('pick_types[]', ['0' => 'Select'] + $pick_types, '', ['class'=>'form-control']) !!}</td>
                                         <td>{!! Form::select('pick_items[]', [''=>'Select'] + $items->toArray(), '',  ['class'=>'form-control']) !!}</td>
@@ -156,36 +155,67 @@ $( document ).ready(function() {
                                     @endfor
                     </tbody>
                   </table>
-                  <div class="row to_hide snd_div" style="display:none;">
-                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                </div>
+              </div>
+            </div>
 
-                      <table class="table table-hover">
-                        <thead>
-                          <tr>
-                            <th></th>
-                            <th>First Blood</th>
-                            <th>Planter</th>
-                            <th>Site</th>
-                            <th>Victor</th>
-                            <th>Side Won</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                            @for($i = 1; $i<=11; $i++)
-                            <tr>
-                              <td><h5 class="text">Round {!!$i!!}</h5></td>
-                              <td>{!!Form::select('fb[]', ['' => 'Select'] + $match->rostera->players + $match->rosterb->players, [], ['class' => 'form-control'])!!}</td>
-                              <td>{!!Form::select('planter[]', ['' => 'Select'] +  $match->rostera->players + $match->rosterb->players, [], ['class' => 'form-control'])!!}</td>
-                              <td>{!!Form::select('site[]', ['' => 'Select', 'a' => 'A', 'b' => 'B'], [], ['class' => 'form-control'])!!}</td>
-                              <td>{!!Form::select('victor[]', ['' => 'Select'] +  $match->teams, [], ['class' => 'form-control'])!!}</td>
-                              <td>{!!Form::select('side[]', ['' => 'Select', 'o' => 'Offense', 'd' => 'Defense'], [], ['class' => 'form-control'])!!}</td>
-                            </tr>
-                            @endfor
-                        </tbody>
-                      </table>
-                    </div>
+            <div class="row" style="">
+              <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
+                <h4 type="text">Specialist Selections</h4>
+              </div>
+            
+              <div class="" style="">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                  <table class="table table-hover">
+                    <thead>
+                      <tr>
+                        <th>Player</th>
+                        <th>Specialist</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      @for($i = 1; $i<=8; $i++)
+                      <tr>
+                        <td>{!!Form::select('specialist_players[]', ['' => 'Select'] + $match->rostera->players + $match->rosterb->players, $i <= 4 ? $match->rostera->starters[$i-1]->player_id : $match->rosterb->starters[$i-5]->player_id, ['class' => 'form-control'])!!}</td>
+                          <td>{!!Form::select('specialists[]', ['' => 'Select'] + $specialists->toArray(), [], ['class' => 'form-control'])!!}</td>
+                      </tr>
+                      @endfor
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
 
-                  </div>
+            <div class="row to_hide snd_div" style="display:none;">
+              <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
+                <table class="table table-hover">
+                  <thead>
+                    <tr>
+                      <th></th>
+                      <th>First Blood</th>
+                      <th>Planter</th>
+                      <th>Site</th>
+                      <th>Victor</th>
+                      <th>Side Won</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                      @for($i = 1; $i<=11; $i++)
+                      <tr>
+                        <td><h5 class="text">Round {!!$i!!}</h5></td>
+                        <td>{!!Form::select('fb[]', ['' => 'Select'] + $match->rostera->players + $match->rosterb->players, [], ['class' => 'form-control'])!!}</td>
+                        <td>{!!Form::select('planter[]', ['' => 'Select'] +  $match->rostera->players + $match->rosterb->players, [], ['class' => 'form-control'])!!}</td>
+                        <td>{!!Form::select('site[]', ['' => 'Select', 'a' => 'A', 'b' => 'B'], [], ['class' => 'form-control'])!!}</td>
+                        <td>{!!Form::select('victor[]', ['' => 'Select'] +  $match->teams, [], ['class' => 'form-control'])!!}</td>
+                        <td>{!!Form::select('side[]', ['' => 'Select', 'o' => 'Offense', 'd' => 'Defense'], [], ['class' => 'form-control'])!!}</td>
+                      </tr>
+                      @endfor
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
                   <div class="row to_hide snd_div snd_score" style="display:none;">
                     <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
                       <h4 type="text">{!!$match->rostera->team->name!!}</h4>

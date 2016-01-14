@@ -122,6 +122,8 @@ class SndController extends BaseModeAdminController {
 
         //update picks
         parent::update_picks($game->id);
+        //update specialists
+        parent::update_specialist($game->id);
 
         return Redirect::action('AdminController@dashboard');
     }
@@ -183,10 +185,13 @@ class SndController extends BaseModeAdminController {
 
         $items = parent::get_pick_items($match->event_id);
         $picks = Pick::where('game_id', $game->id)->orderBy('number')->get();
+        $specialist_players = parent::get_specialist_players($game->id);
+        $specialists = parent::get_specialists($match->event_id);
 
         return View::make('admin.game.snd', compact('game', 'match', 'mode',
             'maps', 'players', 'aplayers', 'bplayers', 'ascores', 'bscores',
-            'rounds', 'aplayerarr', 'bplayerarr', 'picks', 'items'));
+            'rounds', 'aplayerarr', 'bplayerarr', 'picks', 'items',
+            'specialist_players', 'specialists'));
     }
 }
 

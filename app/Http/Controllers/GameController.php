@@ -22,6 +22,7 @@ use App\Models\SndRound;
 use App\Models\Item;
 use App\Models\Pick;
 use App\Models\Event;
+use App\Models\Specialist;
 
 use Input;
 use Redirect;
@@ -49,13 +50,13 @@ class GameController extends BaseModeAdminController {
             '2' => 'Ban', 
             '3' => 'Missed',
             '4' => 'No Choice'];
+        $specialists = Item::where('type', 'Specialist')->lists('name', 'id');
         return View::make('admin.game.create', 
-            compact('modes', 'match', 'mode_map', 'items', 'pick_types'));
+            compact('modes', 'match', 'mode_map', 'items', 'pick_types', 'specialists'));
     }
     public function manage($id) {
         $games = Match::find($id)->games;
-        foreach($games as $game)
-        {
+        foreach($games as $game) {
             $game->map = $game->map()->first()->name;
             $game->mode =  $game->mode()->first()->name;
         }
@@ -141,6 +142,20 @@ class GameController extends BaseModeAdminController {
                 $pick->save();
             }
         }
+
+        //specialists selection
+        $specialist_players = Input::get('specialist_players');
+        $specialists = Input::get('specialists');
+        for($i = 1; $i <= 8; $i++) {
+            if($specialists[$i-1]) {
+                $specialist = new Specialist;
+                $specialist->game_id = $game->id;
+                $specialist->player_id = $specialist_players[$i-1];
+                $specialist->specialist_id = $specialists[$i-1];
+                $specialist->save();
+            }
+        }
+
 
         if($mode->name == 'Search and Destroy') {
             return $this->createSnd($game->id);

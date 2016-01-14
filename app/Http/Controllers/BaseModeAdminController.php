@@ -10,6 +10,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Item;
 use App\Models\Pick;
 use App\Models\Event;
+use App\Models\Specialist;
 
 use Input;
 
@@ -40,6 +41,43 @@ class BaseModeAdminController extends BaseController {
             }
         }
     }
+
+    public function update_specialist($game_id) {
+        $specialist_players = Input::get('specialist_players');
+        $specialists = Input::get('specialists');
+        for($i = 1; $i <= 8; $i++) {
+            if($specialist_players[$i-1]) {
+                $specialist = Specialist::where([
+                    'game_id' => $game_id, 
+                    'player_id' => $specialist_players[$i-1]
+                ])->first();
+                if(!$specialist) {
+                    $specialist = new Specialist;
+                }
+                $specialist->game_id = $game_id;
+                $specialist->player_id = $specialist_players[$i-1];
+                $specialist->specialist_id = $specialists[$i-1];
+                $specialist->save();
+            }
+        }
+    }
+
+    public function get_specialists($event_id) {
+        $event = Event::find($event_id);
+        $specialists = Item::where([
+            'game_title_id'=> $event->game_title_id,
+            'type'=> 'Specialist'
+        ])->get();
+        $specialists = $specialists->lists('name', 'id');
+        return $specialists;
+    }
+
+    public function get_specialist_players($game_id) {
+        $specialists = Specialist::where('game_id', $game_id)->get();
+        $specialists = $specialists->lists('specialist_id', 'player_id');
+        return $specialists;
+    }
+
     public function get_pick_items($event_id) {
         $event = Event::where('id', $event_id)->first();
         $items = Item::where('game_title_id', $event->game_title_id)->get();

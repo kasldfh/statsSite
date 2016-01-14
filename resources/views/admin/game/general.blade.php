@@ -99,3 +99,32 @@
   </div>
 @endsection
 
+@section('specialist')
+<div class="row" style="">
+  <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
+    <h4 type="text">Specialist Selections</h4>
+  </div>
+
+  <div class="" style="">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>Player</th>
+            <th>Specialist</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for($i = 1; $i<=8; $i++)
+          <tr>
+<?php $specialist_player_id = $i <= 4 ? $match->rostera->starters[$i-1]->player_id : $match->rosterb->starters[$i-5]->player_id?>
+            <td>{!!Form::select('specialist_players[]', ['' => 'Select'] + $match->rostera->players + $match->rosterb->players, $specialist_player_id, ['class' => 'form-control'])!!}</td>
+              <td>{!!Form::select('specialists[]', ['' => 'Select'] + $specialists->toArray(), $specialist_players->has($specialist_player_id) ? $specialist_players[$specialist_player_id] : [], ['class' => 'form-control'])!!}</td>
+          </tr>
+          @endfor
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+@stop

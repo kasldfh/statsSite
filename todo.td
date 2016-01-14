@@ -1,9 +1,5 @@
-Team scores for hp aren't saving (always 0)?
+Put specialists and picks pickers dynamically so the code is only in general.blade.php and not in the game create blade template as well. 
 
-fix snd entry (right now it makes 2x snd maps each time, wtf)
-
-Calculate map counts dynamically, or make sure to decrement map count when deleting a map
-addresses:
 map count for manage events isn't updating, how is that being calculated?
 
 when creating a match, only show rosters that are at that event

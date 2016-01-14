@@ -88,6 +88,8 @@ class HpController extends BaseModeAdminController {
 
         //update picks
         parent::update_picks($game->id);
+        //update specialists
+        parent::update_specialist($game->id);
 
         return Redirect::action('AdminController@dashboard');
     }
