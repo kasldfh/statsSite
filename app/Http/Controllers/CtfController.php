@@ -143,8 +143,12 @@ class CtfController extends BaseModeAdminController {
         $items = parent::get_pick_items($match->event_id);
         $picks = Pick::where('game_id', $game->id)->orderBy('number')->get();
 
+        $specialist_players = parent::get_specialist_players($game->id);
+        $specialists = parent::get_specialists($match->event_id);
+
         return View::make('admin.game.ctf', compact('game', 'match', 'mode',
             'maps', 'players', 'aplayers', 'bplayers', 'ascores', 'bscores',
-            'aplayerarr', 'bplayerarr', 'picks', 'items'));
+            'aplayerarr', 'bplayerarr', 'picks', 'items', 'specialist_players',
+            'specialists'));
     }
 }

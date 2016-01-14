@@ -145,8 +145,12 @@ class HpController extends BaseModeAdminController {
         $items = parent::get_pick_items($match->event_id);
         $picks = Pick::where('game_id', $game->id)->orderBy('number')->get();
 
+        $specialist_players = parent::get_specialist_players($game->id);
+        $specialists = parent::get_specialists($match->event_id);
+
         return View::make('admin.game.hp', compact('game', 'match', 'mode', 
             'maps', 'players', 'aplayers', 'bplayers', 'ascores', 'bscores', 
-            'aplayerarr', 'bplayerarr', 'items', 'picks', 'items'));
+            'aplayerarr', 'bplayerarr', 'items', 'picks', 'items',
+            'specialist_players', 'specialists'));
     }
 }
