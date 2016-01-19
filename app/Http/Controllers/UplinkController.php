@@ -27,6 +27,8 @@ class UplinkController extends BaseModeAdminController {
         $deaths = Input::get('deaths');
         $uplinks = Input::get('uplinks');
         $interceptions = Input::get('interceptions');
+        $carries = Input::get('carries');
+        $throws = Input::get('throws');
         $aplayerids = Input::get('aplayers');
         $bplayerids = Input::get('bplayers');
         $aplayers = [];
@@ -63,6 +65,8 @@ class UplinkController extends BaseModeAdminController {
             $aplayer->deaths = $deaths[$i];
             $aplayer->uplinks = $uplinks[$i];
             $aplayer->interceptions = $interceptions[$i] == "" ? null : $interceptions[$i];
+            $aplayer->carries = $carries[$i];
+            $aplayer->throws = $throws[$i];
             $aplayer->save();
             $i++;
             //TODO: host stuff
@@ -79,6 +83,8 @@ class UplinkController extends BaseModeAdminController {
             $bplayer->deaths = $deaths[$i];
             $bplayer->uplinks = $uplinks[$i];
             $bplayer->interceptions = $interceptions[$i] == "" ? null : $interceptions[$i];
+            $bplayer->carries = $carries[$i];
+            $bplayer->throws = $throws[$i];
             $bplayer->save();
             $i++;
             //TODO: host stuff

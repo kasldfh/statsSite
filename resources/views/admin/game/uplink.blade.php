@@ -53,8 +53,10 @@ function containsId($players, $id)
                                     <th>Player</th>
                                     <th>Kills</th>
                                     <th>Deaths</th>
-                                    <th>Uplinks</th>
-                                    <th>Interceptions</th>
+                                    {{--<th>Uplinks</th>--}}
+                                    {{--<th>Interceptions</th>--}}
+                                    <th>Carries</th>
+                                    <th>Throws</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -63,8 +65,10 @@ function containsId($players, $id)
                                     <td>{!! Form::select('aplayers[]', $aplayerarr, $ascores[$i-1]->player_id, ['class'=>'form-control']) !!}</td>
                                     <td>{!! Form::text('kills[]', $ascores[$i-1]->kills , ['class'=>'form-control']) !!}</td>
                                     <td>{!! Form::text('deaths[]', $ascores[$i-1]->deaths , ['class'=>'form-control']) !!}</td>
-                                    <td>{!! Form::text('uplinks[]', $ascores[$i-1]->uplinks , ['class'=>'form-control']) !!}</td>
-                                    <td>{!! Form::text('interceptions[]', $ascores[$i-1]->interceptions , ['class'=>'form-control']) !!}</td>
+                                    <td>{!! Form::text('carries[]', $ascores[$i-1]->carries , array('class'=>'form-control')) !!}</td>
+                                    <td>{!! Form::text('throws[]', $ascores[$i-1]->throws , array('class'=>'form-control')) !!}</td>
+                                    {{--<td>{!! Form::text('uplinks[]', $ascores[$i-1]->uplinks , ['class'=>'form-control']) !!}</td>--}}
+                                    {{--<td>{!! Form::text('interceptions[]', $ascores[$i-1]->interceptions , ['class'=>'form-control']) !!}</td>--}}
                                 </tr>
                                 @endfor
                             </tbody>
@@ -84,8 +88,10 @@ function containsId($players, $id)
                                     <th>Player</th>
                                     <th>Kills</th>
                                     <th>Deaths</th>
-                                    <th>Uplinks</th>
-                                    <th>Interceptions</th>
+                                    {{--<th>Uplinks</th>--}}
+                                    {{--<th>Interceptions</th>--}}
+                                    <th>Carries</th>
+                                    <th>Throws</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -94,8 +100,10 @@ function containsId($players, $id)
                                     <td>{!! Form::select('bplayers[]', $bplayerarr, $bscores[$i-1]->player_id, ['class'=>'form-control']) !!}</td>
                                     <td>{!! Form::text('kills[]', $bscores[$i-1]->kills , ['class'=>'form-control']) !!}</td>
                                     <td>{!! Form::text('deaths[]', $bscores[$i-1]->deaths , ['class'=>'form-control']) !!}</td>
-                                    <td>{!! Form::text('uplinks[]', $bscores[$i-1]->uplinks , ['class'=>'form-control']) !!}</td>
-                                    <td>{!! Form::text('interceptions[]', $bscores[$i-1]->interceptions , ['class'=>'form-control']) !!}</td>
+                                    {{--<td>{!! Form::text('uplinks[]', $bscores[$i-1]->uplinks , ['class'=>'form-control']) !!}</td>--}}
+                                    {{--<td>{!! Form::text('interceptions[]', $bscores[$i-1]->interceptions , ['class'=>'form-control']) !!}</td>--}}
+                                  <td>{!! Form::text('carries[]', $bscores[$i-1]->carries , array('class'=>'form-control')) !!}</td>
+                                  <td>{!! Form::text('throws[]', $bscores[$i-1]->throws , array('class'=>'form-control')) !!}</td>
                                 </tr>
                                 @endfor
 

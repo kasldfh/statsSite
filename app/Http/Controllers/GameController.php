@@ -215,6 +215,8 @@ class GameController extends BaseModeAdminController {
             $uplinks = Input::get('uplinks');
             $shots = Input::get('shots');
             $misses = Input::get('misses');
+            $carries = Input::get('uplink_carries');
+            $throws = Input::get('uplink_throws');
             foreach ($players as $i => $player) {
                 $uplink_player = new UplinkPlayer;
                 $uplink_player->uplink_id = $uplink->id;
@@ -225,6 +227,8 @@ class GameController extends BaseModeAdminController {
                 $uplink_player->makes = $shots[$i];
                 $uplink_player->misses = $misses[$i];
                 $uplink_player->host = $pHost == $player;
+                $uplink_player->carries = $carries[$i];
+                $uplink_player->throws = $throws[$i];
                 $uplink_player->save();
             }
         }

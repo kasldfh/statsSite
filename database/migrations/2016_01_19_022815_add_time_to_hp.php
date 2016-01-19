@@ -13,7 +13,7 @@ class AddTimeToHp extends Migration
     public function up()
     {
         Schema::table('hp_player', function (Blueprint $table) {
-            $table->integer('time');
+            $table->integer('time')->nullable();
             //
         });
     }
@@ -26,7 +26,7 @@ class AddTimeToHp extends Migration
     public function down()
     {
         Schema::table('hp_player', function (Blueprint $table) {
-            //
+            $table->dropColumn('time');
         });
     }
 }

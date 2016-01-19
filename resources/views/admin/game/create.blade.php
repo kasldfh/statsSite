@@ -305,7 +305,7 @@ $( document ).ready(function() {
                             <th>Kills</th>
                             <th>Deaths</th>
                             <th>Captures</th>
-                            <th>Defends</th>
+                            {{--<th>Defends</th>--}}
                             <th>Returns</th>
                           </tr>
                         </thead>
@@ -316,7 +316,7 @@ $( document ).ready(function() {
                                   <td>{!! Form::text('ctf_kills[]', '' , array('class'=>'form-control')) !!}</td>
                                   <td>{!! Form::text('ctf_deaths[]', '' , array('class'=>'form-control')) !!}</td>
                                   <td>{!! Form::text('ctf_captures[]', '' , array('class'=>'form-control')) !!}</td>
-                                  <td>{!! Form::text('ctf_defends[]', '' , array('class'=>'form-control')) !!}</td>
+                                  {{--<td>{!! Form::text('ctf_defends[]', '' , array('class'=>'form-control')) !!}</td>--}}
                                   <td>{!! Form::text('returns[]', '' , array('class'=>'form-control')) !!}</td>
                                 </tr>
                                 @endfor
@@ -341,7 +341,7 @@ $( document ).ready(function() {
                             <th>Kills</th>
                             <th>Deaths</th>
                             <th>Captures</th>
-                            <th>Defends</th>
+                            {{--<th>Defends</th>--}}
                             <th>Returns</th>
                           </tr>
                         </thead>
@@ -352,7 +352,7 @@ $( document ).ready(function() {
                                   <td>{!! Form::text('ctf_kills[]', '' , array('class'=>'form-control')) !!}</td>
                                   <td>{!! Form::text('ctf_deaths[]', '' , array('class'=>'form-control')) !!}</td>
                                   <td>{!! Form::text('ctf_captures[]', '' , array('class'=>'form-control')) !!}</td>
-                                  <td>{!! Form::text('ctf_defends[]', '' , array('class'=>'form-control')) !!}</td>
+                                  {{--<td>{!! Form::text('ctf_defends[]', '' , array('class'=>'form-control')) !!}</td>--}}
                                   <td>{!! Form::text('returns[]', '' , array('class'=>'form-control')) !!}</td>
                                 </tr>
                                 @endfor
@@ -377,9 +377,11 @@ $( document ).ready(function() {
                             <th>Player</th>
                             <th>Kills</th>
                             <th>Deaths</th>
-                            <th>Uplinks</th>
-                            <th>Makes</th>
-                            <th>Misses</th>
+                            {{--<th>Uplinks</th>--}}
+                            {{--<th>Makes</th>--}}
+                            {{--<th>Misses</th>--}}
+                            <th>Carries</th>
+                            <th>Throws</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -388,9 +390,11 @@ $( document ).ready(function() {
                                   <td>{!!Form::select('uplink_player[]', ['' => 'Select'] + $match->rostera->players, $match->rostera->starters[$i-1]->player_id, ['class' => 'form-control'])!!}</td>
                                   <td>{!! Form::text('uplink_kills[]', '' , array('class'=>'form-control')) !!}</td>
                                   <td>{!! Form::text('uplink_deaths[]', '' , array('class'=>'form-control')) !!}</td>
-                                  <td>{!! Form::text('uplinks[]', '' , array('class'=>'form-control')) !!}</td>
-                                  <td>{!! Form::text('shots[]', '' , array('class'=>'form-control')) !!}</td>
-                                  <td>{!! Form::text('misses[]', '' , array('class'=>'form-control')) !!}</td>
+                                  {{--<td>{!! Form::text('uplinks[]', '' , array('class'=>'form-control')) !!}</td>--}}
+                                  {{--<td>{!! Form::text('shots[]', '' , array('class'=>'form-control')) !!}</td>--}}
+                                  {{--<td>{!! Form::text('misses[]', '' , array('class'=>'form-control')) !!}</td>--}}
+                                  <td>{!! Form::text('uplink_carries[]', '' , array('class'=>'form-control')) !!}</td>
+                                  <td>{!! Form::text('uplink_throws[]', '' , array('class'=>'form-control')) !!}</td>
                                 </tr>
                                 @endfor
                         </tbody>
@@ -413,9 +417,11 @@ $( document ).ready(function() {
                             <th>Player</th>
                             <th>Kills</th>
                             <th>Deaths</th>
-                            <th>Uplinks</th>
-                            <th>Makes</th>
-                            <th>Misses</th>
+                            {{--<th>Uplinks</th>--}}
+                            {{--<th>Makes</th>--}}
+                            {{--<th>Misses</th>--}}
+                            <th>Carries</th>
+                            <th>Throws</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -424,9 +430,11 @@ $( document ).ready(function() {
                                   <td>{!!Form::select('uplink_player[]', ['' => 'Select'] + $match->rosterb->players, $match->rosterb->starters[$i-1]->player_id, ['class' => 'form-control'])!!}</td>
                                   <td>{!! Form::text('uplink_kills[]', '' , array('class'=>'form-control')) !!}</td>
                                   <td>{!! Form::text('uplink_deaths[]', '' , array('class'=>'form-control')) !!}</td>
-                                  <td>{!! Form::text('uplinks[]', '' , array('class'=>'form-control')) !!}</td>
-                                  <td>{!! Form::text('shots[]', '' , array('class'=>'form-control')) !!}</td>
-                                  <td>{!! Form::text('misses[]', '' , array('class'=>'form-control')) !!}</td>
+                                  {{--<td>{!! Form::text('uplinks[]', '' , array('class'=>'form-control')) !!}</td>--}}
+                                  {{--<td>{!! Form::text('shots[]', '' , array('class'=>'form-control')) !!}</td>--}}
+                                  {{--<td>{!! Form::text('misses[]', '' , array('class'=>'form-control')) !!}</td>--}}
+                                  <td>{!! Form::text('uplink_carries[]', '' , array('class'=>'form-control')) !!}</td>
+                                  <td>{!! Form::text('uplink_throws[]', '' , array('class'=>'form-control')) !!}</td>
                                 </tr>
                                 @endfor
                         </tbody>
