@@ -245,21 +245,32 @@ class GameController extends BaseModeAdminController {
             $players = Input::get('hp_player');
             $hp_kills = Input::get('hp_kills');
             $hp_deaths = Input::get('hp_deaths');
-            $hp_captures = Input::get('hp_captures');
+            //$hp_captures = Input::get('hp_captures');
+            $hp_time = Input::get('hp_time');
             $hp_defends = Input::get('hp_defends');
             foreach ($players as $i => $player) {
                 $hp_player = new HpPlayer;
                 $kills = $hp_kills[$i];
                 $deaths = $hp_deaths[$i];
-                $captures = $hp_captures[$i];
+                //$time = $hp_time[$i];
+
+                $player_time = explode(':', str_replace('.', ':', $hp_time[$i]));
+                $time;
+                if(sizeof($player_time)) {
+                    $time = 60 * $player_time[0];
+                    if(sizeof($player_time) == 2) {
+                        $time += $player_time[1];
+                    }
+                }
+
                 $defends = $hp_defends[$i];
 
                 $hp_player->hp_id = $hp->id;
                 $hp_player->player_id = $player;
-                $hp_player->kills = $kills;// == "" ? null : $kills;
-                $hp_player->deaths = $deaths;// == "" ? null : $deaths;
-                $hp_player->captures = $captures;// == "" ? null : $captures;
-                $hp_player->defends = $defends;// == "" ? null : $defends;
+                $hp_player->kills = $kills;
+                $hp_player->deaths = $deaths;
+                $hp_player->time = $time;
+                $hp_player->defends = $defends;
                 $hp_player->host = $pHost == $player;
                 $hp_player->save();
                 var_dump($hp_player->kills);

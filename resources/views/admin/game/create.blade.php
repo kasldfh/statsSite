@@ -449,7 +449,7 @@ $( document ).ready(function() {
                             <th>Player</th>
                             <th>Kills</th>
                             <th>Deaths</th>
-                            <th>Captures</th>
+                            <th>Time</th>
                             <th>Defends</th>
                           </tr>
                         </thead>
@@ -459,7 +459,7 @@ $( document ).ready(function() {
                                   <td>{!!Form::select('hp_player[]', ['' => 'Select'] + $match->rostera->players, $match->rostera->starters[$i-1]->player_id, ['class' => 'form-control'])!!}</td>
                                   <td>{!! Form::text('hp_kills[]', '' , array('class'=>'form-control')) !!}</td>
                                   <td>{!! Form::text('hp_deaths[]', '' , array('class'=>'form-control')) !!}</td>
-                                  <td>{!! Form::text('hp_captures[]', '' , array('class'=>'form-control')) !!}</td>
+                                  <td>{!! Form::text('hp_time[]', '' , array('class'=>'form-control')) !!}</td>
                                   <td>{!! Form::text('hp_defends[]', '' , array('class'=>'form-control')) !!}</td>
                                 </tr>
                                 @endfor
@@ -483,7 +483,7 @@ $( document ).ready(function() {
                             <th>Player</th>
                             <th>Kills</th>
                             <th>Deaths</th>
-                            <th>Captures</th>
+                            <th>Time</th>
                             <th>Defends</th>
                           </tr>
                         </thead>
@@ -493,7 +493,7 @@ $( document ).ready(function() {
                                           <td>{!!Form::select('hp_player[]', ['' => 'Select'] + $match->rosterb->players, $match->rosterb->starters[$i-1]->player_id, ['class' => 'form-control'])!!}</td>
                                           <td>{!! Form::text('hp_kills[]', '' , array('class'=>'form-control')) !!}</td>
                                           <td>{!! Form::text('hp_deaths[]', '' , array('class'=>'form-control')) !!}</td>
-                                          <td>{!! Form::text('hp_captures[]', '' , array('class'=>'form-control')) !!}</td>
+                                          <td>{!! Form::text('hp_time[]', '' , array('class'=>'form-control')) !!}</td>
                                           <td>{!! Form::text('hp_defends[]', '' , array('class'=>'form-control')) !!}</td>
                                         </tr>
                                         @endfor

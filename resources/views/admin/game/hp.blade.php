@@ -53,7 +53,7 @@ function containsId($players, $id)
             <th>Player</th>
             <th>Kills</th>
             <th>Deaths</th>
-            <th>Captures</th>
+            <th>Time</th>
             <th>Defends</th>
           </tr>
         </thead>
@@ -63,7 +63,7 @@ function containsId($players, $id)
             <td>{!! Form::select('aplayers[]', $aplayerarr, $ascores[$i-1]->player_id, ['class'=>'form-control']) !!}</td>
             <td>{!! Form::text('kills[]', $ascores[$i-1]->kills , ['class'=>'form-control']) !!}</td>
             <td>{!! Form::text('deaths[]', $ascores[$i-1]->deaths , ['class'=>'form-control']) !!}</td>
-            <td>{!! Form::text('captures[]', $ascores[$i-1]->captures , ['class'=>'form-control']) !!}</td>
+            <td>{!! Form::text('time[]', $ascores[$i-1]->time?strval(intval($ascores[$i-1]->time / 60)) . ':' . strval($ascores[$i-1]->time % 60) :'', ['class'=>'form-control']) !!}</td>
             <td>{!! Form::text('defends[]', $ascores[$i-1]->defends , ['class'=>'form-control']) !!}</td>
           </tr>
           @endfor
@@ -93,7 +93,7 @@ function containsId($players, $id)
             <th>Player</th>
             <th>Kills</th>
             <th>Deaths</th>
-            <th>Captures</th>
+            <th>Time</th>
             <th>Defends</th>
           </tr>
         </thead>
@@ -103,7 +103,7 @@ function containsId($players, $id)
             <td>{!! Form::select('bplayers[]', $bplayerarr, $bscores[$i-1]->player_id, ['class'=>'form-control']) !!}</td>
             <td>{!! Form::text('kills[]', $bscores[$i-1]->kills , ['class'=>'form-control']) !!}</td>
             <td>{!! Form::text('deaths[]', $bscores[$i-1]->deaths , ['class'=>'form-control']) !!}</td>
-            <td>{!! Form::text('captures[]', $bscores[$i-1]->captures , ['class'=>'form-control']) !!}</td>
+            <td>{!! Form::text('time[]', $bscores[$i-1]->time?strval(intval($bscores[$i-1]->time / 60)) . ':' . strval($bscores[$i-1]->time % 60) :'', ['class'=>'form-control']) !!}</td>
             <td>{!! Form::text('defends[]', $bscores[$i-1]->defends , ['class'=>'form-control']) !!}</td>
           </tr>
           @endfor

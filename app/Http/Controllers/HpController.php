@@ -27,7 +27,7 @@ class HpController extends BaseModeAdminController {
         $mode = Hp::find(Input::get('mode_id'));
         $kills = Input::get('kills');
         $deaths = Input::get('deaths');
-        $captures = Input::get('captures');
+        $times= Input::get('time');
         $defends = Input::get('defends');
         $aplayerids = Input::get('aplayers');
         $bplayerids = Input::get('bplayers');
@@ -54,8 +54,7 @@ class HpController extends BaseModeAdminController {
 
         //set new players
         $i = 0;
-        foreach($aplayerids as $aplayerid)
-        {
+        foreach($aplayerids as $aplayerid) {
             $aplayer = HpPlayer::where('player_id', '=', $aplayerid)->where('hp_id', '=', $mode->id)->first();
             if(!$aplayer) //if a different player is selected
                 $aplayer = new HpPlayer;
@@ -63,15 +62,25 @@ class HpController extends BaseModeAdminController {
             $aplayer->hp_id = $mode->id;
             $aplayer->kills = $kills[$i];
             $aplayer->deaths = $deaths[$i];
-            $aplayer->captures = $captures[$i];
+            //$aplayer->time = $time[$i];
+
+            $player_time = explode(':', str_replace('.', ':', $times[$i]));
+            $time;
+            if(sizeof($player_time)) {
+                $time = 60 * $player_time[0];
+                if(sizeof($player_time) == 2) {
+                    $time += $player_time[1];
+                }
+            }
+            $aplayer->time = $time;
+
             $aplayer->defends = $defends[$i];
             $aplayer->save();
             $i++;
             //TODO: host stuff
         }
 
-        foreach($bplayerids as $bplayerid)
-        {
+        foreach($bplayerids as $bplayerid) {
             $bplayer = HpPlayer::where('player_id', '=', $bplayerid)->where('hp_id', '=', $mode->id)->first();
             if(!$bplayer) //if a different player is selected
                 $bplayer = new HpPlayer;
@@ -79,7 +88,18 @@ class HpController extends BaseModeAdminController {
             $bplayer->hp_id = $mode->id;
             $bplayer->kills = $kills[$i];
             $bplayer->deaths = $deaths[$i];
-            $bplayer->captures = $captures[$i];
+            //$aplayer->time = $time[$i];
+
+            $player_time = explode(':', str_replace('.', ':', $times[$i]));
+            $time;
+            if(sizeof($player_time)) {
+                $time = 60 * $player_time[0];
+                if(sizeof($player_time) == 2) {
+                    $time += $player_time[1];
+                }
+            }
+            $bplayer->time = $time;
+
             $bplayer->defends = $defends[$i];
             $bplayer->save();
             $i++;
@@ -122,8 +142,8 @@ class HpController extends BaseModeAdminController {
         }
         //generate list of players by roster
         $ascores = [];
-        foreach($players as $player)
-            foreach($aplayers as $aplayer)
+        foreach($players as $player) {
+            foreach($aplayers as $aplayer) {
                 if($player->player_id == $aplayer->player->id)
                 {
                     $player->alias = $aplayer->player->alias;
@@ -131,9 +151,12 @@ class HpController extends BaseModeAdminController {
                         $mode->pHost = $player->player_id;
                     $ascores[] = $player;
                 }
+            }
+        }
+
         $bscores = [];
-        foreach($players as $player)
-            foreach($bplayers as $bplayer)
+        foreach($players as $player) {
+            foreach($bplayers as $bplayer) {
                 if($player->player_id == $bplayer->player->id)
                 {
                     $player->alias = $bplayer->player->alias;
@@ -141,6 +164,8 @@ class HpController extends BaseModeAdminController {
                         $mode->pHost = $player->player_id;
                     $bscores[] = $player;
                 }
+            }
+        }
 
         $items = parent::get_pick_items($match->event_id);
         $picks = Pick::where('game_id', $game->id)->orderBy('number')->get();
