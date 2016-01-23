@@ -1,4 +1,4 @@
-Put specialists and picks pickers dynamically so the code is only in general.blade.php and not in the game create blade template as well. 
+I dont think i need the if statement in baseadmincontroller for the update specialists where it checks if player was set -- player will basically always be set
 
 map count for manage events isn't updating, how is that being calculated?
 

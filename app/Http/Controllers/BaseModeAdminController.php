@@ -15,11 +15,13 @@ use App\Models\Specialist;
 use Input;
 
 class BaseModeAdminController extends BaseController {
+
     public function update_picks($game_id) {
         $pickers = Input::get('pickers');
         $pick_types = Input::get('pick_types');
         $pick_items = Input::get('pick_items');
         $existing_picks = Pick::where('game_id', $game_id)->orderBy('number')->get();
+        $current = collect();
 
         for($i = 1; $i <= 8; $i++) {
             //if there was a pick
@@ -48,20 +50,18 @@ class BaseModeAdminController extends BaseController {
         $pre_existing = Specialist::where('game_id', $game_id)->get();
         $current = collect();
         for($i = 1; $i <= 8; $i++) {
-            if($specialist_players[$i-1]) {
-                $specialist = Specialist::where([
-                    'game_id' => $game_id, 
-                    'player_id' => $specialist_players[$i-1]
-                ])->first();
-                if(!$specialist) {
-                    $specialist = new Specialist;
-                }
-                $specialist->game_id = $game_id;
-                $specialist->player_id = $specialist_players[$i-1];
-                $specialist->specialist_id = $specialists[$i-1];
-                $specialist->save();
-                $current->push($specialist);
+            $specialist = Specialist::where([
+                'game_id' => $game_id, 
+                'player_id' => $specialist_players[$i-1]
+            ])->first();
+            if(!$specialist) {
+                $specialist = new Specialist;
             }
+            $specialist->game_id = $game_id;
+            $specialist->player_id = $specialist_players[$i-1];
+            $specialist->specialist_id = $specialists[$i-1];
+            $specialist->save();
+            $current->push($specialist);
         }
 
         //remove old entries (if players change we can have old stuff)
