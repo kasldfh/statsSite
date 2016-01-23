@@ -75,16 +75,16 @@
           @for($i = 1; $i<=8; $i++)
           <tr>
           <?php 
-          $player = '';
-          $item = '';
-          $type = '';
-          foreach($picks as $pick) {
-            if($pick->number == $i) {
-              $player = $pick->player_id;
-              $item = $pick->item_id;
-              $type = $pick->pick_type;
+            $player = '';
+            $item = '';
+            $type = '';
+            foreach($picks as $pick) {
+              if($pick->number == $i) {
+                $player = $pick->player_id;
+                $item = $pick->item_id;
+                $type = $pick->pick_type;
+              }
             }
-          }
           ?>
 
           <td>{!!Form::select('pickers[]', ['' => 'Select'] + $match->rostera->players + $match->rosterb->players, $player, ['class' => 'form-control'])!!}</td>
@@ -115,13 +115,13 @@
           </tr>
         </thead>
         <tbody>
-          @for($i = 1; $i<=8; $i++)
+          {{--@for($i = 1; $i<=8; $i++)--}}
+          @foreach($specialist_players as $specialist_player)
           <tr>
-<?php $specialist_player_id = $i <= 4 ? $match->rostera->starters[$i-1]->player_id : $match->rosterb->starters[$i-5]->player_id?>
-            <td>{!!Form::select('specialist_players[]', ['' => 'Select'] + $match->rostera->players + $match->rosterb->players, $specialist_player_id, ['class' => 'form-control'])!!}</td>
-              <td>{!!Form::select('specialists[]', ['' => 'Select'] + $specialists->toArray(), $specialist_players->has($specialist_player_id) ? $specialist_players[$specialist_player_id] : [], ['class' => 'form-control'])!!}</td>
+            <td>{!!Form::select('specialist_players[]', ['' => 'Select'] + $match->rostera->players + $match->rosterb->players, $specialist_player->player_id, ['class' => 'form-control'])!!}</td>
+            <td>{!!Form::select('specialists[]', ['' => 'Select'] + $specialists->toArray(), $specialist_player->specialist_id, ['class' => 'form-control'])!!}</td>
           </tr>
-          @endfor
+          @endforeach
         </tbody>
       </table>
     </div>

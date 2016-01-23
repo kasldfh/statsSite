@@ -45,6 +45,8 @@ class BaseModeAdminController extends BaseController {
     public function update_specialist($game_id) {
         $specialist_players = Input::get('specialist_players');
         $specialists = Input::get('specialists');
+        $pre_existing = Specialist::where('game_id', $game_id)->get();
+        $current = collect();
         for($i = 1; $i <= 8; $i++) {
             if($specialist_players[$i-1]) {
                 $specialist = Specialist::where([
@@ -58,7 +60,14 @@ class BaseModeAdminController extends BaseController {
                 $specialist->player_id = $specialist_players[$i-1];
                 $specialist->specialist_id = $specialists[$i-1];
                 $specialist->save();
+                $current->push($specialist);
             }
+        }
+
+        //remove old entries (if players change we can have old stuff)
+        $old_specialists = $pre_existing->diff($current);
+        foreach($old_specialists as $old_specialist) {
+            $old_specialist->delete();
         }
     }
 
@@ -74,7 +83,7 @@ class BaseModeAdminController extends BaseController {
 
     public function get_specialist_players($game_id) {
         $specialists = Specialist::where('game_id', $game_id)->get();
-        $specialists = $specialists->lists('specialist_id', 'player_id');
+        #$specialists = $specialists->lists('specialist_id', 'player_id');
         return $specialists;
     }
 
