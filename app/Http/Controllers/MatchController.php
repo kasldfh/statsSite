@@ -10,10 +10,12 @@ use App\Models\Event;
 use App\Models\Team;
 use App\Models\ScoreType;
 use App\Models\MatchType;
+use App\Models\Roster;
 
 use View;
 use Input;
 use Redirect;
+
 class MatchController extends Controller {
 	public function __construct() {
         $this->middleware('auth');
@@ -35,6 +37,21 @@ public function create() {
 		return View::make('admin.match.create', compact('events', 'match_types', 'teams', 'score_types', 'match'));
 
 	}
+
+    public function forfeit($id) {
+        $match = Match::find($id);
+        $roster_a = Roster::where('id', $match->roster_a_id)->with('team')->first();
+        $roster_b = Roster::where('id', $match->roster_b_id)->with('team')->first();
+        return View::make('admin.match.forfeit', compact('roster_a', 'roster_b', 'match'));
+    }
+
+    public function store_forfeit($id) {
+
+        $match = Match::find($id);
+        $match->forfeit_roster_id = Input::get('team');
+        $match->save();
+        return Redirect::action('AdminController@dashboard');
+    }
 
 	public function store() {
 		$match = new Match;

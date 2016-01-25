@@ -26,6 +26,7 @@
                 <th>Event Name</th>
                 <th>Match Type</th>
                 <th>Score Type</th>
+                <th>Forfeit</th>
                 <th>Add Map</th>
                 <th>Manage Maps</th>
                 <th>Delete</th>
@@ -40,6 +41,8 @@
                 <td>
                   @if(!empty($match->a_map_count))
                     {!! $match->a_map_count !!}
+                  @elseif($match->forfeit_roster_id)
+                    {!!$match->forfeit_roster_id == $match->roster_a_id ? 'Forfeit' : 'Win by Forfeit'!!}
                   @else
                     -
                   @endif
@@ -47,6 +50,8 @@
                 <td>
                   @if(!empty($match->b_map_count))
                     {!! $match->b_map_count !!}
+                  @elseif($match->forfeit_roster_id)
+                    {!!$match->forfeit_roster_id == $match->roster_b_id ? 'Forfeit' : 'Win by Forfeit'!!}
                   @else
                     -
                   @endif
@@ -54,6 +59,9 @@
                 <td>{!! $match->event->name !!}</td>
                 <td>{!! $match->type->name !!}</td>
                 <td>{!! $match->score->name_short !!}</td>
+                <td>
+                  {!! link_to_action('MatchController@forfeit', 'Forfeit', ['id' => $match->id], ['class' => 'btn btn-default']) !!}
+                </td>
                 <td>
                   {!! link_to_action('GameController@create', 'Add Map', ['id' => $match->id], ['class' => 'btn btn-default']) !!}
                 </td>

@@ -1,21 +1,6 @@
 @extends('layouts.admin')
-@section('js')
-{{-- determine if given player id is in the list of players (for determining selected attribute --}}
-
-<?php
-function containsId($players, $id)
-{
-  foreach($players as $player)
-    if($player->player_id == $id)
-      return true;
-  return false;
-}
-?>
-@endsection
-
 @section('content')
 {!! Form::open(array('action'=>'HpController@update', 'class'=>'form-inline', 'id' => 'form','method' => 'patch')) !!}
-{{--<form class="form-inline">--}}
   <div class="form-group">
     <input type="hidden" name="game_id" value="{!!$game->id!!}">
     <input type="hidden" name="match_id" value="{!!$match->id!!}">

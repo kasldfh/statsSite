@@ -101,6 +101,8 @@ Route::get('admin/match/delete/{id}', ['uses' => 'MatchController@delete']);
 Route::post('admin/match/store', ['uses' => 'MatchController@store']);
 Route::get('admin/match/create', ['uses' => 'MatchController@create']);
 Route::get('admin/match/manage', ['uses' => 'MatchController@manage']);
+Route::get('admin/match/forfeit/{id}', ['uses' => 'MatchController@forfeit']);
+Route::post('admin/match/forfeit/{id}', ['uses' => 'MatchController@store_forfeit']);
 
 Route::get('admin/match_type/delete/{id}', ['uses' => 'MatchTypeController@delete']);
 Route::post('admin/match_type/store', ['uses' => 'MatchTypeController@store']);
