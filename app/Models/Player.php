@@ -27,77 +27,42 @@ class Player extends Model {
 	}
 
 	public function getKdAttribute() {
-		$kills = 0;
-		$deaths = 0;
-		$snd_games = SndPlayer::where("player_id", $this->id)->get();
-		foreach ($snd_games as $game) {	
-			$kills += $game->kills;
-			$deaths += $game->deaths;
-		}
-		$ctf_games = CtfPlayer::where("player_id", $this->id)->get();
-		foreach ($ctf_games as $game) {
-			$kills += $game->kills;
-			$deaths += $game->deaths;
-		}
-		$uplink_games = UplinkPlayer::where("player_id", $this->id)->get();
-		foreach ($uplink_games as $game) {
-			$kills += $game->kills;
-			$deaths += $game->deaths;
-		}
-		$hp_games = HpPlayer::where("player_id", $this->id)->get();
-		foreach ($hp_games as $game) {
-			$kills += $game->kills;
-			$deaths += $game->deaths; 	
-		}
-		return ($deaths != 0) ? round($kills / $deaths, 2) : 0;
+        $kdarr = ['kills' => 0, 'deaths' => 0];
+        $calculate=function(&$kdarr, $mode) {
+            foreach($mode as $mode_game) {
+                $kdarr['kills'] += $mode_game->kills;
+                $kdarr['deaths'] += $mode_game->deaths;
+            }
+        };
+        $calculate($kdarr, SndPlayer::where('player_id', $this->id)->get());
+        $calculate($kdarr, UplinkPlayer::where('player_id', $this->id)->get());
+        $calculate($kdarr, CtfPlayer::where('player_id', $this->id)->get());
+        $calculate($kdarr, HpPlayer::where('player_id', $this->id)->get());
+
+        $kd = $kdarr['kills'];
+        if($kdarr['deaths'] != 0) {
+            $kd = round($kdarr['kills'] / $kdarr['deaths'], 2);
+        }
+        return $kd;
 	}
 
 	public function kdByEvent($id) {
 		$matches = Event::find($id)->matches;
-		$kills = 0;
-		$deaths = 0;
+        $kdarr = ['kills' => 0, 'deaths' => 0];
 		foreach ($matches as $match) {
 			$games = $match->games;
 			foreach ($games as $game) {
-				$ctf = $game->ctf;
-				$snd = $game->snd;
-				$hp = $game->hp;
-				$uplink = $game->uplink;
-				foreach ($ctf as $ctf_game) {
-					foreach ($ctf_game->players as $player) {
-						if($player->player_id == $this->id) {
-							$kills += $player->kills;
-							$deaths += $player->deaths;
-						}
-					}
-				}
-				foreach ($snd as $snd_game) {
-					foreach ($snd_game->players as $player) {
-						if($player->player_id == $this->id) {
-							$kills += $player->kills;
-							$deaths += $player->deaths;
-						}
-					}
-				}
-				foreach ($hp as $hp_game) {
-					foreach ($hp_game->players as $player) {
-						if($player->player_id == $this->id) {
-							$kills += $player->kills;
-							$deaths += $player->deaths;
-						}
-					}
-				}
-				foreach ($uplink as $uplink_game) {
-					foreach ($uplink_game->players as $this->player) {
-						if($player->player_id == $id) {
-							$kills += $player->kills;
-							$deaths += $player->deaths;
-						}
-					}
-				}
-			}
+                $this->kdCalculator($kdarr, $game->ctf);
+                $this->kdCalculator($kdarr, $game->snd);
+                $this->kdCalculator($kdarr, $game->hp);
+                $this->kdCalculator($kdarr, $game->uplink);
+            }
 		}
-		return $deaths != 0 ? round(($kills / $deaths), 2) : 0;
+        $kd = $kdarr['kills'];
+        if($kdarr['deaths'] != 0) {
+            $kd = round($kdarr['kills'] / $kdarr['deaths'], 2);
+        }
+        return $kd;
 	}
 
 	public function getMapCountByEvent($id) {
@@ -498,5 +463,18 @@ class Player extends Model {
 		} else {
 			return 0;
 		}
-	}
+    }
+
+    private function kdCalculator(&$kdarr, $mode_game) {
+        if(!$mode_game) {
+            return $kdarr;
+        }
+
+        foreach ($mode_game->players as $player) {
+            if($player->player_id == $this->id) {
+                $kdarr['kills'] += $player->kills;
+                $kdarr['deaths'] += $player->deaths;
+            }
+        }
+    }
 }
