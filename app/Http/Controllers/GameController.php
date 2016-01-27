@@ -147,13 +147,11 @@ class GameController extends BaseModeAdminController {
         $specialist_players = Input::get('specialist_players');
         $specialists = Input::get('specialists');
         for($i = 1; $i <= 8; $i++) {
-            if($specialists[$i-1]) {
-                $specialist = new Specialist;
-                $specialist->game_id = $game->id;
-                $specialist->player_id = $specialist_players[$i-1];
-                $specialist->specialist_id = $specialists[$i-1];
-                $specialist->save();
-            }
+            $specialist = new Specialist;
+            $specialist->game_id = $game->id;
+            $specialist->player_id = $specialist_players[$i-1];
+            $specialist->specialist_id = $specialists[$i-1];
+            $specialist->save();
         }
 
 
