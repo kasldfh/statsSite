@@ -13,6 +13,7 @@ use App\Models\PlayerRoster;
 use Input;
 use Redirect;
 use View;
+use Session;
 	
 class RosterController extends Controller {
 
@@ -61,7 +62,7 @@ class RosterController extends Controller {
 		$team = Team::find(Input::get('team'));
 		$roles_count = array_count_values($roles);
 		$players = Player::whereIn('id', array_keys($roles))->get();
-		if($roles_count['player'] != 4) {
+		if($roles_count['starter'] != 4) {
 			$players = array_keys($roles);
 			return Redirect::action('RosterController@fix')->with('players', $players)->with('team', $team);
 		}
@@ -71,7 +72,7 @@ class RosterController extends Controller {
 		foreach ($players as $player) {
 			//DBug::DBug($player->toArray(), true);
 			$player_map = new PlayerRoster;
-			$player_map->starter = $roles[$player->id] == 'player';
+			$player_map->starter = $roles[$player->id] == 'starter';
 			$player_map->player_id = $player->id;
 			$player_map->roster_id = $roster->id;
 			$player_map->save();

@@ -26,7 +26,7 @@
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
 					<div class="form-group">
 					{!!Form::label('role[]', $player->alias)!!}
-    				{!! Form::select('role['. $player->id.']', ['' => 'Select Role', 'player' => 'Player', 'sub' => 'Sub'], [], array('class'=>'form-control', 'data-fv-notempty' => 'true')) !!}
+    				{!! Form::select('role['. $player->id.']', ['' => 'Select Role', 'starter' => 'Starter', 'sub' => 'Sub'], [], array('class'=>'form-control', 'data-fv-notempty' => 'true')) !!}
     				</div>
     			</div>
     		</div>
