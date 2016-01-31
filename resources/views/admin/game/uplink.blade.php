@@ -1,5 +1,3 @@
-
-
 @extends('layouts.admin')
 @section('js')
 {{-- determine if given player id is in the list of players (for determining selected attribute --}}
@@ -76,47 +74,41 @@ function containsId($players, $id)
         </table>
       </div>
       <div class="col-xs-12 col-sm-9 col-md-9 col-lg-9">
-                        <h4 type="text">{!!$match->rosterb->team->name!!}</h4>
-                    </div>
-                    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
-                        {{--{!! Form::text('b_hp_score', '' , array('class'=>'form-control', 'placeholder'=>'Score')) !!}--}}
-                        <input type="text" name="b_hp_score" class="form-control" value={!!$mode->team_b_score!!}>
-                    </div>
-                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                        <table class="table table-hover">
-                            <thead>
-                                <tr>
-                                    <th>Player</th>
-                                    <th>Kills</th>
-                                    <th>Deaths</th>
-                                    {{--<th>Uplinks</th>--}}
-                                    {{--<th>Interceptions</th>--}}
-                                    <th>Carries</th>
-                                    <th>Throws</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @for($i = 1; $i <= 4; $i++)
-                                <tr>
-                                    <td>{!! Form::select('bplayers[]', $bplayerarr, $bscores[$i-1]->player_id, ['class'=>'form-control']) !!}</td>
-                                    <td>{!! Form::text('kills[]', $bscores[$i-1]->kills , ['class'=>'form-control']) !!}</td>
-                                    <td>{!! Form::text('deaths[]', $bscores[$i-1]->deaths , ['class'=>'form-control']) !!}</td>
-                                    {{--<td>{!! Form::text('uplinks[]', $bscores[$i-1]->uplinks , ['class'=>'form-control']) !!}</td>--}}
-                                    {{--<td>{!! Form::text('interceptions[]', $bscores[$i-1]->interceptions , ['class'=>'form-control']) !!}</td>--}}
-                                  <td>{!! Form::text('carries[]', $bscores[$i-1]->carries , array('class'=>'form-control')) !!}</td>
-                                  <td>{!! Form::text('throws[]', $bscores[$i-1]->throws , array('class'=>'form-control')) !!}</td>
-                                </tr>
-                                @endfor
-
-                            </tbody>
-                        </table>
-                    </div>
-                @include('admin.game.buttons')
-                @yield('buttons')
-        </div>
-    </div>
-    {!!Form::close()!!}
-@endsection
-
-@section('addback')
+        <h4 type="text">{!!$match->rosterb->team->name!!}</h4>
+      </div>
+      <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+        <input type="text" name="b_hp_score" class="form-control" value={!!$mode->team_b_score!!}>
+      </div>
+      <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>Player</th>
+              <th>Kills</th>
+              <th>Deaths</th>
+              {{--<th>Uplinks</th>--}}
+              {{--<th>Interceptions</th>--}}
+              <th>Carries</th>
+              <th>Throws</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for($i = 1; $i <= 4; $i++)
+              <tr>
+                <td>{!! Form::select('bplayers[]', $bplayerarr, $bscores[$i-1]->player_id, ['class'=>'form-control']) !!}</td>
+                <td>{!! Form::text('kills[]', $bscores[$i-1]->kills , ['class'=>'form-control']) !!}</td>
+                <td>{!! Form::text('deaths[]', $bscores[$i-1]->deaths , ['class'=>'form-control']) !!}</td>
+                {{--<td>{!! Form::text('uplinks[]', $bscores[$i-1]->uplinks , ['class'=>'form-control']) !!}</td>--}}
+                {{--<td>{!! Form::text('interceptions[]', $bscores[$i-1]->interceptions , ['class'=>'form-control']) !!}</td>--}}
+                <td>{!! Form::text('carries[]', $bscores[$i-1]->carries , array('class'=>'form-control')) !!}</td>
+                <td>{!! Form::text('throws[]', $bscores[$i-1]->throws , array('class'=>'form-control')) !!}</td>
+              </tr>
+            @endfor
+          </tbody>
+        </table>
+      </div>
+@include('admin.game.buttons')
+@yield('buttons')
+  </div>
+{!!Form::close()!!}
 @endsection

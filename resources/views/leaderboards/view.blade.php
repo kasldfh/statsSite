@@ -169,7 +169,8 @@
               @endif
               <b>{!!$player->alias!!}</b></td>
               @if(isset($event))
-                <td><span class="">{!!$player->slayerByEvent($event->id)!!}</span></td>
+<?php dd($sndPlayers);?>
+                <td><span class="">{!!$player->slayer($event->id)!!}</span></td>
             <td><span class="">{!!$player->getRespawnMapCountByEvent($event->id)!!}</span></td>
 <!-- came from under ifelse -->
               @else
@@ -206,6 +207,7 @@
           </tr>
           <?php $k=1; ?>
           @foreach($sndPlayers as $player)
+<?php dd('lele');?>
           @if($k<=25)
           
             <td
