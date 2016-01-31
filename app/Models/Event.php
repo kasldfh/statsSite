@@ -29,6 +29,10 @@ class Event extends Model {
 		return $this->hasMany('App\Models\Match', 'event_id', 'id');
 	}
 
+    public function rosters() {
+        return $this->hasMany('App\Models\RosterEvent', 'event_id', 'id')->with('roster');
+    }
+
 	public function getPlayed($id) {
 		$matches = $this->matches;
 		$kills = 0;
