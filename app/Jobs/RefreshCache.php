@@ -66,8 +66,8 @@ class RefreshCache extends Job implements SelfHandling, ShouldQueue
                 //overall stats
                 $player->kd = $player->kdByEvent($event_id);
                 $player->map_count = $player->getMapCountByEvent($event_id);
-                $player->slayer = $player->getSlayerByEvent($event_id);
                 //mode specific stats
+                $player->hpkpm = $player->getHpKPM($event_id);
                 $player->sndkd = $player->getSndkdByEvent($event_id);
                 $player->hpkd = $player->getHpkdByEvent($event_id);
                 $player->ctfkd = $player->getCtfkdByEvent($event_id);
@@ -76,16 +76,16 @@ class RefreshCache extends Job implements SelfHandling, ShouldQueue
                 $player->hp_mapcount = $player->getHpMapCountByEvent($event_id);
                 $player->uplink_mapcount = $player->getUplinkMapCountByEvent($event_id);
                 $player->ctf_mapcount = $player->getCtfMapCountByEvent($event_id);
-                $player->uplink_dunks = 420;
-                $player->hp_time = 69;
+                $player->uplink_dunks = $player->getULDunksPM($event_id);
+                $player->hp_time = $player->getHpTime($event_id);
 
                 //overall stats
                 Redis::set('stat:kd:'.$event_id.':'.$player->id, $player->kd);
                 Redis::set('stat:mapcount:'.$event_id.':'.$player->id, 
                     $player->map_count);
-                Redis::set('stat:slayer:'.$event_id.':'.$player->id, 
-                    $player->slayer);
                 //mode specific stats
+                Redis::set('stat:hpkpm:'.$event_id.':'.$player->id,
+                    $player->hpkpm);
                 Redis::set('stat:sndkd:'.$event_id.':'.$player->id,
                     $player->sndkd);
                 Redis::set('stat:hpkd:'.$event_id.':'.$player->id,
@@ -110,43 +110,28 @@ class RefreshCache extends Job implements SelfHandling, ShouldQueue
         }
         //overall stats
         $kd_leaderboard = $players->sortByDesc('kd');
-        $mapcount_leaderboard = $players->sortByDesc('map_count');
-        $slayer_leaderboard = $players->sortByDesc('slayer');
-        //mode specific stats
-        $sndkd_leaderboard = $players->sortByDesc('sndkd');
-        $hpkd_leaderboard = $players->sortByDesc('hpkd');
-        $ctfkd_leaderboard = $players->sortByDesc('ctfkd');
-        $uplinkkd_leaderboard = $players->sortByDesc('uplinkkd');
-        $snd_mapcount_leaderboard = $players->sortByDesc('snd_mapcount');
-        $hp_mapcount_leaderboard = $players->sortByDesc('hp_mapcount');
-        $uplink_mapcount_leaderboard = $players->sortByDesc('uplink_mapcount');
-        $ctf_mapcount_leaderboard = $players->sortByDesc('ctf_mapcount');
+        //$mapcount_leaderboard = $players->sortByDesc('map_count');
+        ////mode specific stats
+        //$sndkd_leaderboard = $players->sortByDesc('sndkd');
+        //$hpkd_leaderboard = $players->sortByDesc('hpkd');
+        //$ctfkd_leaderboard = $players->sortByDesc('ctfkd');
+        //$uplinkkd_leaderboard = $players->sortByDesc('uplinkkd');
+        //$snd_mapcount_leaderboard = $players->sortByDesc('snd_mapcount');
+        //$hp_mapcount_leaderboard = $players->sortByDesc('hp_mapcount');
+        //$uplink_mapcount_leaderboard = $players->sortByDesc('uplink_mapcount');
+        //$ctf_mapcount_leaderboard = $players->sortByDesc('ctf_mapcount');
 
         //overall stats
         Redis::set('stat:kd:'.$event_id.':all', $kd_leaderboard);
-        Redis::set('stat:mapcount:'.$event_id.':all', $mapcount_leaderboard);
-        Redis::set('stat:slayer:'.$event_id.':all', $slayer_leaderboard);
-        //mode specific stats
-        Redis::set('stat:sndkd:'.$event_id.':all', $sndkd_leaderboard);
-        Redis::set('stat:hpkd:'.$event_id.':all', $hpkd_leaderboard);
-        Redis::set('stat:ctfkd:'.$event_id.':all', $ctfkd_leaderboard);
-        Redis::set('stat:uplinkkd:'.$event_id.':all', $uplinkkd_leaderboard);
-        Redis::set('stat:snd_mapcount:'.$event_id.':all', $snd_mapcount_leaderboard);
-        Redis::set('stat:hp_mapcount:'.$event_id.':all', $hp_mapcount_leaderboard);
-        Redis::set('stat:uplink_mapcount:'.$event_id.':all', $uplink_mapcount_leaderboard);
-        Redis::set('stat:ctf_mapcount:'.$event_id.':all', $ctf_mapcount_leaderboard);
-    }
-
-    public function cache_slayer_leaderboards() {
-            $with = ['rostermap', 'rostermap.roster', 'rostermap.roster.team'];
-            $slayers = Player::with($with)->get();
-            for($i = 0; $i < count($slayers); $i++)
-            {
-                $slayers[$i]->slayer = $slayers[$i]->slayer();
-                Redis::set('stat:slayer:all:'.$slayers[$i]->id, 
-                    $slayers[$i]->slayer());
-            }
-            $slayers = $slayers->sortByDesc('slayer');
-            return $slayers;
+        //Redis::set('stat:mapcount:'.$event_id.':all', $mapcount_leaderboard);
+        ////mode specific stats
+        //Redis::set('stat:sndkd:'.$event_id.':all', $sndkd_leaderboard);
+        //Redis::set('stat:hpkd:'.$event_id.':all', $hpkd_leaderboard);
+        //Redis::set('stat:ctfkd:'.$event_id.':all', $ctfkd_leaderboard);
+        //Redis::set('stat:uplinkkd:'.$event_id.':all', $uplinkkd_leaderboard);
+        //Redis::set('stat:snd_mapcount:'.$event_id.':all', $snd_mapcount_leaderboard);
+        //Redis::set('stat:hp_mapcount:'.$event_id.':all', $hp_mapcount_leaderboard);
+        //Redis::set('stat:uplink_mapcount:'.$event_id.':all', $uplink_mapcount_leaderboard);
+        //Redis::set('stat:ctf_mapcount:'.$event_id.':all', $ctf_mapcount_leaderboard);
     }
 }

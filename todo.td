@@ -1,30 +1,27 @@
-I dont think i need the if statement in baseadmincontroller for the update specialists where it checks if player was set -- player will basically always be set
+high priority
+    finish cache job queue thing
+    figure out map count issue
+    recalculate map count in update game modes
+    figure out fix for ctf scores stuff
 
-map count for manage events isn't updating, how is that being calculated?
-
-when creating a match, only show rosters that are at that event
-
-fix host stuff in modecontrollers (apparently it's not there?) shoudl be quick
-
-Refactor GameController store method
- Store game/match, then hand off to the modecontrollers to store
-
-Refactor match so it doesn't need to have the map counts actually saved...its redundant
-
-Refactor all the migrations to use ->increments instead of integer(id, true)
-
-properly set up redis init on production server
-
-in leaderboardcontroller@viewbyevent, don't use all players -- just the ones
 who are on rosters that were added to that event. 
+    add caching in leaderboardcontroller@viewbyevent
 
-add caching in leaderboardcontroller@viewbyevent
+low priority
+    for hp time, show 2 digits consistently
+    when creating a match, only show rosters that are at that event
+    fix host stuff in modecontrollers shoudl be quick
+    Create real email and put it in suercontroller mail sender
+    Refactor GameController store method
+        Store game/match, then hand off to the modecontrollers to store
+    Refactor all the migrations to use ->increments instead of integer(id, true)
 
-add article management by user, users that can only add articles, auth for article, article to admin dashboard 
+busywork
+    finish properly indenting snd.blade.php
 
-make article url the title of article instead of article id
 
-make all the model deletion delete dependencies
+
+make all the model deletion properly cascade...maybe even properly set up foreigh keys
 match
  game
   mode
@@ -35,12 +32,18 @@ team
 event
  matches
 
-Create real email and put it in suercontroller mail sender
-
 Notes:
+
+not sure if this is needed but possibly add a getAtEvent($id) 
+attribute to roster model instead of doing that logic in the 
+controller
+
 Do I actually need the event_source stuff?
  Could, if we need to handle snd from excel events differently than snd from
      inputted events....
+
+
+
 //update statuploader to include snd stats, do like this for player snd stats
 
     //first, make a "stack" of fb's and lms's. 
@@ -80,15 +83,8 @@ snd plants 3
 snd kills * 2
 snd deaths * -1.2
 
+Ctf maps to fix: 
+http://104.236.216.23/admin/ctf/215/edit
+http://104.236.216.23/admin/ctf/256/edit
 
-Add something liek this for the bans/picks/protects
-so im thinking it'll look like this
-pick 1 | player | ban/pro | thing | weapon used | specialist used| whatever else|
-.....
-pick 8
-
-not sure if this is needed but possibly add a getAtEvent($id) 
-attribute to roster model instead of doing that logic in the 
-controller
-
-coding style pls
+same score, 1 was added to winner

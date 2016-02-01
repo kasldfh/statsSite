@@ -13,10 +13,11 @@ use View;
 class LeaderboardController extends BaseController {
 
     public function view($event_id) {
+        $event = Event::findOrFail($event_id);
         $players = json_decode(parent::cacheGet('stat:kd:'.$event_id.':all'));
 
         return view('frontend.leaderboards', 
-            compact('players'));
+            compact('players', 'event'));
     }
 
 	public function viewByEvent($id) {

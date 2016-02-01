@@ -64,6 +64,70 @@ class Player extends Model {
         }
         return $kd;
 	}
+    
+    public function getSndkdByEvent($id) {
+		$matches = Event::find($id)->matches;
+        $kdarr = ['kills' => 0, 'deaths' => 0];
+		foreach ($matches as $match) {
+			$games = $match->games;
+			foreach ($games as $game) {
+                $this->kdCalculator($kdarr, $game->snd);
+            }
+		}
+        $kd = $kdarr['kills'];
+        if($kdarr['deaths'] != 0) {
+            $kd = round($kdarr['kills'] / $kdarr['deaths'], 2);
+        }
+        return $kd;
+	}
+
+    public function getHpkdByEvent($id) {
+		$matches = Event::find($id)->matches;
+        $kdarr = ['kills' => 0, 'deaths' => 0];
+		foreach ($matches as $match) {
+			$games = $match->games;
+			foreach ($games as $game) {
+                $this->kdCalculator($kdarr, $game->hp);
+            }
+		}
+        $kd = $kdarr['kills'];
+        if($kdarr['deaths'] != 0) {
+            $kd = round($kdarr['kills'] / $kdarr['deaths'], 2);
+        }
+        return $kd;
+	}
+
+    public function getCtfkdByEvent($id) {
+		$matches = Event::find($id)->matches;
+        $kdarr = ['kills' => 0, 'deaths' => 0];
+		foreach ($matches as $match) {
+			$games = $match->games;
+			foreach ($games as $game) {
+                $this->kdCalculator($kdarr, $game->ctf);
+            }
+		}
+        $kd = $kdarr['kills'];
+        if($kdarr['deaths'] != 0) {
+            $kd = round($kdarr['kills'] / $kdarr['deaths'], 2);
+        }
+        return $kd;
+	}
+
+    public function getUplinkkdByEvent($id) {
+		$matches = Event::find($id)->matches;
+        $kdarr = ['kills' => 0, 'deaths' => 0];
+		foreach ($matches as $match) {
+			$games = $match->games;
+			foreach ($games as $game) {
+                $this->kdCalculator($kdarr, $game->uplink);
+            }
+		}
+        $kd = $kdarr['kills'];
+        if($kdarr['deaths'] != 0) {
+            $kd = round($kdarr['kills'] / $kdarr['deaths'], 2);
+        }
+        return $kd;
+	}
 
 	public function getMapCountByEvent($id) {
         $maps = 0;
@@ -130,136 +194,64 @@ class Player extends Model {
             }])->get();
         return count($snds);
     }
-    public function getSndkdByEvent($id) {
-        //$matches = Event::find($id)->matches;
-        $matches = Event::find($id)->matches;
-        $kills = 0;
-        $deaths = 0;
-        foreach ($matches as $match) {
-            $games = $match->games;
-            foreach ($games as $game) {
-                $snd = $game->snd;
-                if($snd) {
-                    foreach ($snd->players as $player) {
-                        if($player->player_id == $this->id) {
-                            $kills += $player->kills;
-                            $deaths += $player->deaths;
-                        }
+
+    public function getULDunksPM($event_id) {
+        $matches = Match::where('event_id', $event_id)->get();
+        $maps = $this->getUplinkMapCountByEvent($event_id);
+        $dunks = 0;
+        foreach($matches as $match) {
+            foreach($match->games as $game) {
+                if($game->uplink()->first()) {
+                    $player = UplinkPlayer::where(
+                        ['uplink_id' => $game->uplink()->first()->id, 
+                        'player_id' => $this->id])->first();
+                    if(count($player)) {
+                        $dunks += $player->carries;
                     }
                 }
             }
         }
-        return $deaths != 0 ? round(($kills / $deaths), 2) : 0;
+        return ($maps != 0) ? round($dunks / $maps, 2) : 0;
     }
+        
 
-
-    public function getHpkdByEvent($id) {
-        //$matches = Event::find($id)->matches;
-        $matches = Event::find($id)->matches;
-        $kills = 0;
-        $deaths = 0;
-        foreach ($matches as $match) {
-            $games = $match->games;
-            foreach ($games as $game) {
-                $hp = $game->hp;
-                if($hp) {
-                    foreach ($hp->players as $player) {
-                        if($player->player_id == $this->id) {
-                            $kills += $player->kills;
-                            $deaths += $player->deaths;
-                        }
+    public function getHpTime($event_id) {
+        $matches = Match::where('event_id', $event_id)->get();
+        $maps = $this->getHpMapCountByEvent($event_id);
+        $time = 0;
+        foreach($matches as $match) {
+            foreach($match->games as $game) {
+                if($game->hp()->first()) {
+                    $player = HpPlayer::where(
+                        ['hp_id' => $game->hp()->first()->id, 'player_id' => $this->id])->first();
+                    if(count($player)) {
+                        $time += $player->time;
                     }
                 }
             }
         }
-        return $deaths != 0 ? round(($kills / $deaths), 2) : 0;
+        return $time % 60 . ':' . $time / 60;
     }
+        
 
-    public function getUplinkkdByEvent($id) {
-        //$matches = Event::find($id)->matches;
-        $matches = Event::find($id)->matches;
+    public function getHpKPM($event_id) {
+        $matches = Match::where('event_id', $event_id)->get();
+        $maps = $this->getHpMapCountByEvent($event_id);
         $kills = 0;
-        $deaths = 0;
-        foreach ($matches as $match) {
-            $games = $match->games;
-            foreach ($games as $game) {
-                $uplink = $game->uplink;
-                if($uplink) {
-                    foreach ($uplink->players as $player) {
-                        if($player->player_id == $this->id) {
-                            $kills += $player->kills;
-                            $deaths += $player->deaths;
-                        }
+        foreach($matches as $match) {
+            foreach($match->games as $game) {
+                if($game->hp()->first()) {
+                    $player = HpPlayer::where(
+                        ['hp_id' => $game->hp()->first()->id, 'player_id' => $this->id])->first();
+                    if(count($player)) {
+                        $kills += $player->kills;
                     }
                 }
             }
         }
-        return $deaths != 0 ? round(($kills / $deaths), 2) : 0;
+        return ($maps != 0) ? round($kills / $maps, 2) : 0;
     }
-
-
-    public function getCtfkdByEvent($id) {
-        //$matches = Event::find($id)->matches;
-        $matches = Event::find($id)->matches;
-        $kills = 0;
-        $deaths = 0;
-        foreach ($matches as $match) {
-            $games = $match->games;
-            foreach ($games as $game) {
-                $ctf = $game->ctf;
-                if($ctf) {
-                    foreach ($ctf->players as $player) {
-                        if($player->player_id == $this->id) {
-                            $kills += $player->kills;
-                            $deaths += $player->deaths;
-                        }
-                    }
-                }
-            }
-        }
-        return $deaths != 0 ? round(($kills / $deaths), 2) : 0;
-    }
-
-
-    public function getSlayerByEvent($event_id) {
-        $matches = Event::find($event_id)->matches;
-        $kills = 0;
-        $maps = 0;
-        foreach ($matches as $match) {
-            $games = $match->games;
-            foreach ($games as $game) {
-                //respawn modes only
-                $ctf = $game->ctf;
-                $hp = $game->hp;
-                $uplink = $game->uplink;
-                if($ctf){
-                    foreach ($ctf->players as $player) {
-                        if($player->player_id == $this->id) {
-                            $kills += $player->kills;
-                            $maps++;
-                        }
-                    }
-                }
-                if($hp) {
-                    foreach ($hp->players as $player) {
-                        if($player->player_id == $this->id) {
-                            $kills += $player->kills;
-                            $maps++;
-                        }
-                    }
-                }
-                if($uplink) {
-                    foreach ($uplink->players as $this->player) {
-                        if($player->player_id == $this->id) {
-                            $kills += $player->kills;
-                            $maps++;
-                        }
-                    }
-                }
-            }
-        }
-        return ($maps != 0) ? round(($kills / $maps) * 600, 2) : 0;
-    }
+        
 
     public function getMapCount() {
         $snd_games = SndPlayer::where("player_id", $this->id)->get();

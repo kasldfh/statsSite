@@ -33,7 +33,7 @@ table.sortable tbody tr:before {
   @include('frontend.assets.header')
 
 	<div class="banner-content event">
-		<h1>Leaderboards</h1>
+		<h1>{!!$event->name!!} LEADERBOARD</h1>
 	</div>
 
 </div><!-- /banner -->
@@ -53,7 +53,7 @@ table.sortable tbody tr:before {
 								<tr>
 									<td class="title">Player</td>
 									<td>K/D</td>
-									<td>Slayer</td>
+									<td>HP Kills / Map</td>
 									<td>SND K/D</td>
 									<td>UL Dunks</td>
 									<td>HP Time</td>
@@ -64,7 +64,7 @@ table.sortable tbody tr:before {
 								  <tr>
 								  	<td class="title"><a href=""><img src="/images/teams/optic-gaming.png" alt="" class="table-icon" />{!!$player->alias!!}</a></td>
 								  	<td>{!!$player->kd!!}</td>
-								  	<td>{!!$player->slayer!!}</td>
+								  	<td>{!!$player->hpkpm!!}</td>
 								  	<td>{!!$player->sndkd!!}</td>
 								  	<td>{!!$player->uplink_dunks!!}</td>
 								  	<td>{!!$player->hp_time!!}</td>
