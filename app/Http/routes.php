@@ -156,6 +156,7 @@ Route::get('leaderboards/overall', ['uses' => 'LeaderboardController@view']);
 Route::get('leaderboards/ctf', ['uses' => 'LeaderboardController@viewCTF']);
 Route::get('leaderboards/uplink', ['uses' => 'LeaderboardController@viewUplink']);
 Route::get('leaderboards/snd', ['uses' => 'LeaderboardController@viewSnD']);
-//Route::get('leaderboards/{id}', ['uses' => 'LeaderboardController@viewByEvent']);
 Route::get('leaderboards/{event_id}', ['uses' => 'LeaderboardController@view']);
+//todo: remove line below
+Route::get('leaderboards/{id}', ['uses' => 'LeaderboardController@viewByEvent']);
 
