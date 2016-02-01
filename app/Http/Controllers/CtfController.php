@@ -89,6 +89,11 @@ class CtfController extends BaseModeAdminController {
 
         //update picks
         parent::update_picks($game->id);
+        //update specialists
+        parent::update_specialist($game->id);
+
+        //start process to refill cache for this event
+        parent::refresh_cache($match->event_id);
 
         return Redirect::action('AdminController@dashboard');
     }

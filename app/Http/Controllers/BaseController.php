@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Jobs\RefreshCache;
 
 use App\Models\Event;
 use App\Models\Team;
@@ -13,20 +14,13 @@ use Auth;
 use View;
 
 class BaseController extends Controller {
-    /* Cache key conventions 
-     * player:{id}              -- player model, json encoded
-     * player:all               -- player model all, json encoded
-     * event:all                -- all events, json encoded
-     * rosplay:all              -- roster with playermap, json encoded
-
-     * stat:{stat}:{all}:{all}      -- all events, all player kd's, sorted desc, json encoded
-     * stat:{stat}:{all}:{playerid} --      player kd, for all events
-     * stat:{stat}:{eventid}:{playerid} -- player kd at event
-     *
-     */
 
     public function __construct()
     {
+    }
+
+    public function refresh_cache($event_id) {
+        $this->dispatch(new RefreshCache($event_id));
     }
 
     public static function getCachedView($key) {

@@ -145,6 +145,9 @@ Route::patch('admin/snd/{id}/update', ['uses' => 'SndController@update']);
 Route::put('admin/snd/{id}/create',  ['uses' => 'SndController@create']);
 Route::put('admin/snd/create',  ['uses' => 'SndController@create']);
 
+//cache routes
+Route::get('admin/cache/refresh', ['uses' => 'cachecontroller@index']);
+
 Route::get('{team}', ['uses' => 'FrontEndTeamController@show']);
 Route::get('event/{event_id}', ['uses' => 'FrontEndEventController@viewEvent']);
 Route::get('player/{id}', ['uses' => 'FrontEndPlayerController@view']);
@@ -153,5 +156,6 @@ Route::get('leaderboards/overall', ['uses' => 'LeaderboardController@view']);
 Route::get('leaderboards/ctf', ['uses' => 'LeaderboardController@viewCTF']);
 Route::get('leaderboards/uplink', ['uses' => 'LeaderboardController@viewUplink']);
 Route::get('leaderboards/snd', ['uses' => 'LeaderboardController@viewSnD']);
-Route::get('leaderboards/{id}', ['uses' => 'LeaderboardController@viewByEvent']);
+//Route::get('leaderboards/{id}', ['uses' => 'LeaderboardController@viewByEvent']);
+Route::get('leaderboards/{event_id}', ['uses' => 'LeaderboardController@view']);
 

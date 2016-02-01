@@ -95,6 +95,9 @@ class UplinkController extends BaseModeAdminController {
         //update specialists
         parent::update_specialist($game->id);
 
+        //start process to refill cache for this event
+        parent::refresh_cache($match->event_id);
+
         return Redirect::action('AdminController@dashboard');
     }
     public function edit($id) {
