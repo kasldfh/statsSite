@@ -47,12 +47,12 @@ class RefreshCache extends Job implements SelfHandling, ShouldQueue
     */
 
     public function handle() {
-        set_time_limit(0);
+        set_time_limit(100000);
         $this->cacheEvent($this->event_id);
     }
 
     public function cacheEvent($event_id) {
-        set_time_limit(0);
+        set_time_limit(100000);
         $with = ['rostermap', 'rostermap.roster', 'rostermap.roster.team'];
         $event = Event::find($event_id);
         $players = collect();

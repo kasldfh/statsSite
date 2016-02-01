@@ -18,7 +18,7 @@ class cachecontroller extends BaseController
      */
     public function index()
     {
-        set_time_limit(0);
+        set_time_limit(100000);
         $events = Event::all();
         foreach($events as $event) {
             parent::refresh_cache($event->id);
