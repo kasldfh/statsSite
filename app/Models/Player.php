@@ -148,51 +148,71 @@ class Player extends Model {
 	}
 	
     public function getHpMapCountByEvent($event_id) {
-        //get snd maps from specified event only
-        $hps = Hp::with([
-            'players' => function($query) {
-                $query->where('player_id', $this->id);
-            }, 
-            'game.match' => function($query) use ($event_id) {
-                $query->where('event_id', $event_id);
-            }])->get();
-        return count($hps);
+        $matches = Match::where('event_id', $event_id)->get();
+        $maps = 0;
+        foreach($matches as $match) {
+            foreach($match->games as $game) {
+                if($game->hp) {
+                    foreach($game->hp->players()->get() as $player) {
+                        if($player->player_id == $this->id) {
+                            $maps++;
+                        }
+                    }
+                }
+            }
+        }
+        return $maps;
     }
 
     public function getCtfMapCountByEvent($event_id) {
-        //get snd maps from specified event only
-        $ctfs = Ctf::with([
-            'players' => function($query) {
-                $query->where('player_id', $this->id);
-            }, 
-            'game.match' => function($query) use ($event_id) {
-                $query->where('event_id', $event_id);
-            }])->get();
-        return count($ctfs);
+        $matches = Match::where('event_id', $event_id)->get();
+        $maps = 0;
+        foreach($matches as $match) {
+            foreach($match->games as $game) {
+                if($game->ctf) {
+                    foreach($game->ctf->players()->get() as $player) {
+                        if($player->player_id == $this->id) {
+                            $maps++;
+                        }
+                    }
+                }
+            }
+        }
+        return $maps;
     }
 
     public function getUplinkMapCountByEvent($event_id) {
-        //get snd maps from specified event only
-        $uplinks = Uplink::with([
-            'players' => function($query) {
-                $query->where('player_id', $this->id);
-            }, 
-            'game.match' => function($query) use ($event_id) {
-                $query->where('event_id', $event_id);
-            }])->get();
-        return count($uplinks);
+        $matches = Match::where('event_id', $event_id)->get();
+        $maps = 0;
+        foreach($matches as $match) {
+            foreach($match->games as $game) {
+                if($game->uplink) {
+                    foreach($game->uplink->players()->get() as $player) {
+                        if($player->player_id == $this->id) {
+                            $maps++;
+                        }
+                    }
+                }
+            }
+        }
+        return $maps;
     }
 
-	public function getSndMapCountByEvent($id) {
-        //get snd maps from specified event only
-        $snds = Snd::with([
-            'players' => function($query) {
-                $query->where('player_id', $this->id);
-            }, 
-            'game.match' => function($query) use ($id) {
-                $query->where('event_id', $id);
-            }])->get();
-        return count($snds);
+	public function getSndMapCountByEvent($event_id) {
+        $matches = Match::where('event_id', $event_id)->get();
+        $maps = 0;
+        foreach($matches as $match) {
+            foreach($match->games as $game) {
+                if($game->snd) {
+                    foreach($game->snd->players()->get() as $player) {
+                        if($player->player_id == $this->id) {
+                            $maps++;
+                        }
+                    }
+                }
+            }
+        }
+        return $maps;
     }
 
     public function getULDunksPM($event_id) {
