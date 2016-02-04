@@ -251,7 +251,10 @@ class Player extends Model {
             }
         }
         $time /= $maps;
-        return (int) $time / 60 . ':' . (int) $time % 60;
+        $mins = (int) $time / 60;
+        $secs = (int) $time % 60;
+
+        return $mins . ':' . $secs;
     }
         
 
