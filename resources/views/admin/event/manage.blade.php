@@ -22,6 +22,7 @@
             <tr>
                 <th>Event Name</th>
 				<th>Game Title</th>
+                <th>Edit Standings</th>
                 <th>Add Roster</th>
                 <th>Manage Rosters</th>
 				<th>Event Type</th>
@@ -35,6 +36,7 @@
                 <td>{!!$event->name!!}</td>
 				<td>{!!$event->title->title!!}</td>
 				<td>{!!$event->type->name!!}</td>
+                <td> {!!link_to_action('RosterEventController@edit_standings', 'Edit Standings', ['id' => $event->id], ['class' => 'btn btn-default'])!!} </td>
                 <td> {!!link_to_action('RosterEventController@create', 'Add Roster', ['id' => $event->id], ['class' => 'btn btn-default'])!!} </td>
                 <td> {!!link_to_action('RosterEventController@manage', 'Manage Rosters', ['id' => $event->id], ['class' => 'btn btn-default'])!!} </td>
 				<td><button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#{!!$event->id!!}">Delete</button></td>

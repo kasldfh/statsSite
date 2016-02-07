@@ -3,6 +3,8 @@ high priority
     figure out map count issue
     recalculate map count in update game modes
     figure out fix for ctf scores stuff
+    hp time isn't properly working
+    is ul dunks properly working?
 
 who are on rosters that were added to that event. 
     add caching in leaderboardcontroller@viewbyevent
@@ -15,6 +17,7 @@ low priority
     Refactor GameController store method
         Store game/match, then hand off to the modecontrollers to store
     Refactor all the migrations to use ->increments instead of integer(id, true)
+    add match type for bracket so we can compare bracket/pool stats for players
 
 busywork
     finish properly indenting snd.blade.php

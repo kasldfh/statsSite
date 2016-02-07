@@ -70,4 +70,23 @@ class RosterEventController extends BaseController {
         return Redirect::action('RosterEventController@manage', 
             ['id' => $roster_event->event_id]);
     }
+
+    public function edit_standings($id) {
+        $event = Event::find($id);
+        $roster_events = RosterEvent::where('event_id', $id)->with('roster')->get();
+        return view('admin.roster_event.standings', compact('roster_events', 'event'));
+    }
+
+    public function update_standings() {
+        $event_id = Input::get('event_id');
+        $roster_events = RosterEvent::where('event_id', $event_id)->get();
+        foreach($roster_events as $roster_event) {
+            $placing = Input::get($roster_event->id);
+            if(!empty($placing)) {
+                $roster_event->placing = $placing;
+                $roster_event->save();
+            }
+        }
+        return Redirect::action('AdminController@dashboard');
+    }
 }

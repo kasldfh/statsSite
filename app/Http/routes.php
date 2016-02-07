@@ -76,6 +76,8 @@ Route::get('admin/roster_event/create/{id}', ['uses' => 'RosterEventController@c
 Route::get('admin/roster_event/manage/{id}', ['uses' => 'RosterEventController@manage']);
 Route::get('admin/roster_event/store', ['uses' => 'RosterEventController@store']);
 Route::get('admin/roster_event/delete/', ['uses' => 'RosterEventController@delete']);
+Route::get('admin/edit_standings/{id}', ['uses' => 'RosterEventController@edit_standings']);
+Route::post('admin/update_standings', ['uses' => 'RosterEventController@update_standings']);
 
 Route::get('admin/map/delete/{id}', ['uses' => 'MapController@delete']);
 Route::post('admin/map/store', ['uses' => 'MapController@store']);
