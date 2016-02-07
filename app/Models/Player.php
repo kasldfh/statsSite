@@ -250,13 +250,21 @@ class Player extends Model {
                 }
             }
         }
-        $time /= $maps;
-        $mins = (int) $time / 60;
-        $secs = (int) $time % 60;
+        if($maps) {
+            $time /= $maps;
+            $mins = $time / 60;
+            $secs = (int) $time % 60;
 
-        return $mins . ':' . $secs;
+            $mins = (int) $mins;
+            $secs = (int) $secs;
+
+            return $mins . ':' . $secs;
+        }
+        else {
+            return "0:00";
+        }
     }
-        
+
 
     public function getHpKPM($event_id) {
         $matches = Match::where('event_id', $event_id)->get();
@@ -275,7 +283,7 @@ class Player extends Model {
         }
         return ($maps != 0) ? round($kills / $maps, 2) : 0;
     }
-        
+
 
     public function getMapCount() {
         $snd_games = SndPlayer::where("player_id", $this->id)->get();
