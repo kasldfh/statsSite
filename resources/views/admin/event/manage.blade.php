@@ -35,10 +35,10 @@
             <tr>
                 <td>{!!$event->name!!}</td>
 				<td>{!!$event->title->title!!}</td>
-				<td>{!!$event->type->name!!}</td>
                 <td> {!!link_to_action('RosterEventController@edit_standings', 'Edit Standings', ['id' => $event->id], ['class' => 'btn btn-default'])!!} </td>
                 <td> {!!link_to_action('RosterEventController@create', 'Add Roster', ['id' => $event->id], ['class' => 'btn btn-default'])!!} </td>
                 <td> {!!link_to_action('RosterEventController@manage', 'Manage Rosters', ['id' => $event->id], ['class' => 'btn btn-default'])!!} </td>
+				<td>{!!$event->type->name!!}</td>
 				<td><button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#{!!$event->id!!}">Delete</button></td>
             </tr>
             <div class="modal fade" id="{!!$event->id!!}" tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true">
