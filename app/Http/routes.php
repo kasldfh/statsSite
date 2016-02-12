@@ -150,7 +150,7 @@ Route::put('admin/snd/create',  ['uses' => 'SndController@create']);
 //cache routes
 Route::get('admin/cache/refresh', ['uses' => 'cachecontroller@index']);
 
-Route::get('{team}', ['uses' => 'FrontEndTeamController@show']);
+Route::get('{name}', ['uses' => 'FrontEndTeamController@show']);
 Route::get('event/{event_id}', ['uses' => 'FrontEndEventController@viewEvent']);
 Route::get('player/{id}', ['uses' => 'FrontEndPlayerController@view']);
 Route::get('player/{id}/detailed', ['uses' => 'FrontEndPlayerController@viewDetailed']);

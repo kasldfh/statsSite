@@ -6,32 +6,38 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\Models\Team;
+use App\Models\RosterEvent;
 
 use View;
 	
 class FrontEndTeamController extends Controller {
 
-	public function show($id) {
-        //matt's version (why use url?)
-		//$team = Team::where('team_url', 'like', $id)->first();
-		$team = Team::where('name', 'like', $id)->first();
+	public function show($name) {
+		$team = Team::where('name', 'like', $name)->first();
+        //get list of roster ids for this team
+        $rosters = $team->rosters()->get();
+        $roster_ids = [];
+        foreach($rosters as $roster) {
+            $roster_ids[] = $roster->id;
+        }
+
 		$currentRoster = $team->getCurrentAttribute();
-        //matt's version -- doesn't work
-		$roster = $currentRoster->playermap;
-        //$roster = $currentRoster->getPlayersAttribute();
-        //dd($roster);
-		return View::make('teams.view', compact('roster')); 
+		$roster_event_starters = $currentRoster->starters()->get();
+        $starters = [];
+        foreach($roster_event_starters as $starter) {
+            $starters[] = $starter->player()->first();
+        }
+
+        $rosterEvents = RosterEvent::whereIn('roster_id', $roster_ids)->with('event')->get();
+        foreach($rosterEvents as &$rosterEvent) {
+            $rosterEvent->wins = $rosterEvent->getWins();
+            $rosterEvent->losses = $rosterEvent->getLosses();
+            $rosterEvent->win_percent = $rosterEvent->getWinPercent();
+            $rosterEvent->map_wins = $rosterEvent->getMapWins();
+            $rosterEvent->map_losses = $rosterEvent->getMapLosses();
+            //$rosterEvent->kd = $rosterEvent->getKd();
+        }
+		return View::make('frontend.team', compact('starters', 'rosterEvents')); 
 
 	}
-
-	function cmp($b, $b)
-{
-    if ($a == $b) {
-        return 0;
-    }
-    return ($a < $b) ? -1 : 1;
-}
-
-
-
 }
