@@ -10,6 +10,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use App\Models\Player;
 use App\Models\Event;
 use App\Models\CacheItem;
+use App\Models\Roster;
 
 use Redis;
 
@@ -78,7 +79,9 @@ class RefreshCache extends Job implements SelfHandling, ShouldQueue
                 $player->ctf_mapcount = $player->getCtfMapCountByEvent($event_id);
                 $player->uplink_dunks = $player->getULDunksPM($event_id);
                 $player->hp_time = $player->getHpTime($event_id);
-                $player->team_logo = $player->rostermap()->first()->photo_url;
+                $current_roster = $player->rostermap()->first()->roster_id;
+                $team = Roster::where('id', $current_roster)->with('team')->first()->team;
+                $player->team_logo = $team->logo_url;
 
                 //overall stats
                 $this->set('stat:kd:'.$event_id.':'.$player->id, $player->kd);
