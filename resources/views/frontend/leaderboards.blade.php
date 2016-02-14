@@ -61,7 +61,6 @@ table.sortable tbody tr:before {
 							</thead>
 							<tbody>
                 @foreach($players as $player)
-<?php dd($player);?>
 								  <tr>
 								  	<td class="title"><a href=""><img src={!!"/images/teams/".$player->team_logo!!} alt="" class="table-icon" />{!!$player->alias!!}</a></td>
 								  	<td>{!!$player->kd!!}</td>
