@@ -139,10 +139,10 @@ class RefreshCache extends Job implements SelfHandling, ShouldQueue
         //$this->set('stat:ctf_mapcount:'.$event_id.':all', $ctf_mapcount_leaderboard);
     }
     private function set($key, $value) {
-        $item = CacheItem::where('key', $key)->first();
+        $item = CacheItem::where('name', $key)->first();
         if(!isset($item)) {
             $item = new CacheItem;
-            $item->key = $key;
+            $item->name = $key;
         }
         $item->value = json_encode($value);
         $item->save();
