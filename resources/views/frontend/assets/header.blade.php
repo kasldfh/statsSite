@@ -7,10 +7,10 @@
 				</a>
 				<nav id="main-nav">
 					<ul class="nav">
-						<li><a href="events.php">Events</a></li>
-						<li><a href="teams.php">Teams</a></li>
-						<li><a href="leaderboards.php">Leaderboards</a></li>
-						<li><a href="about.php">About</a></li>
+                        {{--<li><a href="events.php">Events</a></li>--}}
+                        {{--<li><a href="teams.php">Teams</a></li>--}}
+						{{--<li><a href="leaderboards.php">Leaderboards</a></li>--}}
+						{{--<li><a href="about.php">About</a></li>--}}
 					</ul>
 				</nav>
 				<button type="button" class="nav-toggle">
