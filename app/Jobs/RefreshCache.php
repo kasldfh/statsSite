@@ -78,6 +78,7 @@ class RefreshCache extends Job implements SelfHandling, ShouldQueue
                 $player->ctf_mapcount = $player->getCtfMapCountByEvent($event_id);
                 $player->uplink_dunks = $player->getULDunksPM($event_id);
                 $player->hp_time = $player->getHpTime($event_id);
+                $player->team_logo = $player->rostermap()->first()->photo_url;
 
                 //overall stats
                 $this->set('stat:kd:'.$event_id.':'.$player->id, $player->kd);
