@@ -9,6 +9,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 
 use App\Models\Player;
 use App\Models\Event;
+use App\Models\CacheItem;
 
 use Redis;
 
@@ -79,27 +80,27 @@ class RefreshCache extends Job implements SelfHandling, ShouldQueue
                 $player->hp_time = $player->getHpTime($event_id);
 
                 //overall stats
-                Redis::set('stat:kd:'.$event_id.':'.$player->id, $player->kd);
-                Redis::set('stat:mapcount:'.$event_id.':'.$player->id, 
+                $this->set('stat:kd:'.$event_id.':'.$player->id, $player->kd);
+                $this->set('stat:mapcount:'.$event_id.':'.$player->id, 
                     $player->map_count);
                 //mode specific stats
-                Redis::set('stat:hpkpm:'.$event_id.':'.$player->id,
+                $this->set('stat:hpkpm:'.$event_id.':'.$player->id,
                     $player->hpkpm);
-                Redis::set('stat:sndkd:'.$event_id.':'.$player->id,
+                $this->set('stat:sndkd:'.$event_id.':'.$player->id,
                     $player->sndkd);
-                Redis::set('stat:hpkd:'.$event_id.':'.$player->id,
+                $this->set('stat:hpkd:'.$event_id.':'.$player->id,
                     $player->hpkd);
-                Redis::set('stat:ctfkd:'.$event_id.':'.$player->id,
+                $this->set('stat:ctfkd:'.$event_id.':'.$player->id,
                     $player->ctfkd);
-                Redis::set('stat:uplinkkd:'.$event_id.':'.$player->id,
+                $this->set('stat:uplinkkd:'.$event_id.':'.$player->id,
                     $player->uplinkkd);
-                Redis::set('stat:sndmaps:'.$event_id.':'.$player->id,
+                $this->set('stat:sndmaps:'.$event_id.':'.$player->id,
                     $player->snd_mapcount);
-                Redis::set('stat:hpmaps:'.$event_id.':'.$player->id,
+                $this->set('stat:hpmaps:'.$event_id.':'.$player->id,
                     $player->hp_mapcount);
-                Redis::set('stat:uplinkmaps:'.$event_id.':'.$player->id,
+                $this->set('stat:uplinkmaps:'.$event_id.':'.$player->id,
                     $player->uplink_mapcount);
-                Redis::set('stat:ctfmaps:'.$event_id.':'.$player->id,
+                $this->set('stat:ctfmaps:'.$event_id.':'.$player->id,
                     $player->ctf_mapcount);
                 //not sure how this gets set to begin with but we dont need it
                 unset($player->player);
@@ -121,16 +122,25 @@ class RefreshCache extends Job implements SelfHandling, ShouldQueue
         //$ctf_mapcount_leaderboard = $players->sortByDesc('ctf_mapcount');
 
         //overall stats
-        Redis::set('stat:kd:'.$event_id.':all', $kd_leaderboard);
-        //Redis::set('stat:mapcount:'.$event_id.':all', $mapcount_leaderboard);
+        $this->set('stat:kd:'.$event_id.':all', $kd_leaderboard);
+        //$this->set('stat:mapcount:'.$event_id.':all', $mapcount_leaderboard);
         ////mode specific stats
-        //Redis::set('stat:sndkd:'.$event_id.':all', $sndkd_leaderboard);
-        //Redis::set('stat:hpkd:'.$event_id.':all', $hpkd_leaderboard);
-        //Redis::set('stat:ctfkd:'.$event_id.':all', $ctfkd_leaderboard);
-        //Redis::set('stat:uplinkkd:'.$event_id.':all', $uplinkkd_leaderboard);
-        //Redis::set('stat:snd_mapcount:'.$event_id.':all', $snd_mapcount_leaderboard);
-        //Redis::set('stat:hp_mapcount:'.$event_id.':all', $hp_mapcount_leaderboard);
-        //Redis::set('stat:uplink_mapcount:'.$event_id.':all', $uplink_mapcount_leaderboard);
-        //Redis::set('stat:ctf_mapcount:'.$event_id.':all', $ctf_mapcount_leaderboard);
+        //$this->set('stat:sndkd:'.$event_id.':all', $sndkd_leaderboard);
+        //$this->set('stat:hpkd:'.$event_id.':all', $hpkd_leaderboard);
+        //$this->set('stat:ctfkd:'.$event_id.':all', $ctfkd_leaderboard);
+        //$this->set('stat:uplinkkd:'.$event_id.':all', $uplinkkd_leaderboard);
+        //$this->set('stat:snd_mapcount:'.$event_id.':all', $snd_mapcount_leaderboard);
+        //$this->set('stat:hp_mapcount:'.$event_id.':all', $hp_mapcount_leaderboard);
+        //$this->set('stat:uplink_mapcount:'.$event_id.':all', $uplink_mapcount_leaderboard);
+        //$this->set('stat:ctf_mapcount:'.$event_id.':all', $ctf_mapcount_leaderboard);
+    }
+    private function set($key, $value) {
+        $item = CacheItem::where('key', $key)->first();
+        if(!isset($item)) {
+            $item = new CacheItem;
+            $item->key = $key;
+        }
+        $item->value = json_encode($value);
+        $item->save();
     }
 }

@@ -23,18 +23,21 @@ class SharedViewDataProvider extends ServiceProvider
     {
         //this fixes php artisan complaining when this tries to use tables
         //that dont exist
-        if(Schema::hasTable('event') && Schema::hasTable('team')) {
-            //get list of all events
-            $events = BaseController::cacheRequest('event:all', function () {
-                return Event::all();
-            }, true);
+        //if(Schema::hasTable('event') && Schema::hasTable('team')) {
+        //    //get list of all events
+        //    $events = BaseController::cacheRequest('event:all', function () {
+        //        return Event::all();
+        //    }, true);
 
-            $teams = BaseController::cacheRequest('team:all', function () {
-                return Team::all();
-            }, true);
+        //    $teams = BaseController::cacheRequest('team:all', function () {
+        //        return Team::all();
+        //    }, true);
+            $events = [];
+            $teams = [];
             View::share('events', $events);
             View::share('teams', $teams);
-        }
+        //}
+        
     }
 
     /**

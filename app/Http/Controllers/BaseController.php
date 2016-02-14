@@ -8,6 +8,7 @@ use App\Jobs\RefreshCache;
 
 use App\Models\Event;
 use App\Models\Team;
+use App\Models\CacheItem;
 
 use Redis;
 use Auth;
@@ -34,7 +35,9 @@ class BaseController extends Controller {
     }
 
     public static function cacheGet($key) {
-            return Redis::get($key);
+            //return Redis::get($key);
+        $item = CacheItem::where('key', $key)->first();
+        return isset($item) ? $item->value : null;
     }
 
     public static function cacheSet($key, $value) {
@@ -71,6 +74,6 @@ class BaseController extends Controller {
     //not sure if this will be used 
     public static function cacheClearCommon()
     {
-        self::cacheRemove(["stat*", "player*"]);
+        //self::cacheRemove(["stat*", "player*"]);
     }
 }
