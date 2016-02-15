@@ -37,7 +37,12 @@ class BaseController extends Controller {
     public static function cacheGet($key) {
             //return Redis::get($key);
         $item = CacheItem::where('name', $key)->first();
-        return isset($item) ? $item->value : null;
+        if(isset($item)) {
+            return json_decode($item->value);
+        }
+        else {
+            return null;
+        }
     }
 
     public static function cacheSet($key, $value) {

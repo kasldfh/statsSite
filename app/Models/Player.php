@@ -258,12 +258,24 @@ class Player extends Model {
             $mins = (int) $mins;
             $secs = (int) $secs;
 
+            $mins = $this->formatTime($mins);
+            $secs = $this->formatTime($secs);
+
             return $mins . ':' . $secs;
         }
         else {
-            return "0:00";
+            return "00:00";
         }
     }
+
+    public function formatTime($time) {
+        if(strlen($time) <= 1) {
+            $new_time = "0" . $time;
+            return $this->formatTime($new_time);
+        }
+        return $time;
+    }
+
 
 
     public function getHpKPM($event_id) {
