@@ -1,10 +1,8 @@
 high priority
-    finish cache job queue thing
-    figure out map count issue
     recalculate map count in update game modes
     figure out fix for ctf scores stuff
-    hp time isn't properly working
     is ul dunks properly working?
+    images for events teams players
 
 who are on rosters that were added to that event. 
     add caching in leaderboardcontroller@viewbyevent
