@@ -120,14 +120,13 @@ class GameController extends BaseModeAdminController {
         $game->match_id = $match->id;
         $game->game_number = Input::get('game_num');
         $game->map_mode_id = $map_mode->id;
+        $game->score_type_id = Input::get('score_type_id');
         $game->save();
 
         //do picks and bans stuff
         //TODO:get if event has pickban or not...
         //if($event->has_picks) {
         $pickers = Input::get('pickers');
-        $pick_types = Input::get('pick_types');
-        $pick_items = Input::get('pick_items');
         for($i = 1; $i <= 8; $i++) {
             //if there was a pick
             if($pickers[$i-1]) {

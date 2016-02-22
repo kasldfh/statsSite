@@ -55,7 +55,7 @@ class RosterEvent extends Model {
         $losses = $this->getLosses();
         $total = $wins + $losses;
         if($total > 0) {
-            return $wins / $total;
+            return ($wins / $total) * 100;
         }
         else {
             return 0;

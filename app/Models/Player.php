@@ -26,26 +26,6 @@ class Player extends Model {
 		return $this->hasMany('App\Models\PlayerRoster', 'player_id', 'id')->orderBy('id', 'desc');
 	}
 
-	//public function getKdAttribute() {
-    //    $kdarr = ['kills' => 0, 'deaths' => 0];
-    //    $calculate=function(&$kdarr, $mode) {
-    //        foreach($mode as $mode_game) {
-    //            $kdarr['kills'] += $mode_game->kills;
-    //            $kdarr['deaths'] += $mode_game->deaths;
-    //        }
-    //    };
-    //    $calculate($kdarr, SndPlayer::where('player_id', $this->id)->get());
-    //    $calculate($kdarr, UplinkPlayer::where('player_id', $this->id)->get());
-    //    $calculate($kdarr, CtfPlayer::where('player_id', $this->id)->get());
-    //    $calculate($kdarr, HpPlayer::where('player_id', $this->id)->get());
-
-    //    $kd = $kdarr['kills'];
-    //    if($kdarr['deaths'] != 0) {
-    //        $kd = round($kdarr['kills'] / $kdarr['deaths'], 2);
-    //    }
-    //    return $kd;
-	//}
-
 	public function kdByEvent($id) {
 		$matches = Event::find($id)->matches;
         $kdarr = ['kills' => 0, 'deaths' => 0];
@@ -241,7 +221,7 @@ class Player extends Model {
         $time = 0;
         foreach($matches as $match) {
             foreach($match->games as $game) {
-                if($game->hp()->first()) {
+                if($game->hp()->first() && $game->score_type_id == 0) {
                     $player = HpPlayer::where(
                         ['hp_id' => $game->hp()->first()->id, 'player_id' => $this->id])->first();
                     if(count($player)) {
@@ -284,7 +264,7 @@ class Player extends Model {
         $kills = 0;
         foreach($matches as $match) {
             foreach($match->games as $game) {
-                if($game->hp()->first()) {
+                if($game->hp()->first() && $game->score_type_id == 0) {
                     $player = HpPlayer::where(
                         ['hp_id' => $game->hp()->first()->id, 'player_id' => $this->id])->first();
                     if(count($player)) {
@@ -297,33 +277,43 @@ class Player extends Model {
     }
 
 
-    public function getMapCount() {
-        $snd_games = SndPlayer::where("player_id", $this->id)->get();
-        $ctf_games = CtfPlayer::where("player_id", $this->id)->get();
-        $uplink_games = UplinkPlayer::where("player_id", $this->id)->get();
-        $hp_games = HpPlayer::where("player_id", $this->id)->get();
+    //TODO: delete this? 
+    //public function getMapCount() {
+    //    $snd_games = SndPlayer::where("player_id", $this->id)->get();
+    //    $ctf_games = CtfPlayer::where("player_id", $this->id)->get();
+    //    $uplink_games = UplinkPlayer::where("player_id", $this->id)->get();
+    //    $hp_games = HpPlayer::where("player_id", $this->id)->get();
 
-        $total = count($ctf_games) + count($uplink_games) + count($hp_games) + count($snd_games);
+    //    $total = count($ctf_games) + count($uplink_games) + count($hp_games) + count($snd_games);
 
-        return $total; 
-    }
+    //    return $total; 
+    //}
 
-    public function getSlayerMapCount() {
-        $ctf_games = CtfPlayer::where("player_id", $this->id)->get();
-        $uplink_games = UplinkPlayer::where("player_id", $this->id)->get();
-        $hp_games = HpPlayer::where("player_id", $this->id)->get();
+    //public function getSlayerMapCount() {
+    //    $ctf_games = CtfPlayer::where("player_id", $this->id)->get();
+    //    $uplink_games = UplinkPlayer::where("player_id", $this->id)->get();
+    //    $hp_games = HpPlayer::where("player_id", $this->id)->get();
 
-        $total = count($ctf_games) + count($uplink_games) + count($hp_games);
+    //    $total = count($ctf_games) + count($uplink_games) + count($hp_games);
 
-        return $total; 
-    }
+    //    return $total; 
+    //}
 
     public function getSnDMapCount() {
         $snd_games = SndPlayer::where("player_id", $this->id)->get();
-
         $total = count($snd_games);
-
         return $total; 
+    }
+
+    public function getSndRecordedMapcount() {
+        $sndGames = SndPlayer::where("player_id", $this->id)->get();
+        $maps = 0;
+        foreach($sndGames as $game) {
+            if($game->game()->first()->score_type_id == 0) {
+                $maps++;
+            }
+        }
+        return $maps;
     }
 
     public function getSndkdAttribute() {
@@ -340,24 +330,36 @@ class Player extends Model {
     public function getSlayerAttribute() {
         $kills = 0;
         $game_time = 0;
+
+        $maps = 0;
+
         $ctf_games = CtfPlayer::where("player_id", $this->id)->get();
         foreach ($ctf_games as $game) {
-            $kills += $game->kills;
-            $ctfgame = $game->game;
-            $game_time += $ctfgame->game_time;
-            $game_time += $game->game->game_time;
+            if($game->game()->score_type_id == 0) {
+                $kills += $game->kills;
+                $ctfgame = $game->game;
+                $game_time += $ctfgame->game_time;
+                $game_time += $game->game->game_time;
+                $maps++;
+            }
         }
         $uplink_games = UplinkPlayer::where("player_id", $this->id)->get();
         foreach ($uplink_games as $game) {
-            $kills += $game->kills;
-            $game_time += $game->game->game_time;
+            if($game->game()->score_type_id == 0) {
+                $kills += $game->kills;
+                $game_time += $game->game->game_time;
+                $maps++;
+            }
         }
         $hp_games = HpPlayer::where("player_id", $this->id)->get();
         foreach ($hp_games as $game) {
-            $kills += $game->kills;
-            $game_time += $game->game->game_time;
+            if($game->game()->score_type_id == 0) {
+                $kills += $game->kills;
+                $game_time += $game->game->game_time;
+                $maps++;
+            }
         }
-        return ($game_time != 0) ? round(($kills / $game_time) * 600, 2) : 0;
+        return ($maps != 0) ? round(($kills / $maps), 2) : 0;
     }
 
     public function getCTFCapsTotal() {
@@ -366,12 +368,11 @@ class Player extends Model {
         foreach ($ctf_games as $game) {
             $ctf_captures += $game->captures;
         }
-
         return $ctf_captures;
     }
 
     public function getCTFCapsAverage() {
-        return ($this->getCTFMapCount() != 0) ? number_format((float)$this->getCTFCapsTotal()/ $this->getCTFMapCount(), 2, '.', '') : 0;
+        return ($this->getCTFMapCount() != 0) ? number_format((float)$this->getCTFCapsTotal()/ $this->getCTFRecordedMapCount(), 2, '.', '') : 0;
     }
 
     public function getCTFKD() {
@@ -393,6 +394,18 @@ class Player extends Model {
         return count($ctf_games);
     }
 
+    public function getCtfRecordedMapcount() {
+        $ctf_games = CtfPlayer::where("player_id", $this->id)->get();
+        $maps = 0;
+        foreach($ctf_games as $game) {
+            if($game->game()->first()->score_type_id == 0) {
+                $maps++;
+            }
+        }
+        return $maps;
+    }
+    
+
     public function getUplinkTotal() {
         $uplink_games = UplinkPlayer::where("player_id", $this->id)->get();
         $uplinks = 0;
@@ -404,7 +417,7 @@ class Player extends Model {
     }
 
     public function getUplinkAverage() {
-        return ($this->getUplinkMapCount() != 0) ? number_format((float)$this->getUplinkTotal()/ $this->getUplinkMapCount(), 2, '.', '') : 0;
+        return ($this->getUplinkMapCount() != 0) ? number_format((float)$this->getUplinkTotal()/ $this->getUplinkRecordedMapCount(), 2, '.', '') : 0;
 
     }
 
@@ -423,59 +436,18 @@ class Player extends Model {
 
     public function getUplinkMapCount() {
         $uplink_games = UplinkPlayer::where("player_id", $this->id)->get();
-
         return count($uplink_games);
     }
 
-    public function getRespawnAttribute() {
-        $kills = 0;
-        $ctf_defends = 0;
-        $hp_defends = 0;
-        $hp_captures = 0;
-        $ctf_returns = 0;
-        $ctf_captures = 0;
-        $uplinks = 0;
-        $deaths = 0;
-        $neg_maps = 0;
-        $game_time = 0;
-        $ctf_games = CtfPlayer::where("player_id", $this->id)->get();
-        foreach ($ctf_games as $game) {
-            $kills += $game->kills;
-            if($game->deaths > $game->kills) {
-                $neg_maps += 1;
-            }
-            $ctf_returns += $game->returns;
-            $ctf_captures += $game->captures;
-            $ctf_defends += $game->defends;
-            $deaths += $game->deaths;
-            $game_time += $game->game->game_time;
-        }
+    public function getUplinkRecordedMapcount() {
         $uplink_games = UplinkPlayer::where("player_id", $this->id)->get();
-        foreach ($uplink_games as $game) {
-            $kills += $game->kills;
-            if($game->deaths > $game->kills) {
-                $neg_maps += 1;
+        $maps = 0;
+        foreach($uplink_games as $game) {
+            if($game->game()->first()->score_type_id == 0) {
+                $maps++;
             }
-            $uplinks += $game->uplinks;
-            $deaths += $game->deaths;
-            $game_time += $game->game->game_time;
         }
-        $hp_games = HpPlayer::where("player_id", $this->id)->get();
-        foreach ($hp_games as $game) {
-            $kills += $game->kills;
-            if($game->deaths > $game->kills) {
-                $neg_maps += 1;
-            }
-            $hp_defends += $game->defends;
-            $hp_captures += $game->captures;
-            $deaths += $game->deaths;
-            $game_time += $game->game->game_time;
-        }
-        $respawn = 0;
-        if($game_time != 0) {
-            $respawn = ($kills + $ctf_defends + (3 * $hp_defends) + (1.5 * $hp_captures) + (1.5 * $ctf_returns) + (4 * $ctf_captures) + (3 * $uplinks) - $deaths - (1.5 * $neg_maps)) / ($game_time / 60);
-        }
-        return $respawn != 0 ? round($respawn, 2) : 0;
+        return $maps;
     }
 
     public function getFbAttribute() {

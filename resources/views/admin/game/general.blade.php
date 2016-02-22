@@ -31,6 +31,17 @@
             {{--{!! Form::text('game_time', '' , array('class'=>'form-control')) !!}--}}
             </div>
         </div>
+        <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+          <div class="form-group">
+            <label for="score_type_id">Score Type</label>
+            <select name="score_type_id" class="form-control">
+              <?php $score_type = $game->score_type_id?>
+              <option value="0" {!!$score_type == 0 ? "Selected" : ""!!}>Regular Map</option>
+              <option value="1" {!!$score_type == 1 ? "Selected" : ""!!}>Team scores only</option>
+              <option value="2" {!!$score_type == 2 ? "Selected" : ""!!}>Winner only</option>
+            </select>
+          </div>
+        </div>
     </div>
 @endsection
 

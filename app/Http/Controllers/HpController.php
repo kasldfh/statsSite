@@ -24,6 +24,7 @@ class HpController extends BaseModeAdminController {
         //TODO: need to remove HpPlayers where player was "unselected"
         $match = Match::find(Input::get('match_id'));
         $game = Game::find(Input::get('game_id'));
+        $scoreTypeId = Input::get('score_type_id');
         $mode = Hp::find(Input::get('mode_id'));
         $kills = Input::get('kills');
         $deaths = Input::get('deaths');
@@ -37,6 +38,7 @@ class HpController extends BaseModeAdminController {
         $modeid = $game->mode()->first()->id;
         $mapmode = MapMode::where('map_id', '=', Input::get('map'))->where('mode_id', '=', $modeid)->first();
         $game->map_mode_id = $mapmode->id;
+        $game->score_type_id = $scoreTypeId;
         $game->save();
         //next, set hp variables
         //TODO:set host stuff

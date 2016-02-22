@@ -108,6 +108,16 @@ $( document ).ready(function() {
               <input type="text" name="game_num" class="form-control" data-fv-nonempty="true">
             </div>
           </div>
+          <div class="col-xs-2">
+            <div class="form-group">
+              <label for="score_type_id">Score Type</label>
+              <select name="score_type_id" class="form-control">
+                <option value="0">Regular Map</option>
+                <option value="1">Team scores only</option>
+                <option value="2">Winner only</option>
+              </select>
+            </div>
+          </div>
         </div>
       </div>
             @if($match->event->type->name == "Online")

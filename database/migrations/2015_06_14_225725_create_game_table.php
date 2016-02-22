@@ -19,6 +19,11 @@ class CreateGameTable extends Migration {
 			$table->integer('game_number');
 			$table->timestamps();
 			$table->integer('map_mode_id');
+
+            //note: this is different from match score_type_io
+            //id 0 = normal map, got player records and scores
+            //id 1 = got scores, no player records
+            //id 2 = got victors, scores aren't accurate
 			$table->integer('score_type_id');
 		});
 	}
