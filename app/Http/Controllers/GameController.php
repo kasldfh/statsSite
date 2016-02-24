@@ -127,9 +127,10 @@ class GameController extends BaseModeAdminController {
         //TODO:get if event has pickban or not...
         //if($event->has_picks) {
         $pickers = Input::get('pickers');
+        $pick_types = Input::get('pick_types');
         for($i = 1; $i <= 8; $i++) {
             //if there was a pick
-            if($pickers[$i-1]) {
+            if(!empty($pickers[$i-1])) {
                 $pick = new Pick;
                 $pick->game_id = $game->id;
                 $pick->player_id = $pickers[$i-1];
