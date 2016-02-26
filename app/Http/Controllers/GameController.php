@@ -128,6 +128,7 @@ class GameController extends BaseModeAdminController {
         //if($event->has_picks) {
         $pickers = Input::get('pickers');
         $pick_types = Input::get('pick_types');
+        $pick_items = Input::get('pick_items');
         for($i = 1; $i <= 8; $i++) {
             //if there was a pick
             if(!empty($pickers[$i-1])) {
