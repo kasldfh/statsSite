@@ -1,9 +1,15 @@
 high priority
+    frontend/event.blade.php shoudl really be event-standings.blade.php
+    figure out navigation for event pages
+    figure out bakcgrounds for event pages
     recalculate map count in update game modes
     figure out fix for ctf scores stuff
     is ul dunks properly working?
     images for events teams players
 
+Medium Priority:
+    most recent game in title of frontend/events.blade.php
+    when I click on a different game title nothing shows up in frontend/events/blade.php
 who are on rosters that were added to that event. 
     add caching in leaderboardcontroller@viewbyevent
 
@@ -34,6 +40,8 @@ event
  matches
 
 Notes:
+
+
 
 not sure if this is needed but possibly add a getAtEvent($id) 
 attribute to roster model instead of doing that logic in the 

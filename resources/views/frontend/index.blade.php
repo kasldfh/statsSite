@@ -1,23 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Competitive Call of Duty Esports Statistics</title>
-	<meta name="description" content="">
-	
-	<?php include("assets/head-links.php"); ?>
+@extends('layouts.frontend')
+@section('title')
+  Competitive Call of Duty Esports Statistics
+@stop
 
-</head>
-<body>
-
-<!-- BANNER
-================================================== -->
-<div id="banner" class="home" style="background-image:url(images/banners/about.jpg);" data-type="background" data-speed="6">
-	
-	<?php include("assets/header.php"); ?>
-	
+@section('banner')
+{{--<div id="banner" class="home" style="background-image:url(images/banners/about.jpg);" data-type="background" data-speed="6">--}}
 	<div class="wrap">
 		<div class="banner-content">
 			<div class="latest-blocks">
@@ -55,9 +42,9 @@
 		</div>
 
 	</div>
+@stop
 
-</div><!-- /banner -->
-
+@section('content')
 <!-- LEADERBOARDS
 ================================================== -->
 <section class="section lg">
@@ -140,12 +127,10 @@
 	</div>
 
 </section><!-- /twitter -->
+@stop
 
-<?php include("assets/footer.php"); ?>
-
+@section('loadlast')
 <script>
 !function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");
 </script>
-</body>
-</html>
-
+@stop
