@@ -133,11 +133,6 @@ class SndController extends BaseModeAdminController {
         return Redirect::action('AdminController@dashboard');
     }
 
-    public function create() {
-        $input = Input::all();
-        dd($input);
-
-    }
     public function edit($id) {
         //id is game id for now (change this later?)
         $game = Game::findOrFail($id);

@@ -19,17 +19,4 @@ class AdminController extends Controller {
 	public function dashboard() {
 		return View::make('admin.dashboard');
 	}
-	public function test() {
-		Mail::send('emails.welcome', [], function($message)
-		{
-		    $message->to('masterpwnr@gmail.com', 'f41lurizer')->subject('Welcome!');
-		});
-	}
-	public function create(){
-	}
-	public function manage() {
-		
-	}
 }
-	
-	

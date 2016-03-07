@@ -20,31 +20,6 @@ class LeaderboardController extends BaseController {
             compact('players', 'event'));
     }
 
-	public function viewByEvent($id) {
-		$event = Event::find($id);
-		$players = Player::all();
-		$slayers = Player::all();
-		$sndPlayers = Player::all();
-		
-		$players = $players->sortByDesc(function($player) use($id)
-		{
-			return $player->kdByEvent($id);
-		});
-
-		$slayers = $slayers->sortByDesc(function($slayerPlayer) use($id)
-		{
-			return $slayerPlayer->slayer($id);
-		});
-
-		$sndPlayers = $sndPlayers->sortByDesc(function($sndPlayer) use($id)
-		{
-			return $sndPlayer->sndkd($id);
-		});
-
-		// dd($players);
-		return View::make('leaderboards.view', compact('event', 'players', 'slayers', 'sndPlayers'));
-	}
-
 	public function viewCTF() {
 		$ctfCapsPlayers = Player::all();
 		$ctfKDPlayers = Player::all();

@@ -54,6 +54,7 @@ class SuperController extends Controller {
 		return Redirect::action('SuperController@manage');
 	}
 
+    //TODO: this isn't used rn
 	public function deleteConfirm($id) {
 		CreateUser::destroy($id);
 		return Redirect::action('SuperController@manage');
