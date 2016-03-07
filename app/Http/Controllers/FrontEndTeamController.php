@@ -12,6 +12,10 @@ use View;
 	
 class FrontEndTeamController extends Controller {
 
+    public function index() {
+        return View::make('frontend.teams');
+    }
+
 	public function show($name) {
 		$team = Team::where('name', 'like', $name)->first();
         //get list of roster ids for this team
@@ -38,6 +42,5 @@ class FrontEndTeamController extends Controller {
             //$rosterEvent->kd = $rosterEvent->getKd();
         }
 		return View::make('frontend.team', compact('starters', 'rosterEvents')); 
-
 	}
 }

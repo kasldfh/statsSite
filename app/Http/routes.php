@@ -11,9 +11,13 @@
 |
 */
 
+Route::get('/', 'IndexController@index');
 //iSeed routes (just going to call one controller)
 Route::get('iseed', 'SeedController@seed');
 //now matt's routes start
+
+Route::get('test', 'TestController@test');
+Route::get('about', 'AboutController@index');
 
 
 Route::resource('teams', 'TeamController');
@@ -150,10 +154,23 @@ Route::put('admin/snd/create',  ['uses' => 'SndController@create']);
 //cache routes
 Route::get('admin/cache/refresh', ['uses' => 'cachecontroller@index']);
 
-Route::get('{name}', ['uses' => 'FrontEndTeamController@show']);
+//Front end Event Routes
 Route::get('event/{event_id}', ['uses' => 'FrontEndEventController@viewEvent']);
-Route::get('player/{id}', ['uses' => 'FrontEndPlayerController@view']);
-Route::get('player/{id}/detailed', ['uses' => 'FrontEndPlayerController@viewDetailed']);
+Route::get('event/GameTypeStats/{event_id}', 
+    ['uses' => 'FrontEndEventController@viewGameTypeStatsByEvent']);
+Route::get('event/leaderboard/{event_id}', 
+    ['uses' => 'FrontEndEventController@viewLeaderboardsByEvent']);
+Route::get('event/pickban/{event_id}', 
+    ['uses' => 'FrontEndEventController@viewPickBanStatsByEvent']);
+Route::get('event/specialist/{event_id}', 
+    ['uses' => 'FrontEndEventController@viewSpecialistsByEvent']);
+Route::get('event/stdev/{event_id}', 
+    ['uses' => 'FrontEndEventController@viewStdevByEvent']);
+
+Route::get('teams', 'FrontEndTeamController@index');
+Route::get('{name}', ['uses' => 'FrontEndTeamController@show']);
+Route::get('player/{alias}', ['uses' => 'FrontEndPlayerController@view']);
+Route::get('player/{alias}/detailed', ['uses' => 'FrontEndPlayerController@viewDetailed']);
 Route::get('leaderboards/overall', ['uses' => 'LeaderboardController@view']);
 Route::get('leaderboards/ctf', ['uses' => 'LeaderboardController@viewCTF']);
 Route::get('leaderboards/uplink', ['uses' => 'LeaderboardController@viewUplink']);

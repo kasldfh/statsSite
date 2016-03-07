@@ -12,7 +12,7 @@ use View;
 	
 class FrontEndPlayerController extends Controller {
 
-	public function view($id) {
+	public function view($alias) {
 		$player = Player::where('alias', 'like', $id)->first();
 		$players = Player::all();
 		$highest = $players[0];
@@ -70,7 +70,7 @@ class FrontEndPlayerController extends Controller {
 		$event_kd = array_reverse($event_kd);
 		$event_names[] = "test";
 		$event_kd[] = 1.3;
-		return View::make('players.view', compact('player', 'average', 'highest', 'team', 'color', 'team_name', 'event_names', 'event_kd'));
+		return View::make('frontend.player', compact('player', 'average', 'highest', 'team', 'color', 'team_name', 'event_names', 'event_kd'));
 	}
 
 	public function viewDetailed($id) {
