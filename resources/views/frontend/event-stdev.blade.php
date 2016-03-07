@@ -14,13 +14,13 @@
   <div class="wrap">
     <nav class="section-nav">
       <ul>
-        <li><a href="event.php">Standings</a></li>
-        <li><a href="event-leaderboards.php">Leaderboards</a></li>
-        <li><a href="event-game-type.php">Game Type</a></li>
-        <li><a href="event-records.php">Records</a></li>
-        <li><a href="event-specialists.php">Specialists</a></li>
-        <li><a href="event-picks-bans.php">Pick/Bans</a></li>
-        <li class="active"><a href="event-stdev.php">STDEV Stats</a></li>
+        <li><a href="{!!'/event/' . $event->id!!}">Standings</a></li>
+        <li><a href="{!!'/event/leaderboard/' . $event->id!!}">Leaderboards</a></li>
+        <li><a href="{!!'/event/GameTypeStats/' . $event->id!!}">Game Type</a></li>
+        <li><a href="{!!'/event/records/' . $event->id!!}">Records</a></li>
+        <li><a href="{!!'/event/specialist/' . $event->id!!}">Specialists</a></li>
+        <li><a href="{!!'/event/pickban/' . $event->id!!}">Pick/Bans</a></li>
+        <li class="active"><a href="{!!'/event/stdev/' . $event->id!!}">STDEV Stats</a></li>
       </ul>
     </nav>
   </div>

@@ -27,12 +27,10 @@ Route::get('event/specialist/{event_id}',
     ['uses' => 'FrontEndEventController@viewSpecialistsByEvent']);
 Route::get('event/stdev/{event_id}', 
     ['uses' => 'FrontEndEventController@viewStdevByEvent']);
+Route::get('event/records/{event_id}', 
+    ['uses' => 'FrontEndEventController@viewRecordsByEvent']);
 //leaderboard for event
 Route::get('leaderboards/{event_id}', ['uses' => 'LeaderboardController@view']);
-
-//Team routes
-Route::get('teams', 'FrontEndTeamController@index');
-Route::get('{name}', ['uses' => 'FrontEndTeamController@show']);
 
 //Player routes
 Route::get('player/{alias}', ['uses' => 'FrontEndPlayerController@view']);
@@ -40,6 +38,10 @@ Route::get('player/{alias}/detailed', ['uses' => 'FrontEndPlayerController@viewD
 
 //about route
 Route::get('about', 'AboutController@index');
+
+//Team routes
+Route::get('teams', 'FrontEndTeamController@index');
+Route::get('{name}', ['uses' => 'FrontEndTeamController@show']);
 
 //admin routes
 Route::group(['middleware' => 'auth'], function() {

@@ -24,10 +24,10 @@
         </a>
         <nav id="main-nav">
           <ul class="nav">
-                        <li><a href="events.php">Events</a></li>
-                        <li><a href="teams.php">Teams</a></li>
-            <li><a href="leaderboards.php">Leaderboards</a></li>
-            <li><a href="about.php">About</a></li>
+            <li><a href="/">Events</a></li>
+            <li><a href="/teams">Teams</a></li>
+            {{--<li><a href="leaderboards.php">Leaderboards</a></li>--}}
+            <li><a href="/about">About</a></li>
           </ul>
         </nav>
         <button type="button" class="nav-toggle">
@@ -55,11 +55,11 @@
     <div class="row">
       <div class="col-xs-12 col-md-8">
         <ul class="">
-          <li><a href="index.php">Home</a></li>
-          <li><a href="events.php`">Events</a></li>
-          <li><a href="teams.php">Teams</a></li>
-          <li><a href="leaderboards.php">Leaderboards</a></li>
-          <li><a href="about.php">About</a></li>
+          <li><a href="/">Home</a></li>
+          <li><a href="/">Events</a></li>
+          <li><a href="/teams">Teams</a></li>
+          {{--<li><a href="leaderboards.php">Leaderboards</a></li>--}}
+          <li><a href="/about">About</a></li>
         </ul>
         <p>Copyright &copy; 2015 Competitive COD Stats</p>
       </div>
