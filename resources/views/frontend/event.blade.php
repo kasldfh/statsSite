@@ -38,7 +38,7 @@
           <img src="images/players/seth-abner.jpg" alt="" />
         </div>
         <div class="player-info">
-          <span class="player-name"><a href="player.php">Scump</a></span>
+          <span class="player-name"><a href="player.php">{!!$topkd->name!!}</a></span>
           <span class="player-detail">Highest K/D<em>1.29</em></span>
         </div>
       </div>

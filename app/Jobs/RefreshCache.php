@@ -39,12 +39,16 @@ class RefreshCache extends Job implements SelfHandling, ShouldQueue
      * player:{id}              -- player model, json encoded
      * player:all               -- player model all, json encoded
      * event:all                -- all events, json encoded
+     * event:{id}               -- event by id
      * rosplay:all              -- roster with playermap, json encoded
+
+     * rosterevent:{eventid}:{rosterid} -- roster's standing at an event (with team)
+     * rosterevent:{eventid}:{all}      -- all roster's standings at event (with team)
 
      * stat:{stat}:{all}:{all}      -- all events, all player kd's, sorted desc, json encoded
      * stat:{stat}:{all}:{playerid} --      player kd, for all events
      * stat:{stat}:{eventid}:{playerid} -- player kd at event
-     *
+     * stat:{topstat}:{eventid}:all -- stat with only top performer for this event
     */
 
     public function handle() {
@@ -54,10 +58,23 @@ class RefreshCache extends Job implements SelfHandling, ShouldQueue
 
     public function cacheEvent($event_id) {
         set_time_limit(100000);
-        $with = ['rostermap', 'rostermap.roster', 'rostermap.roster.team'];
-        $event = Event::find($event_id);
+        $with = ['rosters', 'rosters.roster', 'rosters.roster.team'];
+        $event = Event::where('id', $event_id)->with($with)->first();
+        $this->set("event:$event_id", $event);
         $players = collect();
-        foreach($event->rosters as $roster_event) {
+        foreach($event->rosters as &$roster_event) {
+            $roster_standing = $roster_event->placing;
+            $roster_event->wins = $roster_event->getWins();
+            $roster_event->losses = $roster_event->getLosses();
+            $roster_event->winpercent = $roster_event->getWinPercent();
+            $roster_event->mapwins = $roster_event->getMapWins();
+            $roster_event->maplosses = $roster_event->getMapLosses();
+
+            $this->set("rosterevent:$event_id:" . $roster_event->roster->id,
+                $roster_event);
+            
+
+
             foreach($roster_event->roster->playermap as $playermap) {
                 //todo: set up leaderboards as well (this is just doing
                 //indivdual stats atm
@@ -79,6 +96,7 @@ class RefreshCache extends Job implements SelfHandling, ShouldQueue
                 $player->ctf_mapcount = $player->getCtfMapCountByEvent($event_id);
                 $player->uplink_dunks = $player->getULDunksPM($event_id);
                 $player->hp_time = $player->getHpTime($event_id);
+                $player->slayer = $player->getSlayerAttribute($event_id);
                 $current_roster = $player->rostermap()->first()->roster_id;
                 $team = Roster::where('id', $current_roster)->with('team')->first()->team;
                 $player->team_logo = $team->logo_url;
@@ -106,14 +124,30 @@ class RefreshCache extends Job implements SelfHandling, ShouldQueue
                     $player->uplink_mapcount);
                 $this->set('stat:ctfmaps:'.$event_id.':'.$player->id,
                     $player->ctf_mapcount);
+                $this->set("stat:slayer:$event_id:" . $player->id,
+                    $player->slayer);
+                $this->set("stat:hptime:$event_id:" . $player->id,
+                    $player->hp_time);
+                $this->set("stat:uplink_dunks:$event_id:" . $player->id,
+                    $player->uplink_dunks);
+
                 //not sure how this gets set to begin with but we dont need it
                 unset($player->player);
                 $players->push($player);
                 //dd(Redis::get('stat:sndkd:'.$event_id.':'.$player->id));
             }
         }
+
+        $event->rosters = $event->rosters->sortBy('placing');
+        $this->set("rosterevent:$event_id:all",
+                $event->rosters);
+
+
         //overall stats
         $kd_leaderboard = $players->sortByDesc('kd');
+        $hp_time_leaderboard = $players->sortByDesc('hp_time');
+        $uldunks_leaderboard = $players->sortByDesc('uplink_dunks');
+        $slayer_leaderboard = $players->sortByDesc('slayer');
         //$mapcount_leaderboard = $players->sortByDesc('map_count');
         ////mode specific stats
         //$sndkd_leaderboard = $players->sortByDesc('sndkd');
@@ -127,6 +161,9 @@ class RefreshCache extends Job implements SelfHandling, ShouldQueue
 
         //overall stats
         $this->set('stat:kd:'.$event_id.':all', $kd_leaderboard);
+        $this->set('stat:hp_time:'.$event_id.':all', $hp_time_leaderboard);
+        $this->set('stat:uplink_dunks:'.$event_id.':all', $uldunks_leaderboard);
+        $this->set('stat:slayer:'.$event_id.':all', $slayer_leaderboard);
         //$this->set('stat:mapcount:'.$event_id.':all', $mapcount_leaderboard);
         ////mode specific stats
         //$this->set('stat:sndkd:'.$event_id.':all', $sndkd_leaderboard);
@@ -137,6 +174,13 @@ class RefreshCache extends Job implements SelfHandling, ShouldQueue
         //$this->set('stat:hp_mapcount:'.$event_id.':all', $hp_mapcount_leaderboard);
         //$this->set('stat:uplink_mapcount:'.$event_id.':all', $uplink_mapcount_leaderboard);
         //$this->set('stat:ctf_mapcount:'.$event_id.':all', $ctf_mapcount_leaderboard);
+
+        //top performers stats
+        $this->set("stat:topkd:$event_id:all", $kd_leaderboard[0]);
+        $this->set("stat:topslayer:$event_id:all", $slayer_leaderboard[0]);
+        $this->set("stat:tophp_time:$event_id:all", $hp_time_leaderboard[0]);
+        $this->set("stat:topuplink_dunks:$event_id:all", $uldunks_leaderboard[0]);
+
     }
     private function set($key, $value) {
         $item = CacheItem::where('name', $key)->first();

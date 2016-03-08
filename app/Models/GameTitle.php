@@ -17,5 +17,8 @@ class GameTitle extends Model {
 	 *
 	 * @var array
 	 */
-	
+
+    public function events() {
+        return $this->hasmany('App\Models\Event', 'game_title_id', 'id');
+    }
 }

@@ -12,6 +12,10 @@ Medium Priority:
     when I click on a different game title nothing shows up in frontend/events/blade.php
 who are on rosters that were added to that event. 
     add caching in leaderboardcontroller@viewbyevent
+    redirect to home if there's no team found with alias for team routes
+    ask dave how im supposed to handle having multiple events in the listings thing
+    add description, logo to event model
+
 
 low priority
     for hp time, show 2 digits consistently

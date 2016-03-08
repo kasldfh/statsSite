@@ -16,10 +16,6 @@ use View;
 
 class BaseController extends Controller {
 
-    public function __construct()
-    {
-    }
-
     public function refresh_cache($event_id) {
         $this->dispatch(new RefreshCache($event_id));
     }

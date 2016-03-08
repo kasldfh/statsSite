@@ -13,9 +13,17 @@
   <div class="wrap">
     <nav class="section-nav">
       <ul>
-        <li class="active"><a href="events.php">Black Ops 3</a></li>
-        <li><a href="#">Advanced Warfare</a></li>
-        <li><a href="#">Ghosts</a></li>
+        @foreach($games as $index=>$game)
+          @if($index == 0)  
+            <li class="active"><a href="">{!!$game->title!!}</a></li>
+          @else
+            <li><a href="">{!!$game->title!!}</a></li>
+          @endif
+        @endforeach
+
+        {{--<li><a href="#">Advanced Warfare</a></li>--}}
+        {{--<li><a href="#">Ghosts</a></li>--}}
+
       </ul>
     </nav>
   </div>
@@ -25,38 +33,23 @@
 ================================================== -->
 <section class="section listings">
   <div class="wrap">
-
-    <div class="row">
+  @foreach($games as $game)
+    @foreach($game->events as $index => $event)
+      @if($index %4 == 0)
+        <div class="row">
+      @endif
       <div class="col-xs-6 col-sm-3 col-md-3 listing event">
-        <a href="event.php">
+        <a href={!!"/event/" . $event->id!!}>
           <img src="images/events/cod-world-league.png" alt="" class="" />
-          <h4>COD World League NA Qualifier</h4>
-          <span class="event-detail">Groups A &amp; B</span>
+          <h4>{!!$event->name!!}</h4>
+          <span class="event-detail">{!!$event->description!!}</span>
         </a>
       </div>
-      <div class="col-xs-6 col-sm-3 col-md-3 listing event">
-        <a href="event.php">
-          <img src="images/events/cod-world-league.png" alt="" class="" />
-          <h4>COD World League NA Qualifier</h4>
-          <span class="event-detail">Groups C &amp; D</span>
-        </a>
-      </div>
-      <div class="col-xs-6 col-sm-3 col-md-3 listing event">
-        <a href="event.php">
-          <img src="images/events/cod-world-league.png" alt="" class="" />
-          <h4>EU World League Qualifier</h4>
-          <span class="event-detail"></span>
-        </a>
-      </div>
-      <div class="col-xs-6 col-sm-3 col-md-3 listing event">
-        <a href="event.php">
-          <img src="images/events/cod-world-league.png" alt="" class="" />
-          <h4>EU COD World League</h4>
-          <span class="event-detail"></span>
-        </a>
-      </div>
-    </div>
-
+      @if($index %4 == 0 && $index > 0)
+        </div>
+      @endif
+    @endforeach
+  @endforeach
   </div>
 </section><!-- /event listings -->
 @stop

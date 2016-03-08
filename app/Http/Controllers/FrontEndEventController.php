@@ -9,11 +9,23 @@ use App\Models\Event;
 
 use View;
 	
-class FrontEndEventController extends Controller {
+class FrontEndEventController extends BaseController {
 
 	public function viewEvent($id) {
-        $event = Event::findorfail($id);
-		return View::make('frontend.event', compact('event'));
+        $event = parent::cacheGet("event:$id");
+        if($event == null) {
+            dd();
+        }
+
+        //get top performers
+        $topkd = parent::cacheGet("stat:topkd:$id:all");
+        $topslayer = parent::cacheGet("stat:topslayer:$id:all");
+        $tophp_time = parent::cacheGet("stat:tophp_time:$id:all");
+        $topul_dunks = parent::cacheGet("stat:topuplink_dunks:$id:all");
+        $rosters = parent::cacheGet("rosterevent:$id:all");
+        return View::make('frontend.event-standings', 
+            compact('event', 'topkd', 'topslayer', 'tophp_time', 'topul_dunks',
+                'rosters'));
 	}
 
     public function viewGameTypeStatsByEvent($id) {

@@ -80,18 +80,18 @@ class RosterEvent extends Model {
 
     public function getMapLosses() {
         $roster_id = $this->roster_id;
-        $wins = 0;
+        $losses = 0;
         //TODO: refactor this
         $matches = Match::where('event_id', $this->event_id)->get();
         foreach($matches as $match) {
             if($match->roster_a_id == $roster_id) {//|| $match->roster_b_id == $roster_id) {
-                $wins += $match->a_map_count;
+                $losses += $match->b_map_count;
             }
             if($match->roster_b_id == $roster_id) {
-                $wins += $match->b_map_count;
+                $losses += $match->a_map_count;
             }
         }
-        return $wins;
+        return $losses;
     }
 
     //TODO:finish this

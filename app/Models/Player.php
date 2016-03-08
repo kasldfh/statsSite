@@ -335,7 +335,7 @@ class Player extends Model {
 
         $ctf_games = CtfPlayer::where("player_id", $this->id)->get();
         foreach ($ctf_games as $game) {
-            if($game->game()->score_type_id == 0) {
+            if($game->game()->first()->score_type_id == 0) {
                 $kills += $game->kills;
                 $ctfgame = $game->game;
                 $game_time += $ctfgame->game_time;
@@ -345,7 +345,7 @@ class Player extends Model {
         }
         $uplink_games = UplinkPlayer::where("player_id", $this->id)->get();
         foreach ($uplink_games as $game) {
-            if($game->game()->score_type_id == 0) {
+            if($game->game()->first()->score_type_id == 0) {
                 $kills += $game->kills;
                 $game_time += $game->game->game_time;
                 $maps++;
@@ -353,7 +353,7 @@ class Player extends Model {
         }
         $hp_games = HpPlayer::where("player_id", $this->id)->get();
         foreach ($hp_games as $game) {
-            if($game->game()->score_type_id == 0) {
+            if($game->game()->first()->score_type_id == 0) {
                 $kills += $game->kills;
                 $game_time += $game->game->game_time;
                 $maps++;

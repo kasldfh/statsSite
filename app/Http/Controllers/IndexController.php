@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use App\Models\GameTitle;
+
 use View;
 
 class IndexController extends Controller
@@ -18,7 +20,11 @@ class IndexController extends Controller
      */
     public function index()
     {
-        return View::make('frontend.events');
+        //get list of games
+        $games = GameTitle::with('events')->orderby('created_at', 'desc')->get();
+
+        //get list of each event for that game
+        return View::make('frontend.events', compact('games'));
     }
 
     /**
