@@ -23,9 +23,12 @@ class FrontEndEventController extends BaseController {
         $tophp_time = parent::cacheGet("stat:tophp_time:$id:all");
         $topul_dunks = parent::cacheGet("stat:topuplink_dunks:$id:all");
         $rosters = parent::cacheGet("rosterevent:$id:all");
+
+        $players = parent::cacheGet('stat:kd:'.$id.':all');
+
         return View::make('frontend.event-standings', 
             compact('event', 'topkd', 'topslayer', 'tophp_time', 'topul_dunks',
-                'rosters'));
+                'rosters', 'players'));
 	}
 
     public function viewGameTypeStatsByEvent($id) {
@@ -35,7 +38,9 @@ class FrontEndEventController extends BaseController {
 
     public function viewLeaderboardsByEvent($id) {
         $event = Event::findorfail($id);
-		return View::make('frontend.event-leaderboards', compact('event'));
+        $players = parent::cacheGet('stat:kd:'.$id.':all');
+        return View::make('frontend.event-leaderboards', 
+            compact('event', 'players'));
     }
 
     public function viewPickBanStatsByEvent($id) {
