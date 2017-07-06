@@ -33,6 +33,19 @@ class Event extends Model {
         return $this->hasMany('App\Models\RosterEvent', 'event_id', 'id')->with('roster');
     }
 
+    public function getHighestHpKills() {
+        $allrecords = collect();
+        foreach($this->matches as $match) {
+            foreach($match->games as $game) {
+                dd("lele");
+                $hp = $game->hp();
+                if(isset($hp)) {
+                    $allrecords->add($game->hp()->players()->get());
+                }
+            }
+        }
+    }
+    //TODO: remove this method?
 	public function getPlayed($id) {
 		$matches = $this->matches;
 		$kills = 0;

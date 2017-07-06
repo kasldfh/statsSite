@@ -60,6 +60,7 @@ class RefreshCache extends Job implements SelfHandling, ShouldQueue
         set_time_limit(100000);
         $with = ['rosters', 'rosters.roster', 'rosters.roster.team'];
         $event = Event::where('id', $event_id)->with($with)->first();
+        //$event->getHighestHpKills();
         $this->set("event:$event_id", $event);
         $players = collect();
         foreach($event->rosters as &$roster_event) {

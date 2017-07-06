@@ -41,7 +41,7 @@
                           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Events <span class="caret"></span></a>
                           <ul class="dropdown-menu" role="menu">
                             @foreach($events as $event)
-                            <li>{!!link_to_action('LeaderboardController@viewByEvent', $event->name, ['id' => $event->id], [])!!}</li>
+                            <li>{!!link_to_action('LeaderboardController@view', $event->name, ['id' => $event->id], [])!!}</li>
                             @endforeach
                           </ul>
                         </li>
