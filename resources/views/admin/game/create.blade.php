@@ -48,7 +48,89 @@ $( document ).ready(function() {
     }
   });
 });
+</script>
+<script>
+  //script to scrape stats from mlg's exposed API. 
+  function capitalizeFirst(str) {
+      return str.charAt(0).toUpperCase() + str.slice(1);
+  };
 
+  $ ("#mlg_fill").click(function() {
+      var opt = $("#mlg_select option:selected").text();
+      var option = JSON.parse(opt);
+      $.ajax({
+          url: '/admin/game/mlg/' + option.map_id,
+          type: 'GET',
+          data: '',
+          success: function(data) {
+              data = JSON.parse(data);
+              var data_mode = data[0].gametype;
+
+              $("#mode").val(data_mode).change();
+              // data[0].map[0] = data[0].map[0].toUpper();
+              var data_map = capitalizeFirst(data[0].map.toString());
+              var map_id =  $('#map').find('option:contains('+data_map+')').val();
+              $("#map").val(map_id).change();
+              //we don't pass player ID's from controller because if players have duplicate names, we know
+              //the right players are selected because of the team rosters
+
+              //which game mode is it?
+              var playerSels, killsInput, deathsInput;
+              console.log("Mode: " + data_mode);
+
+              switch(data_mode) {
+                  case 1: //hp = 1
+                      playerSels = 'select[name="hp_player[]"]';
+                      killsInput = 'input[name="hp_kills[]"]';
+                      deathsInput = 'input[name="hp_deaths[]"]';
+                      break;
+                  case 2: //snd = 2
+                      playerSels = 'select[name="snd_player[]"]';
+                      killsInput = 'input[name="snd_kills[]"]';
+                      deathsInput = 'input[name="snd_deaths[]"]';
+                      break;
+                  case 3: //uplink
+                      playerSels = 'select[name="uplink_player[]"]';
+                      killsInput = 'input[name="uplink_kills[]"]';
+                      deathsInput = 'input[name="uplink_deaths[]"]';
+                      break;
+                  case 4: //ctf
+                      playerSels = 'select[name="ctf_player[]"]';
+                      killsInput = 'input[name="ctf_kills[]"]';
+                      deathsInput = 'input[name="ctf_deaths[]"]';
+                      break;
+                  default:
+                      console.log("Problem selecting game mode");   
+              }
+                
+              $(playerSels).each(function(index, element) {
+                  var playerName = $(element).find(":selected").text();
+                  for(var i = 0; i < 8; i++) {
+                      if(playerName.toLowerCase() === data[i].player_name.toString().toLowerCase()) {
+                          console.log(data[i]);
+                          $(element).closest('tr').find(killsInput).val(data[i].kills);
+                          $(element).closest('tr').find(deathsInput).val(data[i].deaths);
+                          //$(element).closest('tr').find('input[name="hp_kills[]"]').val(data[i].kills);
+                      }
+                  }
+                  //console.log(element);
+              });
+              //TODO: delete
+              //for(var i = 0; i < 8; i++) {
+              //    var record = data[i];
+              //    console.log("record");
+              //    console.log(record);
+              //}
+
+
+
+          },
+          error: function(e) {
+              //called when there is an error
+              //console.log(e.message);
+          }
+      });
+  });
 </script>
 @endsection
 @section('Delete')
@@ -61,6 +143,7 @@ $( document ).ready(function() {
 
 @endsection
 @section('content')
+    {{-- I like to eat cake is a comment--}}
     {!! Form::open(array('action'=>'GameController@store', 'class'=>'form-login', 'id' => 'form')) !!}
     <input type="hidden" name="match_id" value="{!!$match->id!!}">
     <div class="row">
@@ -70,6 +153,20 @@ $( document ).ready(function() {
             <h4 class="text">Create Game</h4>
           </div>
         </div>
+
+        <div class="row">
+          <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+            <h5 class="text">
+                {!! Form::select("entry", $maps, '', array('class'=>'col-lg-6 col-sm-6 col-md-6', 'id' => 'mlg_select'))!!}
+            </h5>
+          </div>
+          <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+            <h5 class="text">
+                {!! Form::button('Fill', array('class'=>'btn btn-large btn-primary', 'id' => 'mlg_fill'))!!}
+            </h5>
+          </div>
+        </div>
+
         <div class="row">
           <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <h5 class="text">{!!$match->rostera->team->name!!} vs. {!!$match->rosterb->team->name!!} at {!!$match->event->name!!}</h5>
@@ -249,11 +346,11 @@ $( document ).ready(function() {
                         <tbody>
                                 @for($i = 1; $i<=4; $i++)
                                 <tr>
-                                  <td>{!!Form::select('aplayers[]', ['' => 'Select'] + $match->rostera->players, $match->rostera->starters[$i-1]->player_id, ['class' => 'form-control'])!!}</td>
-                                  <td>{!! Form::text('kills[]', '' , array('class'=>'form-control')) !!}</td>
-                                  <td>{!! Form::text('deaths[]', '' , array('class'=>'form-control')) !!}</td>
-                                  <td>{!! Form::text('plants[]', '' , array('class'=>'form-control')) !!}</td>
-                                  <td>{!! Form::text('defuses[]', '' , array('class'=>'form-control')) !!}</td>
+                                  <td>{!!Form::select('snd_player[]', ['' => 'Select'] + $match->rostera->players, $match->rostera->starters[$i-1]->player_id, ['class' => 'form-control'])!!}</td>
+                                  <td>{!! Form::text('snd_kills[]', '' , array('class'=>'form-control')) !!}</td>
+                                  <td>{!! Form::text('snd_deaths[]', '' , array('class'=>'form-control')) !!}</td>
+                                  <td>{!! Form::text('snd_plants[]', '' , array('class'=>'form-control')) !!}</td>
+                                  <td>{!! Form::text('snd_defuses[]', '' , array('class'=>'form-control')) !!}</td>
 
                                 </tr>
                                 @endfor
@@ -285,11 +382,11 @@ $( document ).ready(function() {
                         <tbody>
                                 @for($i = 1; $i<=4; $i++)
                                 <tr>
-                                  <td>{!!Form::select('bplayers[]', ['' => 'Select'] + $match->rosterb->players, $match->rosterb->starters[$i-1]->player_id, ['class' => 'form-control'])!!}</td>
-                                  <td>{!! Form::text('kills[]', '' , array('class'=>'form-control')) !!}</td>
-                                  <td>{!! Form::text('deaths[]', '' , array('class'=>'form-control')) !!}</td>
-                                  <td>{!! Form::text('plants[]', '' , array('class'=>'form-control')) !!}</td>
-                                  <td>{!! Form::text('defuses[]', '' , array('class'=>'form-control')) !!}</td>
+                                  <td>{!!Form::select('snd_player[]', ['' => 'Select'] + $match->rosterb->players, $match->rosterb->starters[$i-1]->player_id, ['class' => 'form-control'])!!}</td>
+                                  <td>{!! Form::text('snd_kills[]', '' , array('class'=>'form-control')) !!}</td>
+                                  <td>{!! Form::text('snd_deaths[]', '' , array('class'=>'form-control')) !!}</td>
+                                  <td>{!! Form::text('snd_plants[]', '' , array('class'=>'form-control')) !!}</td>
+                                  <td>{!! Form::text('snd_defuses[]', '' , array('class'=>'form-control')) !!}</td>
 
                                 </tr>
                                 @endfor

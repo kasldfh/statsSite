@@ -51,9 +51,84 @@ class GameController extends BaseModeAdminController {
             '3' => 'Missed',
             '4' => 'No Choice'];
         $specialists = Item::where('type', 'Specialist')->lists('name', 'id');
+
+        $stats = $this->queryMlg();
+        $maps = [];
+        foreach($stats as $name => $player) {
+            foreach($player->history as $map) {
+                if(!isset($maps[$map->map_id])) {
+                    $map_obj = [
+                        "map_id" => $map->map_id,
+                        "map" => $map->map, 
+                        "gametype" => $map->gametype,
+                        "winner" => $map->winner,
+                        "loser" => $map->loser
+                    ];
+                    $maps[$map->map_id] = json_encode($map_obj);
+                }
+
+            }
+        }
+        krsort($maps);
+        $maps = ['' => "Choose a MLG Map"] + $maps;
         return View::make('admin.game.create', 
-            compact('modes', 'match', 'mode_map', 'items', 'pick_types', 'specialists'));
+            compact('modes', 'match', 'mode_map', 'items', 'pick_types', 'specialists', 'maps'));
     }
+
+    //todo: reduce number of calls to MLG api if possible
+    public function getMlgGame($id) {
+        $stats = $this->queryMlg();
+        $players = [];
+        foreach($stats as $name => $player) {
+            foreach($player->history as $map) {
+                /* var_dump($map); */
+                //translate differences in names between mlg and us
+                if($name == "joe") {
+                    $name = "joee";
+                }
+                if($map->map_id == $id) {
+                    //convert gametype to gametypes (1
+                    //hp=1, snd=2, uplink=3, ctf=4
+                    if($map->gametype == "hp") {
+                        $map->gametype = 1;
+                    }
+                    elseif($map->gametype == "snd") {
+                        $map->gametype = 2;
+                    }
+                    elseif($map->gametype == "up") {
+                        $map->gametype = 3;
+                    }
+                    elseif($map->gametype == "ctf") {
+                        $map->gametype = 4;
+                    }
+                    else {
+                        var_dump("wtf_gamecontroller");
+                    }
+                    $map_arr = (array) $map;
+                    $players[] = ["player_name" => $name] + $map_arr;
+                    /* print("Player:\t$name\t\t, kils:\t$map->kills, deaths:\t$map->deaths, map:$map->map, gametype:$map->gametype\n"); */
+                }
+            }
+        }
+        $json_players = json_encode($players);
+        /* var_dump($players); */
+        return $json_players;
+    }
+
+    //returns json_decoded mlg stats/player/all
+    public function queryMlg() {
+        //TODO: fail gracefully if the response isn't what's expected
+        $response = file_get_contents('http://cod.majorleaguegaming.com/stats/player/all');
+        $stats = json_decode($response);
+        return $stats;
+        
+    }
+
+    //if needed, paste json to mock mlg's server
+    public function mock() {
+        return "";
+    }
+
     public function manage($id) {
         $games = Match::find($id)->games;
         foreach($games as $game) {
@@ -336,14 +411,12 @@ class GameController extends BaseModeAdminController {
         $game = Game::find($game_id);
         $mode = new Snd;
 
-        $kills = Input::get('kills');
-        $deaths = Input::get('deaths');
-        $plants = Input::get('plants');
-        $defuses = Input::get('defuses');
-        $defends = Input::get('defends');
-        $aplayerids = Input::get('aplayers');
-        //dd($aplayerids);
-        $bplayerids = Input::get('bplayers');
+        $kills = Input::get('snd_kills');
+        $deaths = Input::get('snd_deaths');
+        $plants = Input::get('snd_plants');
+        $defuses = Input::get('snd_defuses');
+        //$defends = Input::get('snd_defends');
+        $playerids = Input::get('snd_players');
         //round stuff
         $sides = Input::get('side');
         $fbs = Input::get('fb');
@@ -390,42 +463,28 @@ class GameController extends BaseModeAdminController {
         }
         //dd($rounds);
         //TODO: set team snd stats (plants/etc)
+
         //set new players
         $i = 0;
-        foreach($aplayerids as $aplayerid)
-        {
-            $aplayer = new SndPlayer;
-            $aplayer->player_id = $aplayerid;
-            $aplayer->snd_id = $mode->id;
-            $aplayer->kills = $kills[$i];
-            $aplayer->deaths = $deaths[$i];
-            $aplayer->plants = $plants[$i];
-            $aplayer->defuses = $defuses[$i];
-            $aplayer->first_bloods = parent::fbs($rounds, $aplayerid);
-            $aplayer->first_blood_wins = parent::fbWins($rounds, $aplayerid, $match->roster_a_id);
-            $aplayer->last_man_standing = parent::lms($rounds, $aplayerid);
-            $aplayer->last_man_standing_wins = parent::lmsWins($rounds, $aplayerid, $match->roster_a_id);
-            $aplayer->host = $phost ? $phost : null;
-            $aplayer->save();
-            $i++;
-            //TODO: host stuff
+        foreach($playerids as $playerid) {
+        //select the proper roster (first 4 are a, second 4 are b)
+            $roster_id = $match->roster_a_id;
+        if($i >= 4) {
+            $roster_id = $match->roster_b_id;
         }
-
-        foreach($bplayerids as $bplayerid)
-        {
-            $bplayer = new SndPlayer;
-            $bplayer->player_id = $bplayerid;
-            $bplayer->snd_id = $mode->id;
-            $bplayer->kills = $kills[$i];
-            $bplayer->deaths = $deaths[$i];
-            $bplayer->plants = $plants[$i];
-            $bplayer->defuses = $defuses[$i];
-            $bplayer->first_bloods = parent::fbs($rounds, $bplayerid);
-            $bplayer->first_blood_wins = parent::fbWins($rounds, $bplayerid, $match->roster_b_id);
-            $bplayer->last_man_standing = parent::lms($rounds, $bplayerid);
-            $bplayer->last_man_standing_wins = parent::lmsWins($rounds, $bplayerid, $match->roster_b_id);
-            $bplayer->host = $phost ? $phost : null;
-            $bplayer->save();
+            $player = new SndPlayer;
+            $player->player_id = $playerid;
+            $player->snd_id = $mode->id;
+            $player->kills = $kills[$i];
+            $player->deaths = $deaths[$i];
+            $player->plants = $plants[$i];
+            $player->defuses = $defuses[$i];
+            $player->first_bloods = parent::fbs($rounds, $playerid);
+            $player->first_blood_wins = parent::fbWins($rounds, $playerid, $roster_id);
+            $player->last_man_standing = parent::lms($rounds, $playerid);
+            $player->last_man_standing_wins = parent::lmsWins($rounds, $playerid, $roster_id);
+            $player->host = $phost ? $phost : null;
+            $player->save();
             $i++;
             //TODO: host stuff
         }

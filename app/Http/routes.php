@@ -150,6 +150,13 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('admin/game/create/{id}', ['uses' => 'GameController@create']);
     Route::get('admin/game/manage/{id}', ['uses' => 'GameController@manage']);
     Route::get('admin/game/edit/{id}', ['uses' => 'GameController@edit']);
+    //route to get mlg's exposed games
+    Route::post('admin/game/mlg/mock', ['uses' => 'GameController@mock']);
+    Route::get('admin/game/mlg/mock', ['uses' => 'GameController@mock']);
+
+    Route::post('admin/game/mlg/{id}', ['uses' => 'GameController@getMlgGame']);
+    Route::get('admin/game/mlg/{id}', ['uses' => 'GameController@getMlgGame']);
+
 
     //hp routes
     Route::get('admin/hp/{id}/edit', ['uses' => 'HpController@edit']);
