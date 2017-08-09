@@ -35,8 +35,9 @@ class GameController extends BaseModeAdminController {
     }
     public function create($id) {
         $match = Match::find($id);
+        $event = Event::find($match->event_id);
         //dd($match);
-        $modes = Mode::with('maplink.map')->get();
+        $modes = Mode::with('maplink.map')->where('game_title_id', $event->game_title_id)->get();
         $mode_map = [];
         foreach ($modes as $mode) {
             foreach ($mode->maplink as $maplink) {
@@ -416,7 +417,7 @@ class GameController extends BaseModeAdminController {
         $plants = Input::get('snd_plants');
         $defuses = Input::get('snd_defuses');
         //$defends = Input::get('snd_defends');
-        $playerids = Input::get('snd_players');
+        $playerids = Input::get('snd_player');
         //round stuff
         $sides = Input::get('side');
         $fbs = Input::get('fb');
