@@ -46,6 +46,8 @@ Route::get('{name}', ['uses' => 'FrontEndTeamController@show']);
 //admin routes
 Route::group(['middleware' => 'auth'], function() {
 
+    Route::get('admin/excel', 'TestController@statUploader');
+
     //general admin routes
     Route::get('admin/dashboard', ['uses' => 'AdminController@dashboard']);
     Route::get('admin/cache/refresh', ['uses' => 'cachecontroller@index']);
