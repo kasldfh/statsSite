@@ -78,6 +78,11 @@ class GameController extends BaseModeAdminController {
 
     //todo: reduce number of calls to MLG api if possible
     public function getMlgGame($id) {
+        //TODO: change this depending on the current game id. 
+        //For now it's IW, so we will just enter that. 
+        $event = Event::where('name', 'Infinite Warfare')->first();
+        $game_title_id = $event->game_title_id;
+
         $stats = $this->queryMlg();
         $players = [];
         foreach($stats as $name => $player) {
@@ -91,16 +96,23 @@ class GameController extends BaseModeAdminController {
                     //convert gametype to gametypes (1
                     //hp=1, snd=2, uplink=3, ctf=4
                     if($map->gametype == "hp") {
-                        $map->gametype = 1;
+                        $db_mode = Mode::where('name', 'Hardpoint')->where('game_title_id', $game_title_id)->first();
+
+                        $map->gametype = $db_mode->id;
                     }
                     elseif($map->gametype == "snd") {
-                        $map->gametype = 2;
+                        $db_mode = Mode::where('name', 'Search and Destroy')->where('game_title_id', $game_title_id)->first();
+                        $map->gametype = $db_mode->id;
                     }
                     elseif($map->gametype == "up") {
-                        $map->gametype = 3;
+                        $db_mode = Mode::where('name', 'Uplink')->where('game_title_id', $game_title_id)->first();
+                        $map->gametype = $db_mode->id;
+
                     }
                     elseif($map->gametype == "ctf") {
-                        $map->gametype = 4;
+                        $db_mode = Mode::where('name', 'Capture the Flag')->where('game_title_id', $game_title_id)->first();
+
+                        $map->gametype = $db_mode->id;
                     }
                     else {
                         var_dump("wtf_gamecontroller");
