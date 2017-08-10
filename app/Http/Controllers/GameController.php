@@ -23,6 +23,7 @@ use App\Models\Item;
 use App\Models\Pick;
 use App\Models\Event;
 use App\Models\Specialist;
+use App\Models\GameTitle;
 
 use Input;
 use Redirect;
@@ -80,8 +81,8 @@ class GameController extends BaseModeAdminController {
     public function getMlgGame($id) {
         //TODO: change this depending on the current game id. 
         //For now it's IW, so we will just enter that. 
-        $event = Event::where('name', 'Infinite Warfare')->first();
-        $game_title_id = $event->game_title_id;
+        $game_title = GameTitle::where('title', 'Infinite Warfare')->first();
+        $game_title_id = $game_title->id;
 
         $stats = $this->queryMlg();
         $players = [];
@@ -94,7 +95,6 @@ class GameController extends BaseModeAdminController {
                 }
                 if($map->map_id == $id) {
                     //convert gametype to gametypes (1
-                    //hp=1, snd=2, uplink=3, ctf=4
                     if($map->gametype == "hp") {
                         $db_mode = Mode::where('name', 'Hardpoint')->where('game_title_id', $game_title_id)->first();
 
@@ -362,7 +362,7 @@ class GameController extends BaseModeAdminController {
                 $hp_player->defends = $defends;
                 $hp_player->host = $pHost == $player;
                 $hp_player->save();
-                var_dump($hp_player->kills);
+                /* var_dump($hp_player->kills); */
             }
         }
         return Redirect::action('MatchController@manage');
