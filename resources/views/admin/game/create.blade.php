@@ -77,24 +77,27 @@ $( document ).ready(function() {
               //which game mode is it?
               var playerSels, killsInput, deathsInput;
               console.log("Mode: " + data_mode);
+              var mode_elem = document.getElementById('mode');
+              var modeStr = mode_elem.options[mode_elem.selectedIndex].text;
+              console.log("Modestr: " + modeStr);
 
-              switch(data_mode) {
-                  case 1: //hp = 1
+              switch(modeStr) {
+                  case "Hardpoint": //hp = 1
                       playerSels = 'select[name="hp_player[]"]';
                       killsInput = 'input[name="hp_kills[]"]';
                       deathsInput = 'input[name="hp_deaths[]"]';
                       break;
-                  case 2: //snd = 2
+                  case "Search and Destroy": //snd = 2
                       playerSels = 'select[name="snd_player[]"]';
                       killsInput = 'input[name="snd_kills[]"]';
                       deathsInput = 'input[name="snd_deaths[]"]';
                       break;
-                  case 3: //uplink
+                  case "Uplink": //uplink
                       playerSels = 'select[name="uplink_player[]"]';
                       killsInput = 'input[name="uplink_kills[]"]';
                       deathsInput = 'input[name="uplink_deaths[]"]';
                       break;
-                  case 4: //ctf
+                  case "Capture the Flag": //ctf
                       playerSels = 'select[name="ctf_player[]"]';
                       killsInput = 'input[name="ctf_kills[]"]';
                       deathsInput = 'input[name="ctf_deaths[]"]';
