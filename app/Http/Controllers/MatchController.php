@@ -72,7 +72,7 @@ public function create() {
 	}
 
 	public function manage() {
-		$matches = Match::with(['rostera.team', 'rosterb.team'])->get();
+        $matches = Match::orderBy('id', 'DESC')->with(['rostera.team', 'rosterb.team'])->get();
 		return View::make('admin.match.manage', compact('matches'));
 	}
 
